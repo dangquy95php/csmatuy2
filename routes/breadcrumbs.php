@@ -13,7 +13,7 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Trang chủ', route('dashboard'));
 });
 
-Breadcrumbs::for('user_list', function ($trail) {
+Breadcrumbs::for('user.list', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Tài khoản nhân viên', route('user_list'));
+    $trail->push('Tài khoản nhân viên', route('user.list'));
 });

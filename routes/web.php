@@ -14,16 +14,36 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::get('/login', 'UserController@login')->name('login');
-    Route::post('/login', 'UserController@postLogin')->name('post_login');
-});
-
-Route::group(['prefix' => 'admin'], function () {
+    Route::post('/login', 'UserController@postLogin')->name('login.post');
     
-    Route::get('/register', 'UserController@register')->name('user_register');
-    Route::post('/register', 'UserController@postRegister')->name('post_user_register');
-
-    Route::get('/list', 'UserController@list')->name('user_list');
-    Route::get('/create', 'UserController@create')->name('user_create');
+    
 });
+
+// , , 
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'permission:user-list']], function () {
+    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::resource('users', UserController::class);
+    Route::get('/list', 'UserController@list')->name('user.list');
+    Route::get('/show', 'UserController@show')->name('user.show');
+});
+
+
+
+// Route::group(['prefix' => 'admin'], function () {
+    
+//     Route::get('/register', 'UserController@register')->name('user_register');
+//     Route::post('/register', 'UserController@postRegister')->name('post_user_register');
+
+    
+//     Route::get('/create', 'UserController@create')->name('user_create');
+// });
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// Route::group(['middleware' => ['auth']], function() {
+//     Route::resource('users', UserController::class);
+//     Route::resource('roles', RoleController::class);
+//     Route::resource('permissions', PermissionController::class);
+//     Route::resource('posts', PostController::class);
+// });

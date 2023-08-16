@@ -64,7 +64,7 @@
                     <p class="text-center small">Nhập username và mật khẩu của bạn để đăng nhập</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="post" novalidate>
+                  <form class="row g-3 needs-validation" method="POST" action="{{ route('login.post') }}" accept-charset="UTF-8" novalidate>
                   @csrf
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Nhập username</label>
@@ -88,7 +88,7 @@
                       </div>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Đặng Nhập</button>
+                      <button class="btn btn-primary w-100" type="submit">Đăng Nhập</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Tôi chưa có tài khoản? <a href="/admin/register">Tạo tài khoản</a></p>

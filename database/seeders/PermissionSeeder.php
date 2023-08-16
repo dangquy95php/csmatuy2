@@ -15,6 +15,6 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'edit articles']);
+        Permission::create(['name' => 'user-list']);
     }
 }
