@@ -26,7 +26,6 @@
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
                     <th scope="col">Trạng thái</th>
-                    <th scope="col">Ngày tạo</th>
                     <th scope="col">Ngày cập nhật</th>
                     <th scope="col">
                         <button type="button" class="btn btn-outline-primary">Thêm</button>
@@ -40,6 +39,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->user_role }}</td>
                         <td>
                         @if( $user->status == \App\Models\User::ENABLE)
                             <span class="badge rounded-pill bg-success">Đang hoạt động</span>
@@ -47,11 +47,10 @@
                             <span class="badge rounded-pill bg-danger">Không hoạt động</span>
                         @endif
                         </td>
-                        <td>{{ $user->created_at }}</td>
                         <td>{{ $user->updated_at }}</td>
                         <td>
-                            <button type="button" class="btn btn-outline-info">Sửa</button>
-                            <button type="button" class="btn btn-outline-danger">Xóa</button>
+                            <a href="{{ route('user.edit') }}" class="btn btn-outline-info">Sửa</a>
+                            <a href="" class="btn btn-outline-danger">Xóa</a>
                         </td>
                     </tr>
                     @endforeach

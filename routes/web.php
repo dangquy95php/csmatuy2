@@ -26,8 +26,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'permission:user-lis
     Route::resource('users', UserController::class);
     Route::get('/list', 'UserController@list')->name('user.list');
     Route::get('/show', 'UserController@show')->name('user.show');
-});
 
+    Route::get('/{id}/edit', 'UserController@edit')->name('user.edit');
+});
 
 
 // Route::group(['prefix' => 'admin'], function () {
@@ -35,7 +36,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'permission:user-lis
 //     Route::get('/register', 'UserController@register')->name('user_register');
 //     Route::post('/register', 'UserController@postRegister')->name('post_user_register');
 
-    
 //     Route::get('/create', 'UserController@create')->name('user_create');
 // });
 

@@ -8,7 +8,7 @@ use Diglactic\Breadcrumbs\Breadcrumbs;
 //  with `$trail`. This is nice for IDE type checking and completion.
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
-// Home
+
 Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Trang chủ', route('dashboard'));
 });
@@ -16,4 +16,9 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('user.list', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Tài khoản nhân viên', route('user.list'));
+});
+
+Breadcrumbs::for('user.edit', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Cập nhật nhân viên', route('user.edit'));
 });

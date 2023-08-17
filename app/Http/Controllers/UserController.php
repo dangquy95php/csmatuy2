@@ -62,8 +62,11 @@ class UserController extends Controller
      */
     public function list(Request $request)
     {
-        $data = User::orderBy('id', 'desc')->paginate(5);
-        
+        $data = User::all();
+        foreach ($data as &$user) {
+            $user->user_role = $user->roles->pluck('name', 'name')->first();
+        }
+
         return view('users.index', compact('data'));
     }
 
