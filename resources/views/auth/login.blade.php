@@ -25,7 +25,7 @@
   <link href="{{asset('admin_library/assets/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
   <link href="{{asset('admin_library/assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
   <link href="{{asset('admin_library/assets/vendor/simple-datatables/style.css')}}" rel="stylesheet">
-
+  <link href="{{ asset('admin_library/assets/css/toastr.min.css') }}" rel="stylesheet" type="text/css" >
   <!-- Template Main CSS File -->
   <link href="{{asset('admin_library/assets/css/style.css')}}" rel="stylesheet">
 
@@ -64,7 +64,7 @@
                     <p class="text-center small">Nhập username và mật khẩu của bạn để đăng nhập</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="POST" action="{{ route('login.post') }}" accept-charset="UTF-8" novalidate>
+                  <form class="row g-3 needs-validation" method="POST" accept-charset="UTF-8" novalidate>
                   @csrf
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Nhập username</label>
@@ -103,7 +103,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Thiết kế bởi <a href="https://bootstrapmade.com/">Đặng Quý</a>
+                Thiết kế bởi <a href="https://bootstrapmade.com/">CƠ SỞ CAI NGHIỆN MA TÚY SỐ 2</a>
               </div>
 
             </div>
@@ -126,9 +126,16 @@
   <script src="{{asset('admin_library/assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
   <script src="{{asset('admin_library/assets/vendor/tinymce/tinymce.min.js')}}"></script>
   <script src="{{asset('admin_library/assets/vendor/php-email-form/validate.js')}}"></script>
+   <!-- Jquery Slim JS -->
+   <script src="{{ asset('admin_library/assets/js/jquery.min.js')}} "></script>
 
+  <script src="{{ asset('admin_library/assets/js/jquery-ui.min.js')}} "></script>
   <!-- Template Main JS File -->
   <script src="{{asset('admin_library/assets/js/main.js')}}"></script>
+
+  <script src="{{ asset('admin_library/assets/js/toastr.min.js')}} "></script>
+
+  {!! Toastr::message() !!}
 
 </body>
 

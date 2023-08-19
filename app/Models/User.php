@@ -8,13 +8,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Hash;
+use Auth;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    const DISABLE = 0;
+    const NOT_ACTIVATED = 0;
     const ENABLE = 1;
+    const DISABLE = 2;
+
+    const INFOR_STATUS = [
+        self::NOT_ACTIVATED => 'Chưa kích hoạt',
+        self::ENABLE => 'Đang hoạt động',
+        self::DISABLE => 'Ngừng hoạt động',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +36,7 @@ class User extends Authenticatable
         'status',
         'email',
         'password',
+        'is_account_enabled'
     ];
 
     /**
@@ -50,6 +60,6 @@ class User extends Authenticatable
 
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = bcrypt($value);
+        $this->attributes['password'] = Hash::make($value);
     }
 }

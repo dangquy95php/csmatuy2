@@ -15,10 +15,15 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('user.list', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Tài khoản nhân viên', route('user.list'));
+    $trail->push('Danh sách nhân viên', route('user.list'));
 });
 
-Breadcrumbs::for('user.edit', function ($trail) {
-    $trail->parent('dashboard');
-    $trail->push('Cập nhật nhân viên', route('user.edit'));
+Breadcrumbs::for('user.edit', function ($trail, $user) {
+    $trail->parent('user.list');
+    $trail->push('Chỉnh sửa nhân viên '. $user->username, route('user.edit', $user->id));
 });
+
+// Breadcrumbs::for('user.edit', function ($trail) {
+//     $trail->parent('dashboard');
+//     $trail->push('Cập nhật nhân viên', route('user.edit'));
+// });

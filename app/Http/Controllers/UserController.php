@@ -11,7 +11,7 @@ use Illuminate\Support\Arr;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\User\CreateUserRequest;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Http\Requests\User\LoginUserRequest;
+use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller
 {
@@ -28,33 +28,6 @@ class UserController extends Controller
         //  $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
-    public function login(Request $request)
-    {
-        return view('auth.login');
-    }
-
-    public function postLogin(LoginUserRequest $request)
-    {
-        $data = [
-            'username' => $request->get('username'),
-            'password' => trim($request->get('password')),
-            'status' => User::ENABLE,
-        ];
-
-        $remember_me = $request->has('remember') ? true : false;
-
-        if (Auth::attempt($data, $remember_me)) {
-            Toastr::success('Đăng nhập vào hệ thống thành công!');
-            
-            return redirect()->route('dashboard');
-        } else {
-            Toastr::error('Tên người dùng hoặc mật khẩu không chính xác!');
-            return redirect()->route('login');
-        }
-      
-        return redirect()->route('dashboard');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -64,7 +37,7 @@ class UserController extends Controller
     {
         $data = User::all();
         foreach ($data as &$user) {
-            $user->user_role = $user->roles->pluck('name', 'name')->first();
+            $user->user_role = $user->roles->pluck('name', 'name')->all();
         }
 
         return view('users.index', compact('data'));
@@ -98,7 +71,7 @@ class UserController extends Controller
         ]);
     
         $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+        $input['password'] = $input['password'];
     
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
@@ -130,8 +103,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Role::pluck('name', 'name')->all();
+        
         $userRole = $user->roles->pluck('name', 'name')->all();
-    
+
         return view('users.edit', compact('user', 'roles', 'userRole'));
     }
 
@@ -147,19 +121,23 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'confirmed',
+            'password' => 'required_with:password_confirmation|same:password_confirmation',
             'roles' => 'required'
         ]);
-    
+       
         $input = $request->all();
-        
+
         if(!empty($input['password'])) { 
-            $input['password'] = Hash::make($input['password']);
+            $input['password'] = trim($input['password']);
         } else {
             $input = Arr::except($input, array('password'));    
         }
-    
+
         $user = User::find($id);
+        $userRole = $user->roles->pluck('name')->all();
+        $result = array_diff($userRole, $request->input('roles'));
+        $result1 = array_diff($request->input('roles'), $userRole);
+
         $user->update($input);
 
         DB::table('model_has_roles')
@@ -167,9 +145,16 @@ class UserController extends Controller
             ->delete();
     
         $user->assignRole($request->input('roles'));
-    
-        return redirect()->route('users.index')
-            ->with('success', 'User updated successfully.');
+       
+        $result = array_diff($userRole, $request->input('roles'));
+
+        if (count($user->getChanges()) > 0 || count($result) > 0 || count($result1) > 0) {
+            $user->update(['is_account_enabled' => false]);
+        }
+
+        Toastr::success('Cập nhật người dùng thành công!');
+
+        return redirect()->route('user.list');
     }
 
     /**
@@ -182,7 +167,7 @@ class UserController extends Controller
     {
         User::find($id)->delete();
 
-        return redirect()->route('users.index')
+        return redirect()->route('users.list')
             ->with('success', 'User deleted successfully.');
     }
 }

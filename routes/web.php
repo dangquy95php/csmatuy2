@@ -14,20 +14,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/login', 'UserController@login')->name('login');
-    Route::post('/login', 'UserController@postLogin')->name('login.post');
+    Route::get('/login', 'LoginController@login')->name('login');
+    Route::post('/login', 'LoginController@postLogin')->name('login.post');
     
     
 });
 
 // , , 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'permission:user-list']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled', 'permission:user-list']], function () {
     Route::get('/', 'DashboardController@index')->name('dashboard');
     Route::resource('users', UserController::class);
-    Route::get('/list', 'UserController@list')->name('user.list');
+    
     Route::get('/show', 'UserController@show')->name('user.show');
+    Route::get('/list', 'UserController@list')->name('user.list');
 
     Route::get('/{id}/edit', 'UserController@edit')->name('user.edit');
+    Route::post('/{id}/edit', 'UserController@update')->name('user.update');
 });
 
 

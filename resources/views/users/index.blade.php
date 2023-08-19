@@ -28,7 +28,7 @@
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày cập nhật</th>
                     <th scope="col">
-                        <button type="button" class="btn btn-outline-primary">Thêm</button>
+                        <button type="button" class="btn btn-primary btn-sm">Thêm</button>
                     </th>
                   </tr>
                 </thead>
@@ -39,7 +39,11 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->user_role }}</td>
+                        <td>
+                            @foreach($user->user_role as $key => $value)
+                                <span class="badge bg-secondary">{{$value}}</span>
+                            @endforeach
+                        </td>
                         <td>
                         @if( $user->status == \App\Models\User::ENABLE)
                             <span class="badge rounded-pill bg-success">Đang hoạt động</span>
@@ -49,8 +53,8 @@
                         </td>
                         <td>{{ $user->updated_at }}</td>
                         <td>
-                            <a href="{{ route('user.edit') }}" class="btn btn-outline-info">Sửa</a>
-                            <a href="" class="btn btn-outline-danger">Xóa</a>
+                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success  btn-sm">Sửa</a>
+                            <a href="" class="btn btn-danger btn-sm">Xóa</a>
                         </td>
                     </tr>
                     @endforeach
