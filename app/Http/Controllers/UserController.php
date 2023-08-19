@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     function __construct()
     {
-        //  $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+        //  $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['list','store']]);
         //  $this->middleware('permission:user-create', ['only' => ['create','store']]);
         //  $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
         //  $this->middleware('permission:user-delete', ['only' => ['destroy']]);
@@ -36,6 +36,7 @@ class UserController extends Controller
     public function list(Request $request)
     {
         $data = User::all();
+        
         foreach ($data as &$user) {
             $user->user_role = $user->roles->pluck('name', 'name')->all();
         }
@@ -76,7 +77,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users.index')
+        return redirect()->route('users.list')
             ->with('success', 'User created successfully.');
     }
 

@@ -21,15 +21,21 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 // , , 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled', 'permission:user-list']], function () {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
-    Route::resource('users', UserController::class);
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled']], function () {
+    Route::get('/', 'DashboardController@index')->name('dashboard')->middleware('permission:user-list');
+    // Route::resource('users', UserController::class);
     
-    Route::get('/show', 'UserController@show')->name('user.show');
-    Route::get('/list', 'UserController@list')->name('user.list');
+    Route::get('/list', 'UserController@list')->name('user.list')->middleware('permission:user-list');
+    Route::get('/show', 'UserController@show')->name('user.show')->middleware('permission:user-list');
 
     Route::get('/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::post('/{id}/edit', 'UserController@update')->name('user.update');
+
+    Route::group(['prefix' => 'roles'], function () {
+        Route::get('/list', 'RoleController@list')->name('roles.list');
+        Route::get('/create', 'RoleController@create')->name('roles.create');
+        Route::get('/edit', 'RoleController@edit')->name('roles.edit');
+    });
 });
 
 
@@ -40,8 +46,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
 
 //     Route::get('/create', 'UserController@create')->name('user_create');
 // });
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::group(['middleware' => ['auth']], function() {
 //     Route::resource('users', UserController::class);

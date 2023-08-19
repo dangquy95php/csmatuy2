@@ -17,16 +17,12 @@
          <div class="card pt-3">
             <div class="card-body table-responsive">
                <!-- Table with stripped rows -->
-               <table class="table table-striped">
+               <table class="table table-striped small">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Tên</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col">Ngày cập nhật</th>
+                    <th scope="col">Ngày tạo</th>
                     <th scope="col">
                         <button type="button" class="btn btn-primary btn-sm">Thêm</button>
                     </th>
@@ -35,7 +31,7 @@
                 <tbody>
                     @foreach ($data as $key => $user)
                     <tr>
-                        <th scope="row">{{ $user->id }}</th>
+                        <th scope="row">{{ $key + 1 }}</th>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>

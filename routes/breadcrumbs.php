@@ -23,6 +23,17 @@ Breadcrumbs::for('user.edit', function ($trail, $user) {
     $trail->push('Chỉnh sửa nhân viên '. $user->username, route('user.edit', $user->id));
 });
 
+Breadcrumbs::for('roles.list', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách Roles', route('roles.list'));
+});
+
+Breadcrumbs::for('roles.create', function ($trail) {
+    $trail->parent('roles.list');
+    $trail->push('Thêm role', route('roles.create'));
+});
+
+
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');
 //     $trail->push('Cập nhật nhân viên', route('user.edit'));
