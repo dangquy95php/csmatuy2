@@ -31,7 +31,7 @@
                             @foreach($permission as $value)
                             <div class="list-group-item list-group-item-action">
                                 <div class="form-check">
-                                    <input class="form-check-input" value="{{ $value->id }}" type="checkbox" id="gridCheck{{ $value->id }}" checked="">
+                                    <input class="form-check-input" value="{{ $value->id }}" type="checkbox" id="gridCheck{{ $value->id }}">
                                     <label class="form-check-label" for="gridCheck{{ $value->id }}">
                                         {{ $value->name }}
                                     </label>
