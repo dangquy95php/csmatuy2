@@ -12,14 +12,11 @@ class LoginController extends Controller
 {
     function __construct()
     {
-        if (Auth::check()) {
-            redirect()->route('dashboard');
-        }
+        
     }
 
     public function login(Request $request)
     {
-
         return view('auth.login');
     }
 
