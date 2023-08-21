@@ -21,7 +21,7 @@ class CheckIsAccountEnabled
         // check if the account is disabled 
         // if it is disabled, log the user out and redirect to login
       
-        if (! Auth::user()->is_account_enabled) {
+        if (!Auth::user()->is_account_enabled) {
             Auth::user()->is_account_enabled = true;
             Auth::user()->save();
             Auth::logout();

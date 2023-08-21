@@ -30,10 +30,10 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/roles/*') ? '' : 'collapsed' }}" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link {{ request()->is('admin/roles/*') || request()->is('admin/permission/*') ? '' : 'collapsed' }}" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="ri-parent-line"></i><span>Quản lý phân quyền</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="forms-nav" class="nav-content collapse {{ request()->is('admin/roles/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+        <ul id="forms-nav" class="nav-content collapse {{ request()->is('admin/roles/*') || request()->is('admin/permission/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('roles.list') }}" class="{{ request()->is('admin/roles/list') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Danh sách Roles</span>
