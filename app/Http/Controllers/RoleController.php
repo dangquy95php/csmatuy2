@@ -61,8 +61,8 @@ class RoleController extends Controller
         ]);
     
         $role = Role::create([
-            'name' => $request->input('name'),
-            'html' => $request->input('html')
+            'name' => trim($request->input('name')),
+            'html' => trim($request->input('html'))
         ]);
         $role->syncPermissions($request->input('permission'));
         Toastr::success('Tạo Role thành công!');
@@ -127,8 +127,8 @@ class RoleController extends Controller
         $result1 = array_diff($request->input('permission'), $rolePermissions);
 
         $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->html = $request->input('html');
+        $role->name = trim($request->input('name'));
+        $role->html = trim($request->input('html'));
         $role->save();
     
         $role->syncPermissions($request->input('permission'));

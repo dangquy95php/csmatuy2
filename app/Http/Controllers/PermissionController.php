@@ -101,9 +101,14 @@ class PermissionController extends Controller
             'name' => 'required'
         ]);
     
-        $permission = Permission::find($id);
-        $permission->name = trim($request->input('name'));
-        $permission->save();
+        try {
+            $permission = Permission::find($id);
+            $permission->name = trim($request->input('name'));
+            $permission->save();
+        } catch (\Exception $ex) {
+            Toastr::error('Có lỗi hệ thống '. $ex->getMessage());
+        }
+        
         if ($permission->wasChanged()) {
             Toastr::success('Cập nhật permission thành công!');
         } else {
