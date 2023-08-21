@@ -17,7 +17,7 @@
          <div class="card pt-3">
             <div class="card-body table-responsive">
                <!-- Table with stripped rows -->
-               <table class="table table-striped small">
+               <table class="table table-striped">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
