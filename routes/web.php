@@ -20,6 +20,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest'], function () {
 
 // , , 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled']], function () {
+    
+    Route::get('/logout', 'DashboardController@logout')->name('logout');
     Route::get('/', 'DashboardController@index')->name('dashboard')->middleware('permission:user-list');
     // Route::resource('users', UserController::class);
     
