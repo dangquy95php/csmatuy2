@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Brian2694\Toastr\Facades\Toastr;
 
 class PermissionController extends Controller
 {
@@ -15,10 +16,10 @@ class PermissionController extends Controller
      */
     function __construct()
     {
-         $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:permission-create', ['only' => ['create','store']]);
-         $this->middleware('permission:permission-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
+        //  $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index','store']]);
+        //  $this->middleware('permission:permission-create', ['only' => ['create','store']]);
+        //  $this->middleware('permission:permission-edit', ['only' => ['edit','update']]);
+        //  $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -26,7 +27,7 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function list(Request $request)
     {
         $data = Permission::orderBy('id','DESC')->paginate(100);
 
@@ -56,9 +57,9 @@ class PermissionController extends Controller
         ]);
     
         Permission::create(['name' => $request->input('name')]);
-    
-        return redirect()->route('permissions.index')
-            ->with('success', 'Permission created successfully.');
+        Toastr::success('Tạo permission thành công!');
+
+        return redirect()->route('permission.list');;
     }
 
     /**
@@ -101,11 +102,15 @@ class PermissionController extends Controller
         ]);
     
         $permission = Permission::find($id);
-        $permission->name = $request->input('name');
+        $permission->name = trim($request->input('name'));
         $permission->save();
+        if ($permission->wasChanged()) {
+            Toastr::success('Cập nhật permission thành công!');
+        } else {
+            Toastr::warning('Dữ liệu không có thay đổi');
+        }
         
-        return redirect()->route('permissions.index')
-            ->with('success', 'Permission updated successfully.');
+        return redirect()->route('permission.list');
     }
 
     /**
@@ -117,8 +122,8 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         Permission::find($id)->delete();
-        
-        return redirect()->route('permissions.index')
-            ->with('success', 'Permission deleted successfully');
+        Toastr::success('Xóa permission thành công!');
+
+        return redirect()->route('permission.list');
     }
 }

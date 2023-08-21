@@ -34,7 +34,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     Route::group(['prefix' => 'roles'], function () {
         Route::get('/list', 'RoleController@list')->name('roles.list');
         Route::get('/create', 'RoleController@create')->name('roles.create');
-        Route::get('/edit', 'RoleController@edit')->name('roles.edit');
+        Route::post('/create', 'RoleController@store')->name('roles.store');
+        Route::get('/{id}/edit', 'RoleController@edit')->name('roles.edit');
+        Route::post('/{id}/edit', 'RoleController@update')->name('roles.update');
+        Route::get('/{id}/destroy', 'RoleController@destroy')->name('roles.destroy');
+    });
+    Route::group(['prefix' => 'permission'], function () {
+        Route::get('/list', 'PermissionController@list')->name('permission.list');
+        Route::get('/create', 'PermissionController@create')->name('permission.create');
+        Route::post('/create', 'PermissionController@store')->name('permission.store');
+        Route::get('/{id}/edit', 'PermissionController@edit')->name('permission.edit');
+        Route::post('/{id}/edit', 'PermissionController@update')->name('permission.update');
+        Route::get('/{id}/destroy', 'PermissionController@destroy')->name('permission.destroy');
     });
 });
 

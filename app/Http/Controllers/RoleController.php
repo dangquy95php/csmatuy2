@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Brian2694\Toastr\Facades\Toastr;
 
 class RoleController extends Controller
 {
@@ -59,11 +60,14 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
     
-        $role = Role::create(['name' => $request->input('name')]);
+        $role = Role::create([
+            'name' => $request->input('name'),
+            'html' => $request->input('html')
+        ]);
         $role->syncPermissions($request->input('permission'));
-    
-        return redirect()->route('roles.index')
-            ->with('success', 'Role created successfully.');
+        Toastr::success('Tạo Role thành công!');
+
+        return redirect()->route('roles.list');
     }
 
     /**
@@ -88,7 +92,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $role = Role::find($id);
         $permission = Permission::get();
@@ -114,14 +118,27 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
     
+        $rolePermissions = DB::table('role_has_permissions')
+        ->where('role_has_permissions.role_id', $id)
+        ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+        ->all();
+
+        $result = array_diff($rolePermissions, $request->input('permission'));
+        $result1 = array_diff($request->input('permission'), $rolePermissions);
+
         $role = Role::find($id);
         $role->name = $request->input('name');
+        $role->html = $request->input('html');
         $role->save();
     
         $role->syncPermissions($request->input('permission'));
-    
-        return redirect()->route('roles.index')
-            ->with('success', 'Role updated successfully.');
+
+        if ($role->wasChanged() || count($result) > 0 || count($result1) > 0) {
+            Toastr::success('Cập nhật Role thành công!');
+        } else {
+            Toastr::warning('Dữ liệu không có thay đổi');
+        }
+        return redirect()->route('roles.list');
     }
 
     /**
@@ -133,8 +150,8 @@ class RoleController extends Controller
     public function destroy($id)
     {
         Role::find($id)->delete();
-        
-        return redirect()->route('roles.index')
-            ->with('success', 'Role deleted successfully');
+        Toastr::success('Xóa Role thành công!');
+
+        return redirect()->route('roles.list');
     }
 }

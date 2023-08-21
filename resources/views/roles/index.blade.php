@@ -41,7 +41,7 @@
                         <td>{{ date('d-m-Y', strtotime($role->created_at)) }}</td>
                         <td>
                             <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-success  btn-sm">Sửa</a>
-                            <a href="" class="btn btn-danger btn-sm">Xóa</a>
+                            <a href="{{ route('roles.destroy', $role->id) }}" onclick="return confirm('Bạn có muốn xóa role {{ $role->name }} không?')" class="btn btn-danger btn-sm">Xóa</a>
                         </td>
                     </tr>
                     @endforeach

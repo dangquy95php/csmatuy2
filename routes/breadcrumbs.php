@@ -33,6 +33,26 @@ Breadcrumbs::for('roles.create', function ($trail) {
     $trail->push('Thêm role', route('roles.create'));
 });
 
+Breadcrumbs::for('roles.edit', function ($trail, $roles) {
+    $trail->parent('roles.list');
+    $trail->push('Chỉnh sửa Role '. $roles->name, route('roles.edit', $roles->id));
+});
+
+Breadcrumbs::for('permission.list', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách permission', route('permission.list'));
+});
+
+Breadcrumbs::for('permission.create', function ($trail) {
+    $trail->parent('permission.list');
+    $trail->push('Thêm role', route('permission.create'));
+});
+
+Breadcrumbs::for('permission.edit', function ($trail, $permission) {
+    $trail->parent('permission.list');
+    $trail->push('Thêm role '. $permission->name, route('permission.edit', $permission->id));
+});
+
 
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');

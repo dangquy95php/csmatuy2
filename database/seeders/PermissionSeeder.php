@@ -16,5 +16,6 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         Permission::create(['name' => 'user-list']);
+        Permission::create(['name' => 'role-list']);
     }
 }

@@ -1,52 +1,56 @@
+@section('title','Danh sách permission')
 @extends('layouts.template')
+
+@section('breadcrumb')
+
+   <h1>DANH SÁCH PERMISSIONS</h1>
+
+   {{ Breadcrumbs::render('permission.list') }}
+
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="justify-content-center">
-        @if (\Session::has('success'))
-            <div class="alert alert-success">
-                <p>{{ \Session::get('success') }}</p>
+
+<section class="section">
+   <div class="row">
+      <div class="col-lg-8">
+         <div class="card">
+            <div class="card-header">Permission
+                <span class="float-right">
+                    <a class="btn btn-primary btn-sm" href="{{route('permission.create')}}">Thêm</a>
+                </span>
             </div>
-        @endif
-        <div class="card">
-            <div class="card-header">Permissions
-                @can('role-create')
-                    <span class="float-right">
-                        <a class="btn btn-primary" href="{{ route('permissions.create') }}">New Permission</a>
-                    </span>
-                @endcan
+            <div class="card-body table-responsive">
+               <!-- Table with stripped rows -->
+               <table class="table table-striped small">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">
+                        Hành động
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data as $key => $permission)
+                    <tr>
+                        <th scope="row">{{$key + 1}}</th>
+                        <td>{{ $permission->name }}</td>
+                        <td>{{ date('d-m-Y', strtotime($permission->created_at)) }}</td>
+                        <td>
+                            <a href="{{ route('permission.edit', $permission->id) }}" class="btn btn-success  btn-sm">Sửa</a>
+                            <a href="{{ route('permission.destroy', $permission->id) }}" onclick="return confirm('Bạn có muốn xóa permission {{ $permission->name }} không?')" class="btn btn-danger btn-sm">Xóa</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+              </table>
+               <!-- End Table with stripped rows -->
             </div>
-            <div class="card-body">
-                <table class="table table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th width="280px">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data as $key => $permission)
-                            <tr>
-                                <td>{{ $permission->id }}</td>
-                                <td>{{ $permission->name }}</td>
-                                <td>
-                                    <a class="btn btn-success" href="{{ route('permissions.show',$permission->id) }}">Show</a>
-                                    @can('role-edit')
-                                        <a class="btn btn-primary" href="{{ route('permissions.edit',$permission->id) }}">Edit</a>
-                                    @endcan
-                                    @can('role-delete')
-                                        {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $permission->id],'style'=>'display:inline']) !!}
-                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                        {!! Form::close() !!}
-                                    @endcan
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{ $data->appends($_GET)->links() }}
-            </div>
-        </div>
-    </div>
-</div>
+         </div>
+      </div>
+   </div>
+</section>
 @endsection

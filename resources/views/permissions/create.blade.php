@@ -1,33 +1,37 @@
+@section('title','Tạo permission')
 @extends('layouts.template')
+
+@section('breadcrumb')
+
+   <h1>TẠO ROLE</h1>
+
+   {{ Breadcrumbs::render('permission.create') }}
+   
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="justify-content-center">
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Opps!</strong> Something went wrong, please check below errors.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        <div class="card">
-            <div class="card-header">Create permission
-                <span class="float-right">
-                    <a class="btn btn-primary" href="{{ route('permissions.index') }}">Permissions</a>
-                </span>
-            </div>
-            <div class="card-body">
-                {!! Form::open(array('route' => 'permissions.store','method'=>'POST')) !!}
-                    <div class="form-group">
-                        <strong>Name:</strong>
-                        {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-                    </div>
+
+<section class="section">
+   <div class="row">
+    <div class="col-lg-6">
+        <div class="card pt-3">
+        <div class="card-body">
+            <!-- Vertical Form -->
+            <form class="row g-3" method="POST">
+            @csrf
+                <div class="col-12">
+                    <label for="inputNanme4" class="form-label">Tên Permission:</label>
+                    <input type="text" name="name" value="{{old('name')}}" class="form-control" id="inputNanme4">
+                    @include('_partials.alert', ['field' => 'name'])
+                </div>
+              
+                <div class="text-left mt-1">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                {!! Form::close() !!}
-            </div>
+                </div>
+            </form><!-- Vertical Form -->
+        </div>
         </div>
     </div>
-</div>
+   </div>
+</section>
 @endsection

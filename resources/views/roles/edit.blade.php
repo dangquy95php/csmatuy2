@@ -1,86 +1,62 @@
-@section('title','Chỉnh sửa người dùng')
+@section('title','Cập nhật role')
 @extends('layouts.template')
 
 @section('breadcrumb')
 
-   <h1>CHỈNH SỬA NGƯỜI DÙNG</h1>
+   <h1>CẬP NHẬT ROLE</h1>
 
-   {{ Breadcrumbs::render('user.edit', $user) }}
-
+   {{ Breadcrumbs::render('roles.edit', $role) }}
+   
 @endsection
 
 @section('content')
 
-<div class="col-lg-6">
-    <div class="card">
+<section class="section">
+   <div class="row">
+    <div class="col-lg-6">
+        <div class="card pt-3">
         <div class="card-body">
-            <h5 class="card-title">Thông tin nhân viên</h5>
-
             <!-- Vertical Form -->
             <form class="row g-3" method="POST">
             @csrf
                 <div class="col-12">
-                    <label for="inputNanme4" class="form-label">Họ tên:</label>
-                    <input type="text" name="name" placeholder="Nhập họ tên" value="{{ $user->name }}" class="form-control" id="inputNanme4">
+                    <label for="inputNanme4" class="form-label">Tên Role:</label>
+                    <input type="text" name="name" value="{{old('name', $role->name)}}" class="form-control" id="inputNanme4">
                     @include('_partials.alert', ['field' => 'name'])
                 </div>
+                
                 <div class="col-12">
-                    <label for="inputEmail4" class="form-label">Email:</label>
-                    <input type="email" name="email" placeholder="Nhập email" value="{{ $user->email }}" class="form-control" id="inputEmail4">
-                    @include('_partials.alert', ['field' => 'email'])
+                    <label for="inputNanme4" class="form-label">Template:  {!! @$role->html !!}</label>
+                    <input type="text" name="html" value="{{old('html', $role->html)}}" class="form-control" id="inputNanme4">
                 </div>
                 <div class="col-12">
-                    <label for="inputEmail1" class="form-label">Username:</label>
-                    <input type="text" name="username" readonly value="{{ $user->username }}" placeholder="Nhập username" class="form-control" id="inputEmail1">
-                    @include('_partials.alert', ['field' => 'username'])
+                    <div class="card mb-0">
+                        <div class="card-body p-0">
+                            <!-- List group with Links and buttons -->
+                            <div class="list-group">
+                                <div class="list-group-item list-group-item-action active" aria-current="true">Danh sách Permission:</div>
+                                @foreach($permission as $value)
+                                <div class="list-group-item list-group-item-action">
+                                    <div class="form-check">
+                                        <input {{ in_array($value->id, old('permission', $rolePermissions)) ? 'checked' : ''  }} class="form-check-input" name="permission[]" value="{{ $value->id }}" type="checkbox" id="gridCheck{{ $value->id }}">
+                                        <label class="form-check-label" for="gridCheck{{ $value->id }}">
+                                            {{ $value->name }}
+                                        </label>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div><!-- End List group with Links and buttons -->
+                            @include('_partials.alert', ['field' => 'permission'])
+                        </div>
+                    </div>
                 </div>
-                <div class="col-12">
-                    <label for="inputPassword4" class="form-label">Mật khẩu:</label>
-                    <input type="password" placeholder="Nhập mật khẩu" name="password" class="form-control" id="inputPassword4">
-                    @include('_partials.alert', ['field' => 'password'])
-                </div>
-                <div class="col-12">
-                    <label for="inputPassword10" class="form-label">Nhập lại mật khẩu:</label>
-                    <input type="password" placeholder="Nhập lại mật khẩu" name="password_confirmation" class="form-control" id="inputPassword10">
-                    @include('_partials.alert', ['field' => 'password_confirmation'])
-                </div>
-                <div class="col-12">
-                    <label for="inputPassword5" class="form-label">Trạng thái:</label>
-                    <select id="inputState" name="status" class="form-select" name="status">
-                        @foreach(\App\Models\User::INFOR_STATUS as $key => $value)
-                            <option {{ $key == $user->status ? 'selected' : '' }}  value="{{$key}}">{{$value}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-12">
-                    <label class="form-label">Role:</label>
-                    <select class="form-select" name="roles[]" multiple="" aria-label="multiple select example">
-                        @foreach($roles as $key => $value)
-                            @php
-                                $flag = false;
-                            @endphp
-                            @foreach ($userRole as $roleUser)
-                                @if($value == $roleUser)
-                                    <option selected value="{{$key}}">{{$value}}</option>
-                                    @php
-                                        $flag = true;
-                                    @endphp
-                                @endif
-                            @endforeach
-
-                            @if(!$flag)
-                                <option value="{{$key}}">{{$value}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div>
-              
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Cập nhật</button>
-                    <!-- <button type="reset" class="btn btn-secondary">Reset</button> -->
+                    <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
                 </div>
             </form><!-- Vertical Form -->
         </div>
+        </div>
     </div>
-</div>
+   </div>
+</section>
 @endsection
