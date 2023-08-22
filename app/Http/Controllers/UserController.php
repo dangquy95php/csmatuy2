@@ -154,9 +154,10 @@ class UserController extends Controller
 
         if (count($user->getChanges()) > 0 || count($result) > 0 || count($result1) > 0) {
             $user->update(['is_account_enabled' => false]);
+            Toastr::success('Cập nhật người dùng thành công!');
+        } else {
+            Toastr::warning('Dữ liệu không có thay đổi');
         }
-
-        Toastr::success('Cập nhật người dùng thành công!');
 
         return redirect()->route('user.list');
     }

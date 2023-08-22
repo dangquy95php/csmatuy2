@@ -75,8 +75,8 @@
                     </select>
                 </div>
               
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
                     <!-- <button type="reset" class="btn btn-secondary">Reset</button> -->
                 </div>
             </form><!-- Vertical Form -->
