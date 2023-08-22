@@ -26,7 +26,7 @@ class AdminSeeder extends Seeder
             'password' => 'username1',
         ]);
 
-        $role = Role::create(['name' => 'writer']);
+        $role = Role::create(['name' => 'user']);
      
         $permissions = Permission::pluck('id','id')->all();
    
@@ -48,5 +48,21 @@ class AdminSeeder extends Seeder
    
         $role1->syncPermissions($permissions1);
         $user1->assignRole([$role1->id]);
+
+        $user2 = User::create([
+            'name' => 'writer',
+            'username' => 'writer',
+            'email' => 'writer@gmail.com',
+            'status' => '1',
+            'email_verified_at' => now(),
+            'password' => 'writer',
+        ]);
+
+        $role2 = Role::create(['name' => 'writer']);
+     
+        $permissions2 = Permission::pluck('id','id')->all();
+   
+        $role2->syncPermissions($permissions2);
+        $user2->assignRole([$role2->id]);
     }
 }

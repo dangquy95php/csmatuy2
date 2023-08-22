@@ -67,18 +67,21 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed',
+            'password' => 'required_with:password_confirmation|same:password_confirmation',
             'roles' => 'required'
         ]);
     
         $input = $request->all();
-        $input['password'] = $input['password'];
-    
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
-    
-        return redirect()->route('users.list')
-            ->with('success', 'User created successfully.');
+        $input['password'] = trim($input['password']);
+        try {
+            $user = User::create($input);
+            $user->assignRole($request->input('roles'));
+            Toastr::success('Tạo người dùng thành công!');
+        } catch (\Exception $ex) {
+            Toastr::error('Tạo người dùng thất bại '. $ex->getMessage());
+        }
+        
+        return redirect()->route('user.list');
     }
 
     /**

@@ -27,7 +27,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     
     Route::get('/list', 'UserController@list')->name('user.list')->middleware('permission:user-list');
     Route::get('/show', 'UserController@show')->name('user.show')->middleware('permission:user-list');
-
+    Route::get('/create', 'UserController@create')->name('user.create');
+    Route::post('/create', 'UserController@store')->name('user.store');
     Route::get('/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::post('/{id}/edit', 'UserController@update')->name('user.update');
 

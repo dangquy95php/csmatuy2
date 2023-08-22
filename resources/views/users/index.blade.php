@@ -28,7 +28,7 @@
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
-                        <button type="button" class="btn btn-primary btn-sm">Thêm</button>
+                        <a class="btn btn-primary btn-sm" href="{{route('user.create')}}">Thêm</a>
                     </th>
                   </tr>
                 </thead>
@@ -47,8 +47,10 @@
                         <td>
                         @if( $user->status == \App\Models\User::ENABLE)
                             <span class="badge rounded-pill bg-success">Đang hoạt động</span>
-                        @else
+                        @elseif( $user->status == \App\Models\User::DISABLE)
                             <span class="badge rounded-pill bg-danger">Không hoạt động</span>
+                        @else
+                            <span class="badge rounded-pill bg-warning">Chưa kích hoạt động</span>
                         @endif
                         </td>
                         <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>

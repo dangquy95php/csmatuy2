@@ -18,6 +18,11 @@ Breadcrumbs::for('user.list', function ($trail) {
     $trail->push('Danh sách nhân viên', route('user.list'));
 });
 
+Breadcrumbs::for('user.create', function ($trail) {
+    $trail->parent('user.list');
+    $trail->push('Thêm người dùng', route('user.create'));
+});
+
 Breadcrumbs::for('user.edit', function ($trail, $user) {
     $trail->parent('user.list');
     $trail->push('Chỉnh sửa nhân viên '. $user->username, route('user.edit', $user->id));

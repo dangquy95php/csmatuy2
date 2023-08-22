@@ -17,5 +17,6 @@ class PermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'user-list']);
         Permission::create(['name' => 'role-list']);
+        Permission::create(['name' => 'user-chat']);
     }
 }
