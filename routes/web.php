@@ -18,15 +18,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest'], function () {
     Route::post('/login', 'LoginController@postLogin')->name('login.post');
 });
 
-// , , 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled']], function () {
     
     Route::get('/logout', 'DashboardController@logout')->name('logout');
-    Route::get('/', 'DashboardController@index')->name('dashboard')->middleware('permission:user-list');
-    // Route::resource('users', UserController::class);
-    
-    Route::get('/list', 'UserController@list')->name('user.list')->middleware('permission:user-list');
-    Route::get('/show', 'UserController@show')->name('user.show')->middleware('permission:user-list');
+    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::get('/list', 'UserController@list')->name('user.list');
+    Route::get('/show', 'UserController@show')->name('user.show');
     Route::get('/create', 'UserController@create')->name('user.create');
     Route::post('/create', 'UserController@store')->name('user.store');
     Route::get('/{id}/edit', 'UserController@edit')->name('user.edit');

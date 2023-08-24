@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     function __construct()
     {
-        
+        $this->middleware('permission:user-list', ['only' => ['index']]);
     }
 
     public function index(Request $request)

@@ -26,7 +26,7 @@
                 </div>
               
                 <div class="text-left mt-1">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                 </div>
             </form><!-- Vertical Form -->
         </div>

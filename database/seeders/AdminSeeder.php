@@ -17,6 +17,7 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        $role = Role::create(['name' => 'user']);
         $user = User::create([
             'name' => 'username1',
             'username' => 'username1',
@@ -25,9 +26,7 @@ class AdminSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => 'username1',
         ]);
-
-        $role = Role::create(['name' => 'user']);
-     
+        
         $permissions = Permission::pluck('id','id')->all();
    
         $role->syncPermissions($permissions);
