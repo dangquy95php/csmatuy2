@@ -17,7 +17,7 @@ class RoleController extends Controller
      */
     function __construct()
     {
-        //  $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['list','store']]);
         //  $this->middleware('permission:role-create', ['only' => ['create','store']]);
         //  $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
         //  $this->middleware('permission:role-delete', ['only' => ['destroy']]);
@@ -62,7 +62,6 @@ class RoleController extends Controller
     
         $role = Role::create([
             'name' => trim($request->input('name')),
-            'html' => trim($request->input('html'))
         ]);
         $role->syncPermissions($request->input('permission'));
         Toastr::success('Tạo Role thành công!');
@@ -128,7 +127,6 @@ class RoleController extends Controller
 
         $role = Role::find($id);
         $role->name = trim($request->input('name'));
-        $role->html = trim($request->input('html'));
         $role->save();
     
         $role->syncPermissions($request->input('permission'));
@@ -138,7 +136,8 @@ class RoleController extends Controller
         } else {
             Toastr::warning('Dữ liệu không có thay đổi');
         }
-        return redirect()->route('roles.list');
+
+        return redirect()->back();
     }
 
     /**

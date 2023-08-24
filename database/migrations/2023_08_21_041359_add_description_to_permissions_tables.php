@@ -17,9 +17,9 @@ class AddDescriptionToPermissionsTables extends Migration
             //
         });
 
-        Schema::table('roles', function (Blueprint $table) {
-            $table->string('html')->nullable();
-        });
+        // Schema::table('roles', function (Blueprint $table) {
+        //     $table->string('html')->nullable();
+        // });
     }
 
     /**
