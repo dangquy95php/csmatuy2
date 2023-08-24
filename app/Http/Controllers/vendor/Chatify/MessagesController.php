@@ -18,6 +18,12 @@ class MessagesController extends Controller
 {
     protected $perPage = 30;
 
+
+    function __construct()
+    {
+         $this->middleware('permission:user-chat', ['only' => ['index']]);
+    }
+
     /**
      * Authenticate the connection for pusher
      *
