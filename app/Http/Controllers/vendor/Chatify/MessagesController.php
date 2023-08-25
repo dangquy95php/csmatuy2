@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 class MessagesController extends Controller
 {
     protected $perPage = 30;
@@ -157,7 +159,6 @@ class MessagesController extends Controller
                 ]);
             }
         }
-
         // send the response
         return Response::json([
             'status' => '200',
@@ -175,6 +176,7 @@ class MessagesController extends Controller
      */
     public function fetch(Request $request)
     {
+        $countMessage = Message::whereDate('created_at', Carbon::today())->where('from_id', Auth::user()->id)->count();
         $query = Chatify::fetchMessagesQuery($request['id'])->latest();
         $messages = $query->paginate($request->per_page ?? $this->perPage);
         $totalMessages = $messages->total();
@@ -184,6 +186,7 @@ class MessagesController extends Controller
             'last_page' => $lastPage,
             'last_message_id' => collect($messages->items())->last()->id ?? null,
             'messages' => '',
+            'type_search' => $countMessage < env('APP_COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
         ];
 
         // if there is no messages yet.
@@ -229,6 +232,7 @@ class MessagesController extends Controller
      */
     public function getContacts(Request $request)
     {
+        $countMessage = Message::whereDate('created_at', Carbon::today())->where('from_id', Auth::user()->id)->count();
         // get all users that received/sent message from/to [Auth user]
         $users = Message::join('users',  function ($join) {
             $join->on('ch_messages.from_id', '=', 'users.id')
@@ -259,6 +263,7 @@ class MessagesController extends Controller
             'contacts' => $contacts,
             'total' => $users->total() ?? 0,
             'last_page' => $users->lastPage() ?? 1,
+            'type_search' => $countMessage < env('APP_COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
         ], 200);
     }
 
@@ -279,9 +284,11 @@ class MessagesController extends Controller
         }
         $contactItem = Chatify::getContactItem($user);
 
+        $countMessage = Message::whereDate('created_at', Carbon::today())->where('from_id', Auth::user()->id)->count();
         // send the response
         return Response::json([
             'contactItem' => $contactItem,
+            'type_search' => $countMessage < env('APP_COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
         ], 200);
     }
 

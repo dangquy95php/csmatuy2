@@ -571,6 +571,11 @@ function fetchMessages(id, newFetch = false) {
           messagesElement.prepend(data.messages);
           messagesContainer.scrollTop(lastMsg.offset().top - curOffset);
         }
+        
+        $("#message-form").css('display', data.type_search);
+        if (data.type_search == 'none') {
+          $("#show-message").text( "Bạn nhắn tin quá nhiều. Đã hết hạn! Mai rồi hãy tiếp tục" );
+        }
         // trigger seen event
         makeSeen(true);
         // Pagination lock & messages page
@@ -921,6 +926,11 @@ function updateContactItem(user_id) {
           $(".listOfContacts").find(".message-hint").hide();
         } else {
           $(".listOfContacts").find(".message-hint").show();
+        }
+         
+        $("#message-form").css('display', data.type_search);
+        if (data.type_search == 'none') {
+          $("#show-message").text( "Bạn nhắn tin quá nhiều. Đã hết hạn! Mai rồi hãy tiếp tục" );
         }
         // update data-action required with [responsive design]
         cssMediaQueries();

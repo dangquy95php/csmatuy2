@@ -7,3 +7,4 @@
         <button disabled='disabled' class="send-button"><span class="fas fa-paper-plane"></span></button>
     </form>
 </div>
+<p id="show-message"></p>
