@@ -120,7 +120,7 @@ body {
   overflow: auto;
 }
 .messenger-listView .m-header {
-  height: var(--listView-header-height);
+  /* height: var(--listView-header-height); */
 }
 .messenger-listView .m-header > nav {
   padding: var(--headers-padding);
