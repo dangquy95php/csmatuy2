@@ -105,7 +105,9 @@
           @role('chat')
           <a class="nav-link nav-icon" href="/admin/chatify">
             <i class="bi bi-chat-left-text"></i>
-            <!-- <span class="badge bg-success badge-number">3</span> -->
+            @if(check_unread_messages(Auth::user()->id) > 0)
+              <span class="badge bg-success badge-number">{{ check_unread_messages(Auth::user()->id) }}</span>
+            @endif
           </a><!-- End Messages Icon -->
           @endrole
 
