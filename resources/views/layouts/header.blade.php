@@ -102,12 +102,12 @@
         </li><!-- End Notification Nav -->
 
         <li class="nav-item dropdown">
-          @can('user-chat')
+          @role('chat')
           <a class="nav-link nav-icon" href="/admin/chatify">
             <i class="bi bi-chat-left-text"></i>
             <!-- <span class="badge bg-success badge-number">3</span> -->
           </a><!-- End Messages Icon -->
-          @endcan
+          @endrole
 
         </li><!-- End Messages Nav -->
 

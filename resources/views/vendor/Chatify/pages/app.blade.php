@@ -105,6 +105,22 @@
             <a href="#"><i class="fas fa-times"></i></a>
         </nav>
         {!! view('Chatify::layouts.info')->render() !!}
+
+        <div class="messenger-user">
+            <p class="messenger-title"><span>Danh sách người dùng</span></p>
+            <div class="user-message-list">
+                @foreach($userData as $user)
+                <table class="messenger-list-item" data-contact="{{ @$user->id }}">
+                    <tr data-action="0">
+                        <td style="position: relative">
+                            <div class="avatar av-m" style="background-image: url('https://www.gravatar.com/avatar/75d23af433e0cea4c0e45a56dba18b30?s=200&d=identicon');"></div>
+                        </td>{{-- center side --}}<td>
+                        <p data-id="{{ @$user->id }}">{{ @$user->name }}</p>
+                    </tr>
+                </table>
+                @endforeach
+            </div>
+        </div>
     </div>
 </div>
 

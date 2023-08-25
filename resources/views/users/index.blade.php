@@ -27,9 +27,11 @@
                     <th scope="col">Roles</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
+                    @canany(['user-edit', 'user-delete', 'user-create'])
                     <th scope="col">
                         <a class="btn btn-primary btn-sm" href="{{route('user.create')}}">Thêm</a>
                     </th>
+                    @endcanany
                   </tr>
                 </thead>
                 <tbody>
@@ -55,8 +57,12 @@
                         </td>
                         <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
                         <td>
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success  btn-sm">Sửa</a>
-                            <a href="" class="btn btn-danger btn-sm">Xóa</a>
+                            @can('user-edit')
+                                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success  btn-sm">Sửa</a>
+                            @endcan
+                            @can('user-delete')
+                                <a href="" class="btn btn-danger btn-sm">Xóa</a>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach
