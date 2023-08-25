@@ -50,7 +50,7 @@ class MessagesController extends Controller
      */
     public function index( $id = null)
     {
-        $data = User::select('name', 'id', 'avatar')->role('chat')->get();
+        $data = User::select('name', 'id', 'avatar')->where('users.id', '!=', Auth::user()->id)->role('chat')->get();
         
         $messenger_color = Auth::user()->messenger_color;
         return view('Chatify::pages.app', [
