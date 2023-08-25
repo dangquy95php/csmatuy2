@@ -186,7 +186,7 @@ class MessagesController extends Controller
             'last_page' => $lastPage,
             'last_message_id' => collect($messages->items())->last()->id ?? null,
             'messages' => '',
-            'type_search' => $countMessage < env('APP_COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
+            'type_search' => $countMessage < env('COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
         ];
 
         // if there is no messages yet.
@@ -263,7 +263,7 @@ class MessagesController extends Controller
             'contacts' => $contacts,
             'total' => $users->total() ?? 0,
             'last_page' => $users->lastPage() ?? 1,
-            'type_search' => $countMessage < env('APP_COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
+            'type_search' => $countMessage < env('COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
         ], 200);
     }
 
@@ -288,7 +288,7 @@ class MessagesController extends Controller
         // send the response
         return Response::json([
             'contactItem' => $contactItem,
-            'type_search' => $countMessage < env('APP_COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
+            'type_search' => $countMessage < env('COUNT_MESSAGE', 1000) ? 'inline-flex' : 'none',
         ], 200);
     }
 
