@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Gate;
+use App\Models\Team;
 use App\Models\GateNote;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -44,7 +45,10 @@ class GateController extends Controller
      */
     public function create()
     {
-        return view('gate.create');
+        $gateNote = GateNote::all();
+        $teams    = Team::all();
+
+        return view('gate.create', compact('gateNote', 'teams'));
     }
 
     /**

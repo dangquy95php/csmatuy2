@@ -71,15 +71,32 @@
                                           </div>
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                      <label for="inputPassword3" class="col-sm-3 col-form-label">Đơn vị:</label>
+                                      <div class="col-sm-9 h-100">
+                                        <select class="form-select" aria-label="Default select example">
+                                          <option selected="">Vui lòng chọn đơn vị</option>
+                                          @foreach ($teams as $key => $data)
+                                            <option value="1">{{ $data->name }}</option>
+                                          @endforeach
+                                        </select>
+                                      </div>
+                                    </div>
 
                                     <div class="row mb-3">
-                                      <label for="inputPassword3" class="col-sm-3 col-form-label">Ghi chú:</label>
+                                      <label for="inputPassword3" class="col-sm-3 col-form-label">Ghi chú:
+                                        @foreach ($gateNote as $key => $data)
+                                          <span role="button" class="badge bg-secondary btn-note">
+                                              {{ $data->name }} <i class="ri-check-line"></i>
+                                          </span>
+                                        @endforeach
+                                      </label>
                                       <div class="col-sm-9 h-100">
+                                      <textarea class="form-control area-note" placeholder="Vui lòng nhập ghi chú" id="floatingTextarea" style="height: 200px;"></textarea>
                                           <!-- <div class="form-floating">
                                               <textarea class="form-control" placeholder="Address" id="floatingTextarea" style="height: 200px;"></textarea>
                                               <label for="floatingTextarea">Mô tả hoạt động ra vào cổng</label>
                                           </div> -->
-                                          <div class="quill-editor-default" style="height:200px;"></div>
                                       </div>
                                     </div>
                                     <fieldset class="row mb-3">
@@ -120,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                   <div class="col-lg-6">
                         <div class="card customer-note border border-success border-3">
                             <div class="card-body pt-3">
@@ -142,22 +159,28 @@
                                         </div>
                                     </div>
                                     <fieldset class="row mb-3">
-                                        <legend class="col-form-label col-sm-3 pt-0">Loại hình:</legend>
-                                        <div class="col-sm-9 customer_in_and_out">
+                                      <legend class="col-form-label col-sm-3 pt-0">Loại hình:</legend>
+                                      <div class="col-sm-2 customer_in_and_out">
                                         <div class="form-check was-validated">
-                                              <input class="form-check-input" type="radio" name="gate_customer_in_out" id="gridRadios21" value="in" checked="">
-                                              <label class="form-check-label text-dark" for="gridRadios21">
-                                              Vào cổng
-                                              </label>
-                                          </div>
-                                          <div class="form-check">
-                                              <input class="form-check-input form-check-input_out"  type="radio" name="gate_customer_in_out" id="gridRadios11" value="out">
-                                              <label class="form-check-label" for="gridRadios11">
-                                              Ra cổng
-                                              </label>
-                                          </div>
-                                          
+                                            <input class="form-check-input" type="radio" name="gate_customer_in_out" id="gridRadios21" value="in" checked="">
+                                            <label class="form-check-label text-dark" for="gridRadios21">Vào cổng</label>
                                         </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input form-check-input_out"  type="radio" name="gate_customer_in_out" id="gridRadios11" value="out">
+                                            <label class="form-check-label" for="gridRadios11">Ra cổng</label>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-7">
+                                        <!-- <button type="button" class="btn btn-info text-white btn-time"></button>
+                                        <span class="time-now"></span> -->
+                                        <div class="form-check form-switch time-switch">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11">
+                                          <label class="form-check-label" for="flexSwitchCheckDefault11">Thời gian hiện tại:</label>
+                                          <strong>
+                                            <span class="time-now1 text-danger"></span>
+                                          </strong>
+                                        </div>
+                                      </div>
                                     </fieldset>
                                     <div class="row mb-3">
                                         <label for="inputEmail3" class="col-sm-3 col-form-label">Tên người cai nghiện: <span class="badge text-bg-primary add-employer" role="button"><i class="bi bi-plus-circle"></i></span></label>
@@ -289,6 +312,11 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   
   <script>
+    $('.btn-note').click(function() {
+      let tag = $(this).text().trim();
+      $(".area-note").append(tag + ', ');
+    });
+
     $(".add-employer").click(function() {
       $(this).parent().next().append(`<div class="add-employer-tab" role="button">
         <input type="text" class="form-control mt-1">
@@ -300,9 +328,22 @@
       $(data).parent().remove();
     }
     
-    $(".time-switch input:checkbox").change(function() {
-      let time = moment().format('YYYY-MM-DD hh:mm:ss');
-      $(".time-now").text(time);
+    $("#home .time-switch input:checkbox").change(function() {
+      if(this.checked) {
+        let time = moment().format('YYYY-MM-DD hh:mm:ss');
+        $(".time-now").text(time);
+      } else {
+        $(".time-now").text('');
+      }
+    });
+
+    $("#profile .time-switch input:checkbox").change(function() {
+      if(this.checked) {
+        let time = moment().format('YYYY-MM-DD hh:mm:ss');
+        $(".time-now1").text(time);
+      } else {
+        $(".time-now1").text('');
+      }
     });
 
     $(".check_drug_addict input:checkbox").change(function() {
