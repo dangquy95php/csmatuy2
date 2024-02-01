@@ -1,5 +1,6 @@
 
   <!-- ======= Sidebar ======= -->
+  @role('admin')
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -27,6 +28,29 @@
           </li>
         </ul>
       </li><!-- End Forms Nav -->
+      
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/team/*') || request()->is('admin/team/*') ? '' : 'collapsed' }}" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="ri-account-circle-line"></i><span>Quản lý khu</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse {{ request()->is('admin/team/*') || request()->is('admin/team/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('team.index') }}" class="{{ request()->is('admin/team/index') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách khu</span>
+            </a>
+          </li>
+          <!-- <li>
+            <a href="charts-apexcharts.html">
+              <i class="bi bi-circle"></i><span>ApexCharts</span>
+            </a>
+          </li>
+          <li>
+            <a href="charts-echarts.html">
+              <i class="bi bi-circle"></i><span>ECharts</span>
+            </a>
+          </li> -->
+        </ul>
+      </li><!-- End Charts Nav -->
 
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/list') ? '' : 'collapsed' }} " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -38,54 +62,31 @@
               <i class="bi bi-circle"></i><span>Danh sách</span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="components-accordion.html">
               <i class="bi bi-circle"></i><span>Accordion</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link {{ request()->is('admin/gate/*') || request()->is('admin/gate/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="ri-ancient-gate-line"></i><span>Quản lý ra vào cổng</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="tables-nav" class="nav-content collapse {{ request()->is('admin/gate/*') || request()->is('admin/gate/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
+            <a href="{{ route('gate.create') }}" class="{{ request()->is('admin/gate/create') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Tạo phiếu</span>
             </a>
           </li>
           <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
+            <a href="{{ route('gate.index') }}" class="{{ request()->is('admin/gate/index') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách</span>
             </a>
           </li>
         </ul>
       </li><!-- End Tables Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -164,3 +165,4 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+  @endrole

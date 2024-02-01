@@ -11,7 +11,7 @@
             <div class="card-header">User
                 @can('role-create')
                     <span class="float-right">
-                        <a class="btn btn-primary" href="{{ route('users.index') }}">Back</a>
+                        <a class="btn btn-primary" href="{{ route('team.index') }}">Back</a>
                     </span>
                 @endcan
             </div>

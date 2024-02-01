@@ -28,7 +28,7 @@
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
-                        <button type="button" class="btn btn-primary btn-sm">Thêm</button>
+                        <a href="/" type="button" class="btn btn-primary btn-sm">Thêm</a>
                     </th>
                   </tr>
                 </thead>

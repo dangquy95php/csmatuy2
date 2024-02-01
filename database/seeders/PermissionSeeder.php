@@ -17,5 +17,23 @@ class PermissionSeeder extends Seeder
     {
         Permission::create(['name' => 'user-list']);
         Permission::create(['name' => 'role-list']);
+        Permission::create(['name' => 'role-create']);
+        Permission::create(['name' => 'role-edit']);
+        Permission::create(['name' => 'role-delete']);
+
+        Permission::create(['name' => 'permission-list']);
+        Permission::create(['name' => 'permission-create']);
+        Permission::create(['name' => 'permission-edit']);
+        Permission::create(['name' => 'permission-delete']);
+
+        Permission::create(['name' => 'gate-create']);
+        Permission::create(['name' => 'gate-list']);
+        Permission::create(['name' => 'gate-edit']);
+        Permission::create(['name' => 'gate-delete']);
+
+        Permission::create(['name' => 'team-index']);
+        Permission::create(['name' => 'team-create']);
+        Permission::create(['name' => 'team-edit']);
+        Permission::create(['name' => 'team-delete']);
     }
 }

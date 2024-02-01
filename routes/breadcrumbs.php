@@ -53,6 +53,29 @@ Breadcrumbs::for('permission.edit', function ($trail, $permission) {
     $trail->push('Thêm role '. $permission->name, route('permission.edit', $permission->id));
 });
 
+Breadcrumbs::for('gate.create', function ($trail) {
+    $trail->push('Tạo phiếu ra vào cổng',  route('gate.create'));
+});
+
+Breadcrumbs::for('gate.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách ra vào cổng', route('gate.index'));
+});
+
+Breadcrumbs::for('team.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách các phòng/khu', route('team.index'));
+});
+
+Breadcrumbs::for('team.create', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tạo khu', route('team.create'));
+});
+
+Breadcrumbs::for('team.edit', function ($trail, $teams) {
+    $trail->parent('team.index');
+    $trail->push('Chỉnh sửa Phòng/Khu '. $teams->name, route('team.edit', $teams->id));
+});
 
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');

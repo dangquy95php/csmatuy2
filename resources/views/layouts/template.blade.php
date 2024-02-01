@@ -25,7 +25,9 @@
     <link href="{{ asset('admin_library/assets/css/toastr.min.css') }}" rel="stylesheet" type="text/css" >
 
     <!-- Template Main CSS File -->
-<link href="{{ asset('admin_library/assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin_library/assets/css/style.css')}}" rel="stylesheet">
+
+    @stack('styles')
 </head>
 
 <body>
@@ -34,7 +36,7 @@
 
     @include('layouts.sidebar')
 
-    <main id="main" class="main">
+    <main id="{{ (Auth::user()->hasRole('admin')) ? 'main' : '' }}" class="main">
 
         <div class="pagetitle">
 

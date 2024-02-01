@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     Route::post('/{id}/edit', 'UserController@update')->name('user.update');
 
     Route::group(['prefix' => 'roles'], function () {
-        Route::get('/list', 'RoleController@list')->name('roles.list');
+        Route::get('/list', 'RoleController@index')->name('roles.list');
         Route::get('/create', 'RoleController@create')->name('roles.create');
         Route::post('/create', 'RoleController@store')->name('roles.store');
         Route::get('/{id}/edit', 'RoleController@edit')->name('roles.edit');
@@ -46,6 +46,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::get('/{id}/edit', 'PermissionController@edit')->name('permission.edit');
         Route::post('/{id}/edit', 'PermissionController@update')->name('permission.update');
         Route::get('/{id}/destroy', 'PermissionController@destroy')->name('permission.destroy');
+    });
+
+    Route::group(['prefix' => 'team'], function () {
+        Route::get('/index', 'TeamController@index')->name('team.index');
+        Route::get('/create', 'TeamController@create')->name('team.create');
+        Route::post('/create', 'TeamController@store')->name('team.store');
+        Route::get('/{id}/edit', 'TeamController@edit')->name('team.edit');
+        Route::post('/{id}/edit', 'TeamController@update')->name('team.update');
+        Route::get('/{id}/destroy', 'TeamController@destroy')->name('team.destroy');
+    });
+
+    Route::group(['prefix' => 'gate'], function () {
+        Route::get('/create', 'GateController@create')->name('gate.create');
+        Route::get('/index', 'GateController@index')->name('gate.index');
     });
 });
 

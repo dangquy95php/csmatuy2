@@ -6,9 +6,10 @@ use DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\Gate;
 use Brian2694\Toastr\Facades\Toastr;
 
-class RoleController extends Controller
+class GateController extends Controller
 {
     /**
      * create a new instance of the class
@@ -17,10 +18,10 @@ class RoleController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:role-create', ['only' => ['create','store']]);
-        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:gate-list|gate-create|gate-edit|gate-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:gate-create', ['only' => ['create','store']]);
+        $this->middleware('permission:gate-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:gate-delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -30,9 +31,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Role::orderBy('name','ASC')->paginate(20);
+        $data = Gate::orderBy('id', 'DESC')->paginate(20);
 
-        return view('roles.index', compact('data'));
+        return view('gate.index', compact('data'));
     }
 
     /**
@@ -42,9 +43,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
-
-        return view('roles.create', compact('permission'));
+        return view('gate.create');
     }
 
     /**
