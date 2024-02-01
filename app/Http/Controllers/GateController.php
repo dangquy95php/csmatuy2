@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Gate;
+use App\Models\GateNote;
 use Brian2694\Toastr\Facades\Toastr;
 
 class GateController extends Controller
@@ -152,5 +153,46 @@ class GateController extends Controller
         Toastr::success('Xóa Role thành công!');
 
         return redirect()->route('roles.list');
+    }
+
+    public function note()
+    {
+        $data = GateNote::orderBy('id', 'DESC')->paginate(20);
+
+        return view('gate.note', compact('data'));
+    }
+
+    public function noteEdit($id)
+    {
+        $note = GateNote::find($id);
+
+        return view('gate.note-edit', compact('note'));
+    }
+
+    public function noteUpdate(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+    
+        $note = GateNote::find($id);
+        $note->name = trim($request->input('name'));
+        $note->save();
+
+        if ($note->wasChanged()) {
+            Toastr::success('Cập nhật ghi chú thành công!');
+        } else {
+            Toastr::warning('Dữ liệu không có thay đổi');
+        }
+
+        return redirect()->route('gate.note');
+    }
+
+    public function noteDestroy($id)
+    {
+        GateNote::find($id)->delete();
+        Toastr::success('Xóa ghi chú thành công!');
+
+        return redirect()->route('gate.note');
     }
 }

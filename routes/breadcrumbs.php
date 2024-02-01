@@ -62,6 +62,16 @@ Breadcrumbs::for('gate.index', function ($trail) {
     $trail->push('Danh sách ra vào cổng', route('gate.index'));
 });
 
+Breadcrumbs::for('gate.note', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách thẻ ghi chú', route('gate.note'));
+});
+
+Breadcrumbs::for('gate.note_edit', function ($trail, $note) {
+    $trail->parent('dashboard');
+    $trail->push('Chỉnh sửa thẻ ghi chú '. $note->name, route('gate.note-edit', $note->id));
+});
+
 Breadcrumbs::for('team.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Danh sách các phòng/khu', route('team.index'));

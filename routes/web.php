@@ -60,6 +60,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     Route::group(['prefix' => 'gate'], function () {
         Route::get('/create', 'GateController@create')->name('gate.create');
         Route::get('/index', 'GateController@index')->name('gate.index');
+        Route::get('/note', 'GateController@note')->name('gate.note');
+        Route::get('/note/{id}/edit', 'GateController@noteEdit')->name('gate.note-edit');
+        Route::post('/note/{id}/edit', 'GateController@noteUpdate')->name('gate.note-update');
+        Route::get('/note/{id}/destroy', 'GateController@noteDestroy')->name('gate.note-destroy');
     });
 });
 

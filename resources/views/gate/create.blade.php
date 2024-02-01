@@ -22,17 +22,17 @@
               <!-- Default Tabs -->
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Cán bộ</button>
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Cán bộ</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Người thân của người cai nghiện đưa lên</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Khách đưa quân lên</button>
+                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Khách đưa quân lên</button>
                 </li>
               </ul>
               <div class="tab-content pt-2" id="myTabContent">
-                <div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="col-lg-6">
                         <div class="card create-note border border-danger border-3">
                             <div class="card-body pt-3">
@@ -73,18 +73,18 @@
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="inputPassword3" class="col-sm-3 col-form-label">Ghi chú:</label>
-                                        <div class="col-sm-9 h-100">
-                                            <!-- <div class="form-floating">
-                                                <textarea class="form-control" placeholder="Address" id="floatingTextarea" style="height: 200px;"></textarea>
-                                                <label for="floatingTextarea">Mô tả hoạt động ra vào cổng</label>
-                                            </div> -->
-                                            <div class="quill-editor-default" style="height:200px;"></div>
-                                        </div>
+                                      <label for="inputPassword3" class="col-sm-3 col-form-label">Ghi chú:</label>
+                                      <div class="col-sm-9 h-100">
+                                          <!-- <div class="form-floating">
+                                              <textarea class="form-control" placeholder="Address" id="floatingTextarea" style="height: 200px;"></textarea>
+                                              <label for="floatingTextarea">Mô tả hoạt động ra vào cổng</label>
+                                          </div> -->
+                                          <div class="quill-editor-default" style="height:200px;"></div>
+                                      </div>
                                     </div>
                                     <fieldset class="row mb-3">
                                         <legend class="col-form-label col-sm-3 pt-0 type-gate">Loại hình:</legend>
-                                        <div class="col-sm-9 in_and_out">
+                                        <div class="col-sm-2 in_and_out">
                                           <div class="form-check">
                                               <input class="form-check-input form-check-input_out"  type="radio" name="gate_in_out" id="gridRadios1" value="out" checked="">
                                               <label class="form-check-label" for="gridRadios1">
@@ -92,10 +92,21 @@
                                               </label>
                                           </div>
                                           <div class="form-check was-validated">
-                                              <input class="form-check-input" type="radio" name="gate_in_out" id="gridRadios2" value="in">
-                                              <label class="form-check-label text-dark" for="gridRadios2">
-                                              Vào cổng
-                                              </label>
+                                            <input class="form-check-input" type="radio" name="gate_in_out" id="gridRadios2" value="in">
+                                            <label class="form-check-label text-dark" for="gridRadios2">
+                                            Vào cổng
+                                            </label>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-7">
+                                          <!-- <button type="button" class="btn btn-info text-white btn-time"></button>
+                                          <span class="time-now"></span> -->
+                                          <div class="form-check form-switch time-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault1">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault1">Thời gian hiện tại:</label>
+                                            <strong>
+                                              <span class="time-now text-danger"></span>
+                                            </strong>
                                           </div>
                                         </div>
                                     </fieldset>
@@ -185,7 +196,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="col-lg-6">
                         <div class="card create-note border border-danger border-3">
                             <div class="card-body pt-3">
@@ -284,14 +295,15 @@
         <span class="badge bg-danger delete" onClick="employerFunction(this)"><i class="ri-delete-back-2-line"></i> Xóa</span>
       </div>`);
     });
+
     function employerFunction(data) {
       $(data).parent().remove();
     }
     
-    // $(".time-now").click(function() {
-    //   let time = moment().format('YYYY-MM-DD hh:mm:ss');
-    //   $(".time-number").text(time);
-    // });
+    $(".time-switch input:checkbox").change(function() {
+      let time = moment().format('YYYY-MM-DD hh:mm:ss');
+      $(".time-now").text(time);
+    });
 
     $(".check_drug_addict input:checkbox").change(function() {
       var ischecked= $(this).is(':checked');
@@ -329,6 +341,7 @@
     $('.create-note [type="reset"]').on('click',function(){
       $(".select2-selection__rendered").empty();
       $(".number_drug_addict").addClass('invisible');
+      $(".time-now").empty();
     });
 
      $("#staff").select2({

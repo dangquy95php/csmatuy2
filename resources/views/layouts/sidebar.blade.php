@@ -76,6 +76,11 @@
         </a>
         <ul id="tables-nav" class="nav-content collapse {{ request()->is('admin/gate/*') || request()->is('admin/gate/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
+            <a href="{{ route('gate.note') }}" class="{{ request()->is('admin/gate/note') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Tạo tag ghi chú</span>
+            </a>
+          </li>
+          <li>
             <a href="{{ route('gate.create') }}" class="{{ request()->is('admin/gate/create') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Tạo phiếu</span>
             </a>
