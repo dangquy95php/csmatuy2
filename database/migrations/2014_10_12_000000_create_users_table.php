@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_account_enabled')->default(true); // or false up to you
+            $table->string('team_id');
             $table->rememberToken();
             $table->timestamps();
         });

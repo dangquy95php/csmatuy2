@@ -24,6 +24,7 @@ class AdminSeeder extends Seeder
             'status' => '1',
             'email_verified_at' => now(),
             'password' => 'username1',
+            'team_id' => 2,
         ]);
 
         $role = Role::create(['name' => 'staff']);
@@ -40,6 +41,7 @@ class AdminSeeder extends Seeder
             'status' => '1',
             'email_verified_at' => now(),
             'password' => 'admin',
+            'team_id' => 2,
         ]);
 
         $role1 = Role::create(['name' => 'admin']);
@@ -56,6 +58,7 @@ class AdminSeeder extends Seeder
             'status' => '1',
             'email_verified_at' => now(),
             'password' => 'phophong',
+            'team_id' => 3,
         ]);
 
         $role = Role::create(['name' => 'deputy']);
@@ -72,6 +75,7 @@ class AdminSeeder extends Seeder
             'status' => '1',
             'email_verified_at' => now(),
             'password' => 'truongphong',
+            'team_id' => 4,
         ]);
 
         $role = Role::create(['name' => 'manager']);
@@ -80,5 +84,75 @@ class AdminSeeder extends Seeder
    
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
+
+        // --------------------------------------
+        $user2 = User::create([
+            'name' => 'Nguyễn Ngọc Tuân',
+            'username' => 'nguyenngoctuan',
+            'email' => 'nguyenngoctuan@gmail.com',
+            'status' => '1',
+            'email_verified_at' => now(),
+            'password' => 'nguyenngoctuan',
+            'team_id' => 10,
+        ]);
+
+        $role2 = Role::where('name', 'deputy')->first();
+        
+        $permissions2 = Permission::pluck('id','id')->all();
+    
+        $role2->syncPermissions($permissions2);
+        $user2->assignRole([$role2->id]);
+
+        $user3 = User::create([
+            'name' => 'Võ Văn Lợi',
+            'username' => 'vovanloi',
+            'email' => 'vovanloi@gmail.com',
+            'status' => '1',
+            'email_verified_at' => now(),
+            'password' => 'vovanloi',
+            'team_id' => 10,
+        ]);
+
+        $role3 = Role::where('name', 'deputy')->first();
+
+        $permissions3 = Permission::pluck('id','id')->all();
+    
+        $role3->syncPermissions($permissions3);
+        $user3->assignRole([$role3->id]);
+
+        
+        $user4 = User::create([
+            'name' => 'Phạm Viết Sơn',
+            'username' => 'phamvietson',
+            'email' => 'phamvietson@gmail.com',
+            'status' => '1',
+            'email_verified_at' => now(),
+            'password' => 'phamvietson',
+            'team_id' => 1,
+        ]);
+
+        $role4 = Role::where('name', 'deputy')->first();
+        
+        $permissions4 = Permission::pluck('id','id')->all();
+    
+        $role4->syncPermissions($permissions4);
+        $user4->assignRole([$role4->id]);
+
+        $user4 = User::create([
+            'name' => 'Lê Đình Đức',
+            'username' => 'ledinhduc',
+            'email' => 'ledinhduc@gmail.com',
+            'status' => '1',
+            'email_verified_at' => now(),
+            'password' => 'ledinhduc',
+            'team_id' => 1,
+        ]);
+
+        $role4 = Role::where('name', 'deputy')->first();
+        
+        $permissions4 = Permission::pluck('id','id')->all();
+    
+        $role4->syncPermissions($permissions4);
+        $user4->assignRole([$role4->id]);
     }
 }

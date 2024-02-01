@@ -46,9 +46,28 @@ class GateController extends Controller
     public function create()
     {
         $gateNote = GateNote::all();
-        $teams    = Team::all();
+        $teams    = Team::with('user')->orderBy('name','ASC')->get();
+        $dataTeamAndEmployer = [];
 
-        return view('gate.create', compact('gateNote', 'teams'));
+        foreach ($teams as $items) {
+            $data = [];
+            foreach ($items->user as $value) {
+                $object = new \stdClass;
+                $object->id = $value->id;
+                $object->text = $value->name;
+
+                array_push($data, $object);
+            }
+
+            $objectTotal = new \stdClass;
+            $objectTotal->children = $data;
+            $objectTotal->id = $items->id;
+            $objectTotal->text = $items->name;
+
+            array_push($dataTeamAndEmployer, $objectTotal);
+        }
+
+        return view('gate.create', compact('gateNote', 'teams', 'dataTeamAndEmployer'));
     }
 
     /**

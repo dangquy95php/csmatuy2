@@ -127,7 +127,6 @@
                                           </div>
                                         </div>
                                     </fieldset>
-                                   
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary">Tạo phiếu</button>
                                         <button type="reset" class="btn btn-secondary">Làm sạch dữ liệu</button>
@@ -386,45 +385,12 @@
     });
 
      $("#staff").select2({
-        data: [
-        // {
-        //     "id": 1,
-        //     "text": "Aboriginal Education"
-        // },
-        {
-            "children": [
-              {
-                  "id": 1,
-                  "text": "Nguyễn Ngọc Tuân"
-              },
-              {
-                  "id": 2,
-                  "text": "Võ Văn Lợi"
-              }
-            ],
-            "id": 3,
-            "text": "Phòng ANTT"
-        },
-        {
-            "children": [
-              {
-                  "id": 4,
-                  "text": "Phạm Viết Sơn"
-              },
-              {
-                  "id": 5,
-                  "text": "Lê Đình Đức"
-              }
-            ],
-            "id": 6,
-            "text": "Khu 1"
-        },
-      ],
         placeholder: "Chọn cán bộ của cơ sở ma túy số 2",
         allowClear: true,
         width:'100%',
         maximumSelectionLength: 10,
         tags : true,
+        data: <?php echo json_encode($dataTeamAndEmployer); ?>
       });
   </script>
 @endpush

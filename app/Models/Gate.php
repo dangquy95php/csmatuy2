@@ -16,19 +16,10 @@ class Gate extends Model
      */
     protected $fillable = [
         'name',
-        'username',
-        'status',
-        'email',
-        'password',
+        'number_of_drug_addicts',
+        'department',
+        'note',
+        'in_and_out',
+        'time',
     ];
-    
-    /**
-     * A message belong to a user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
