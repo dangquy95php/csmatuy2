@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Hash;
 use App\Models\User;
+use App\Models\Team;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -35,7 +36,7 @@ class UserController extends Controller
      */
     public function list(Request $request)
     {
-        $data = User::all();
+        $data = User::with('team')->get();
         
         foreach ($data as &$user) {
             $user->user_role = $user->roles->pluck('name', 'name')->all();
@@ -52,8 +53,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
+        $teams = Team::select('id', 'name')->get();
 
-        return view('users.create', compact('roles'));
+        return view('users.create', compact('roles', 'teams'));
     }
 
     /**
@@ -67,8 +69,10 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed',
-            'roles' => 'required'
+            'username' => 'required|alpha_dash|unique:users,username',
+            'password' => 'required',
+            'team_id' => 'required',
+            'roles' => 'required',
         ]);
     
         $input = $request->all();
@@ -77,7 +81,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users.list')
+        return redirect()->route('user.list')
             ->with('success', 'User created successfully.');
     }
 
@@ -168,7 +172,7 @@ class UserController extends Controller
     {
         User::find($id)->delete();
 
-        return redirect()->route('users.list')
+        return redirect()->route('user.list')
             ->with('success', 'User deleted successfully.');
     }
 }

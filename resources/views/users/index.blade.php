@@ -24,11 +24,12 @@
                     <th scope="col">Tên</th>
                     <th scope="col">Email</th>
                     <th scope="col">Username</th>
+                    <th scope="col">Khu/Phòng</th>
                     <th scope="col">Roles</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
-                        <a href="/" type="button" class="btn btn-primary btn-sm">Thêm</a>
+                        <a href="{{ route('user.create') }}" type="button" class="btn btn-primary btn-sm">Thêm</a>
                     </th>
                   </tr>
                 </thead>
@@ -39,6 +40,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->username }}</td>
+                        <td>{{ $user->team->name }}</td>
                         <td>
                             @foreach($user->user_role as $key => $value)
                                 <span class="badge bg-secondary">{{$value}}</span>
@@ -54,7 +56,7 @@
                         <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
                         <td>
                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success  btn-sm">Sửa</a>
-                            <a href="" class="btn btn-danger btn-sm">Xóa</a>
+                            <a href="{{ route('user.destroy', $user->id) }}" onclick="return confirm('Bạn có muốn xóa {{ $user->name }} không?')" class="btn btn-danger btn-sm">Xóa</a>
                         </td>
                     </tr>
                     @endforeach
