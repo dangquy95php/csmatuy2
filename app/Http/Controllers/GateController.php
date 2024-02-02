@@ -218,4 +218,24 @@ class GateController extends Controller
 
         return redirect()->route('gate.note');
     }
+
+    function noteCreate()
+    {
+        return view('gate.note-create');
+    }
+
+    public function noteStore(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|unique:teams,name',
+        ]);
+    
+        $team = Team::create([
+            'name' => trim($request->input('name')),
+        ]);
+       
+        Toastr::success('Tạo khu thành công!');
+
+        return redirect()->route('team.index');
+    }
 }

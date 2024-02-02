@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-body pt-2">
                     <!-- <h5 class="card-title">Table with hoverable rows</h5> -->
-
+                   
                     <!-- Table with hoverable rows -->
                     <table class="table table-hover">
                         <thead>
@@ -25,7 +25,11 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Tên thẻ ghi chú</th>
                                 <th scope="col">Ngày tạo</th>
-                                <th scope="col">Loại hình</th>
+                                <th scope="col">
+                                    <span class="float-right">
+                                        <a class="btn btn-primary btn-sm" href="{{route('gate.note-create')}}">Thêm</a>
+                                    </span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>

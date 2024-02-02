@@ -68,8 +68,13 @@ Breadcrumbs::for('gate.note', function ($trail) {
 });
 
 Breadcrumbs::for('gate.note_edit', function ($trail, $note) {
-    $trail->parent('dashboard');
+    $trail->parent('gate.note');
     $trail->push('Chỉnh sửa thẻ ghi chú '. $note->name, route('gate.note-edit', $note->id));
+});
+
+Breadcrumbs::for('gate.note_create', function ($trail) {
+    $trail->parent('gate.note');
+    $trail->push('Tạo thẻ ghi chú',  route('gate.note-create'));
 });
 
 Breadcrumbs::for('team.index', function ($trail) {
