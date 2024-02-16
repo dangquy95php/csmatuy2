@@ -47,6 +47,14 @@ class GateController extends Controller
     {
         $gateNote = GateNote::all();
         $teams    = Team::with('user')->orderBy('name','ASC')->get();
+        $copyData = $teams;
+
+        foreach ($copyData as $key => $team) {
+            foreach ($team->user as &$value) {
+               
+                $value->id_area = $team->id;
+            }
+        }
         $dataTeamAndEmployer = [];
 
         foreach ($teams as $items) {
@@ -67,7 +75,7 @@ class GateController extends Controller
             array_push($dataTeamAndEmployer, $objectTotal);
         }
 
-        return view('gate.create', compact('gateNote', 'teams', 'dataTeamAndEmployer'));
+        return view('gate.create', compact('gateNote', 'teams', 'dataTeamAndEmployer', 'copyData'));
     }
 
     /**
@@ -237,5 +245,18 @@ class GateController extends Controller
         Toastr::success('Tạo khu thành công!');
 
         return redirect()->route('team.index');
+    }
+
+    public function createStaff(Request $request)
+    {
+        $this->validate($request, [
+            'staff' => 'required',
+            'department' => 'numeric',
+            'time' => 'required',
+        ], [
+            'staff.required'=> 'Chọn tên nhân viên',
+            'department.numeric'=> 'Xin vui lòng chọn phòng ban',
+            'time.required'=> 'Xin vui lòng chọn thời gian',
+        ]);
     }
 }

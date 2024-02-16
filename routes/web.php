@@ -61,6 +61,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
 
     Route::group(['prefix' => 'gate'], function () {
         Route::get('/create', 'GateController@create')->name('gate.create');
+        Route::post('/staff', 'GateController@createStaff')->name('gate.create.staff');
         Route::get('/index', 'GateController@index')->name('gate.index');
         Route::get('/note', 'GateController@note')->name('gate.note');
         Route::get('/note/create', 'GateController@noteCreate')->name('gate.note-create');

@@ -39,11 +39,13 @@
                                 <!-- <h5 class="card-title">Horizontal Form</h5> -->
 
                                 <!-- Horizontal Form -->
-                                <form>
+                                <form action="{{ route('gate.create.staff') }}" method="post" accept-charset="UTF-8">
+                                @csrf 
                                     <div class="row mb-3">
-                                        <label for="inputEmail3" class="col-sm-3 col-form-label">Tên nhân viên:</label>
+                                        <label for="inputEmail3" class="col-sm-3 col-form-label">Tên nhân viên:<code>*</code></label>
                                         <div class="col-sm-9">
-                                          <select id="staff" class="form-control" placeholder="select one" multiple="multiple"></select>
+                                          <select id="staff" name="staff[]" class="form-control" placeholder="select one" multiple="multiple"></select>
+                                          @include('_partials.alert', ['field' => 'staff'])
                                         </div>
                                     </div>
                                     <!-- <div class="row mb-3">
@@ -57,7 +59,7 @@
                                     <div class="row mb-3 d-flex justify-content-between">
                                         <div class="col-sm-5">
                                           <div class="form-check form-switch check_drug_addict">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                            <input class="form-check-input" name="drug_addict" type="checkbox" id="flexSwitchCheckDefault">
                                             <label class="form-check-label" for="flexSwitchCheckDefault">Dẫn người cai nghiện</label>
                                           </div>
                                         </div>
@@ -66,20 +68,21 @@
                                           <div class="row d-flex align-items-center">
                                             <label class="col-sm-4">Số lượng:</label>
                                             <div class="col-sm-6">
-                                              <input type="number" value="1" min="1" max="100" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                              <input type="number" value="1" min="1" name="num_drug_addict" max="100" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
                                             </div>
                                           </div>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                      <label for="inputPassword3" class="col-sm-3 col-form-label">Đơn vị:</label>
+                                      <label for="inputPassword3" class="col-sm-3 col-form-label">Đơn vị:<code>*</code></label>
                                       <div class="col-sm-9 h-100">
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select class="form-select select-employer" name="department" aria-label="Default select example">
                                           <option selected="">Vui lòng chọn đơn vị</option>
                                           @foreach ($teams as $key => $data)
-                                            <option value="1">{{ $data->name }}</option>
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
                                           @endforeach
                                         </select>
+                                        @include('_partials.alert', ['field' => 'department'])
                                       </div>
                                     </div>
 
@@ -92,7 +95,7 @@
                                         @endforeach
                                       </label>
                                       <div class="col-sm-9 h-100">
-                                      <textarea class="form-control area-note" placeholder="Vui lòng nhập ghi chú" id="floatingTextarea" style="height: 200px;"></textarea>
+                                      <textarea class="form-control area-note" name="note" placeholder="Vui lòng nhập ghi chú" id="floatingTextarea" style="height: 200px;"></textarea>
                                           <!-- <div class="form-floating">
                                               <textarea class="form-control" placeholder="Address" id="floatingTextarea" style="height: 200px;"></textarea>
                                               <label for="floatingTextarea">Mô tả hoạt động ra vào cổng</label>
@@ -119,12 +122,13 @@
                                           <!-- <button type="button" class="btn btn-info text-white btn-time"></button>
                                           <span class="time-now"></span> -->
                                           <div class="form-check form-switch time-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault1">
-                                            <label class="form-check-label" for="flexSwitchCheckDefault1">Thời gian hiện tại:</label>
+                                            <input class="form-check-input" type="checkbox" name="time" id="flexSwitchCheckDefault1">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault1">Thời gian hiện tại:<code>*</code></label>
                                             <strong>
                                               <span class="time-now text-danger"></span>
                                             </strong>
                                           </div>
+                                          @include('_partials.alert', ['field' => 'time'])
                                         </div>
                                     </fieldset>
                                     <div class="text-center">
@@ -383,14 +387,52 @@
       $(".number_drug_addict").addClass('invisible');
       $(".time-now").empty();
     });
+    function renderAccountInformation(data, container) {
+      console.log(data);
+      if (data.id === '') {
+        return 'Select account';
+      }
+      const el = data.element;
+      const accNickname = $(el).attr('data-account-nickname');
+      const accNumber = $(el).attr('data-account-number');
+      return $(`<strong>${accNickname}</strong><span>${accNumber}</span>`);
+    }
+    $("#staff").select2({
+      placeholder: "Chọn cán bộ của cơ sở ma túy số 2",
+      allowClear: true,
+      width:'100%',
+      maximumSelectionLength: 10,
+      tags : true,
+      // templateResult: renderAccountInformation,
+      // templateSelection: renderAccountInformation,
+      data: <?php echo json_encode($dataTeamAndEmployer); ?>,
+      tokenSeparators: [',', ' '],
+      templateSelection: function(selection) {
+        if(selection.selected) {
+            return $.parseHTML('<span class="customclass">' + selection.text + '</span>');
+        }
+        else {
+            return $.parseHTML('<span class="customclass">' + selection.text + '</span>');
+        }
+      }
+    });
 
-     $("#staff").select2({
-        placeholder: "Chọn cán bộ của cơ sở ma túy số 2",
-        allowClear: true,
-        width:'100%',
-        maximumSelectionLength: 10,
-        tags : true,
-        data: <?php echo json_encode($dataTeamAndEmployer); ?>
-      });
+    // select-employer
+    $('#staff').on('select2:select', function (e) {
+      var data = e.params.data;
+
+      console.log(e.params);
+
+      var id = data.id;
+      var text = data.text;
+      var data1 =  <?php echo json_encode($copyData); ?>;
+
+      // console.log(data);
+      // $(".select-employer > option").each(function() {
+      //   if (this.value == id) {
+      //     $(this).prop("selected", true)
+      //   }
+      // });
+    });
   </script>
 @endpush
