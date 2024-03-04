@@ -22,10 +22,10 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Tên</th>
-                    <th scope="col">Email</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Khu/Phòng</th>
-                    <th scope="col">Roles</th>
+                    <th scope="col" id="title-roles">Roles</th>
+                    <th scope="col" id="title-team">Khu/Phòng</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
@@ -38,14 +38,14 @@
                     <tr>
                         <th scope="row">{{ $key + 1 }}</th>
                         <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
                         <td>{{ $user->username }}</td>
-                        <td>{{ $user->team->name }}</td>
                         <td>
                             @foreach($user->user_role as $key => $value)
                                 <span class="badge bg-secondary">{{$value}}</span>
                             @endforeach
                         </td>
+                        <td>{{ $user->team->name }}</td>
+                        <td>{{ $user->email }}</td>
                         <td>
                         @if( $user->status == \App\Models\User::ENABLE)
                             <span class="badge rounded-pill bg-success">Đang hoạt động</span>
@@ -69,3 +69,15 @@
    </div>
 </section>
 @endsection
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('#title-team').click(function() {
+        sortTable("title-team", this);
+    });
+    $('#title-roles').click(function() {
+        sortTable("title-roles", this);
+    });
+});
+</script>
+@endpush()

@@ -20,7 +20,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest'], function () {
 
 // , , 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled']], function () {
-    
+    Route::get('/excel', 'ExcelImportController@index')->name('excel.index');
+    Route::post('/excel', 'ExcelImportController@import')->name('excel.import');
+
+
     Route::get('/logout', 'DashboardController@logout')->name('logout');
     Route::get('/', 'DashboardController@index')->name('dashboard')->middleware('permission:user-list');
     // Route::resource('users', UserController::class);
@@ -62,6 +65,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     Route::group(['prefix' => 'gate'], function () {
         Route::get('/create', 'GateController@create')->name('gate.create');
         Route::post('/staff', 'GateController@createStaff')->name('gate.create.staff');
+        Route::post('/relatives-of-drug-addicts', 'GateController@relativesOfDrugAddicts')->name('gate.create.relatives_of_drug_addicts');
+        Route::post('/guest-student', 'GateController@guestStudent')->name('gate.create.guest_student');
+        
         Route::get('/index', 'GateController@index')->name('gate.index');
         Route::get('/note', 'GateController@note')->name('gate.note');
         Route::get('/note/create', 'GateController@noteCreate')->name('gate.note-create');

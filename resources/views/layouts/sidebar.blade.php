@@ -76,18 +76,18 @@
         </a>
         <ul id="tables-nav" class="nav-content collapse {{ request()->is('admin/gate/*') || request()->is('admin/gate/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('gate.note') }}" class="{{ request()->is('admin/gate/note') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Danh sách thẻ ghi chú</span>
-            </a>
-          </li>
-          <li>
             <a href="{{ route('gate.create') }}" class="{{ request()->is('admin/gate/create') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Tạo phiếu</span>
             </a>
           </li>
           <li>
+            <a href="{{ route('gate.note') }}" class="{{ request()->is('admin/gate/note') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách thẻ ghi chú</span>
+            </a>
+          </li>
+          <li>
             <a href="{{ route('gate.index') }}" class="{{ request()->is('admin/gate/index') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Danh sách</span>
+              <i class="bi bi-circle"></i><span>Danh sách phiếu</span>
             </a>
           </li>
         </ul>
@@ -95,12 +95,12 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-gem"></i><span>Excel</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+            <a href="{{ route('excel.index') }}">
+              <i class="bi bi-circle"></i><span>Excel import</span>
             </a>
           </li>
           <li>

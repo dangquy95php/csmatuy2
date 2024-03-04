@@ -40,6 +40,7 @@ class User extends Authenticatable
         'password',
         'is_account_enabled',
         'team_id',
+        'image',
     ];
 
     /**
@@ -65,7 +66,7 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
     }
-    
+
     /**
      * A user can have many messages
      *

@@ -74,7 +74,7 @@ class UserController extends Controller
             'team_id' => 'required',
             'roles' => 'required',
         ]);
-    
+
         $input = $request->all();
         $input['password'] = $input['password'];
     

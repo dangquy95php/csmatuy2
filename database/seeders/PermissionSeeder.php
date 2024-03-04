@@ -39,5 +39,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'team-create']);
         Permission::create(['name' => 'team-edit']);
         Permission::create(['name' => 'team-delete']);
+        Permission::create(['name' => 'gate-create-staff']);
+        Permission::create(['name' => 'gate-guest-student']);
     }
 }

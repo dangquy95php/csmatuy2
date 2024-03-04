@@ -18,6 +18,9 @@ class CreateGatesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('number_of_drug_addicts')->nullable();
             $table->text('note')->nullable();
+            $table->boolean('type_gate')->default(0);
+            $table->integer('department');
+            $table->integer('count_request');
             $table->timestamps();
         });
     }

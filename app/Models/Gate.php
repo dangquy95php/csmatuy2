@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Team;
 
 class Gate extends Model
 {
@@ -15,11 +17,21 @@ class Gate extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
         'number_of_drug_addicts',
-        'department',
         'note',
-        'in_and_out',
-        'time',
+        'type_gate',
+        'user_id',
+        'department',
+        'count_request',
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class)->select(['name','status', 'image', 'team_id', 'id']);
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'department', 'id')->select(['name','id']);
+    }
 }

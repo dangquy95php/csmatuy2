@@ -62,7 +62,7 @@
 
     <!-- Template Main JS File -->
     <script src="{{asset('admin_library/assets/js/main.js')}}"></script>
-
+    <script src="{{asset('admin_library/assets/js/custom-sort.js')}}"></script>
     <!-- Jquery Slim JS -->
     <script src="{{ asset('admin_library/assets/js/jquery.min.js')}} "></script>
 

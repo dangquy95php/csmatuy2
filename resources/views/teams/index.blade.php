@@ -28,6 +28,7 @@
                                     <a class="btn btn-primary btn-sm" href="{{route('team.create')}}">Thêm</a>
                                 </span>
                             </th>
+                            <th scope="col">Ghi chú</th>
                             <th scope="col">Ngày tạo</th>
                             <th scope="col">Hành động</th>
                         </tr>
@@ -37,6 +38,7 @@
                             <tr>
                                 <th scope="row">{{$key + 1}}</th>
                                 <td class="text-capitalize">{{ $team->name }}</td>
+                                <td class="text-capitalize">{{ $team->note }}</td>
                                 <td>{{ date('d-m-Y', strtotime($team->created_at)) }}</td>
                                 <td>
                                     <a href="{{ route('team.edit', $team->id) }}" class="btn btn-success  btn-sm">Sửa</a>

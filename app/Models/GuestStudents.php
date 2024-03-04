@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GateNote extends Model
+class GuestStudents extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,11 @@ class GateNote extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'staff_name',
+        'number_of_drug_addicts',
+        'type_gate',
+        'car_number',
+        'time',
+        'note',
     ];
 }
