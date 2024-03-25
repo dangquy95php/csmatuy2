@@ -176,20 +176,20 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6>Phòng/Khu:</h6>
+              <span>{{ auth()->user()->load(['team'])->team->name; }}</span>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('user.profile') }}">
                 <i class="bi bi-person"></i>
-                <span>My Profile</span>
+                <span>Trang cá nhân của tôi</span>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <hr class="dropdown-divider">
             </li>
 
@@ -208,7 +208,7 @@
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
               </a>
-            </li>
+            </li> -->
             <li>
               <hr class="dropdown-divider">
             </li>

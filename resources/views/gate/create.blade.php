@@ -169,7 +169,7 @@
                                         <label for="inputPassword12" class="col-sm-3 col-form-label">Ghi chú:</label>
                                         <div class="col-sm-9 h-100">
                                           <!-- <div class="quill-editor-default1" style="height:200px;"></div> -->
-                                          <textarea class="form-control" name="note" placeholder="Vui lòng nhập ghi chú của bạn" id="floatingTextarea" style="height: 200px;">{{old('note') }}</textarea>
+                                          <textarea class="form-control" name="note1" placeholder="Vui lòng nhập ghi chú của bạn" id="floatingTextarea" style="height: 200px;">{{old('note') }}</textarea>
                                         </div>
                                     </div>
                                     <fieldset class="row mb-3">
@@ -280,20 +280,20 @@
                                         <label for="inputPassword12" class="col-sm-3 col-form-label">Ghi chú:</label>
                                         <div class="col-sm-9 h-100">
                                           <!-- <div class="quill-editor-default1" style="height:200px;"></div> -->
-                                          <textarea class="form-control" name="note" placeholder="Vui lòng nhập ghi chú của bạn" id="floatingTextarea" style="height: 150px;">{{old('note') }}</textarea>
+                                          <textarea class="form-control" name="note2" placeholder="Vui lòng nhập ghi chú của bạn" id="floatingTextarea" style="height: 150px;">{{old('note2') }}</textarea>
                                         </div>
                                     </div>
                                     <fieldset class="row mb-3">
                                         <legend class="col-form-label col-sm-3 pt-0 type-gate">Loại hình:</legend>
                                         <div class="col-sm-2 in_and_out">
                                           <div class="form-check">
-                                              <input class="form-check-input form-check-input_out" name="type_gate"  type="radio" id="gridRadios111" value="0" checked="">
+                                              <input class="form-check-input form-check-input_out" name="type_gate" @if(old('type_gate') == '1') checked @endif value="0" checked="" type="radio" id="gridRadios111">
                                               <label class="form-check-label" for="gridRadios111">
                                               Ra cổng
                                               </label>
                                           </div>
                                           <div class="form-check was-validated">
-                                              <input class="form-check-input" type="radio" name="type_gate" id="gridRadios22" value="1">
+                                              <input class="form-check-input" type="radio" name="type_gate" @if(old('type_gate') == '1') checked @endif value="1" id="gridRadios22">
                                               <label class="form-check-label text-dark" for="gridRadios22">
                                               Vào cổng
                                               </label>

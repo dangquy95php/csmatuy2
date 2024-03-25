@@ -11,11 +11,12 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Str;
 use DB;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class UserImport implements ToModel, WithHeadingRow, WithStartRow, WithChunkReading
+class UserImport implements ToModel, WithHeadingRow, WithStartRow, WithChunkReading, ShouldQueue
 {
     /**
     * @param Collection $collection
@@ -43,10 +44,10 @@ class UserImport implements ToModel, WithHeadingRow, WithStartRow, WithChunkRead
                 $teamId = Team::where('note', $row[1])->select('id')->first();
     
                 DB::beginTransaction();
-
                 $input['name'] = $row['ho_va_ten'];
                 $input['password'] = Hash::make(12345678);
                 $input['team_id'] = $teamId->id;
+                $input['image'] = \Illuminate\Support\Str::upper($row['ho_va_ten']).'.jpg';
                 if ($row['ho_va_ten'] == 'Cao Văn Tuấn') {
                     $input['username'] = 'CaoVanTuan1';
                 } else {
@@ -138,5 +139,12 @@ class UserImport implements ToModel, WithHeadingRow, WithStartRow, WithChunkRead
             DB::rollBack();
             throw new \Exception($ex->getMessage());
         }
+    }
+
+    public function rules(): array
+    {
+        return [
+            'ho_va_ten' => ['required'],//số hợp đồng
+        ];
     }
 }

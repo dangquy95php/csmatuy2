@@ -6,6 +6,7 @@ use App\Models\User;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UserImport;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class ExcelImportController extends Controller
 {
@@ -21,11 +22,15 @@ class ExcelImportController extends Controller
 
     public function import(Request $request)
     {
+        \DB::beginTransaction();
         try {
-            Excel::import(new UserImport, $request->file('file'));
+            Excel::queueImport(new UserImport, $request->file('file'));
+            \DB::commit();
         } catch (\Exception $ex) {
-            return redirect()->route('excel.index');;
+            Toastr::error('Import excel thất bại!');
+            return redirect()->route('excel.index');
         }
+        Toastr::success('Import dữ liệu thành công!');
         return redirect()->route('user.list');
     }
 

@@ -13,6 +13,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Requests\User\CreateUserRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -36,7 +37,7 @@ class UserController extends Controller
      */
     public function list(Request $request)
     {
-        $data = User::with('team')->get();
+        $data = User::with('team')->paginate(20);
         
         foreach ($data as &$user) {
             $user->user_role = $user->roles->pluck('name', 'name')->all();
@@ -174,5 +175,38 @@ class UserController extends Controller
 
         return redirect()->route('user.list')
             ->with('success', 'User deleted successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        return view('users.profile');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function postProfile(Request $request)
+    {
+        try {
+            $unix_timestamp = now()->timestamp;
+            $fileName = Auth::user()->username . '_' . $unix_timestamp;
+            $file = $request->file('image'); // Retrieve the uploaded file from the request
+            Storage::disk('local')->put('public/profile/'. $fileName .'_'. $file->getClientOriginalName(), file_get_contents($file));
+        } catch (\Exception $ex) {
+            Toastr::error('Cập nhật thất bại '. $ex->getMessage());
+            return redirect()->back();
+        }
+
+        Toastr::success('Cập nhật người dùng thành công!');
+        return redirect()->back();
     }
 }

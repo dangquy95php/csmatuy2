@@ -27,7 +27,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     Route::get('/logout', 'DashboardController@logout')->name('logout');
     Route::get('/', 'DashboardController@index')->name('dashboard')->middleware('permission:user-list');
     // Route::resource('users', UserController::class);
+
     
+    Route::get('/profile', 'UserController@profile')->name('user.profile');
+    Route::post('/profile', 'UserController@postProfile');
     Route::get('/list', 'UserController@list')->name('user.list');
     Route::get('/show', 'UserController@show')->name('user.show');
     Route::get('/create', 'UserController@create')->name('user.create');

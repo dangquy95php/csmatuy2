@@ -26,6 +26,7 @@
                     <th scope="col" id="title-roles">Roles</th>
                     <th scope="col" id="title-team">Khu/Phòng</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Hình ảnh</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
@@ -40,12 +41,30 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->username }}</td>
                         <td>
-                            @foreach($user->user_role as $key => $value)
+                            @foreach($user->user_role as $k => $value)
                                 <span class="badge bg-secondary">{{$value}}</span>
                             @endforeach
                         </td>
                         <td>{{ $user->team->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>
+                            <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}" src="{{ !file_exists('storage/profile/'.$user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image)}}" style="width:70px;" class="img-fluid img-thumbnail" alt="">
+                            <div class="modal fade" id="exampleModal{{ $key + 1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ $user->team->name }}: <b>{{ $user->name }}</b></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img class="img-fluid w-100" src="{{ !file_exists('storage/profile/'.$user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image) }}" alt="">
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
                         <td>
                         @if( $user->status == \App\Models\User::ENABLE)
                             <span class="badge rounded-pill bg-success">Đang hoạt động</span>
@@ -62,6 +81,7 @@
                     @endforeach
                 </tbody>
               </table>
+              {!! $data->links('_partials.pagination') !!}
                <!-- End Table with stripped rows -->
             </div>
          </div>

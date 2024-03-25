@@ -358,7 +358,7 @@ class GateController extends Controller
         try {
             $drugAddict = new DrugAddict();
             $drugAddict->personal_name = $personalName;
-            $drugAddict->note = $request->get('note');
+            $drugAddict->note = $request->get('note1');
             $drugAddict->type_gate = $request->get('type_gate');
             $drugAddict->kind_of_detox = $request->get('kind_of_detox');
             $drugAddict->car_number = $request->get('car_number');
@@ -393,7 +393,7 @@ class GateController extends Controller
         $guestStudent->car_number = $request->get('car_number');
         $guestStudent->number_of_drug_addicts = $request->get('number_of_drug_addicts1');
         $guestStudent->type_gate = $request->get('type_gate');
-        $guestStudent->note = $request->get('note');
+        $guestStudent->note = $request->get('note2');
         $guestStudent->created_at = $request->get('time2');
 
         $guestStudent->save();
