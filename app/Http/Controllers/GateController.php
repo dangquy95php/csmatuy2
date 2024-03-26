@@ -39,16 +39,21 @@ class GateController extends Controller
      */
     public function index(Request $request)
     {
-        if (($request->get('staff_start_date') && $request->get('staff_end_date')) && empty($request->get('staff_today'))) {
-            $data = Gate::whereDate('created_at', '>=', $request->get('staff_start_date'))
-            ->whereDate('created_at', '<=', $request->get('staff_end_date'))
-            ->orderBy('id', 'DESC')->with(['user', 'team'])->get();
-        } elseif($request->get('staff_today')) {
-            $data = Gate::whereDate('created_at', Carbon::today())->orderBy('id', 'DESC')->with(['user', 'team'])->get();
-        } else {
-            $data = Gate::orderBy('id', 'DESC')->with(['user', 'team'])->get();
+        $gate = '';
+        if ($request->get('type_gate')) {
+            $gate = $request->get('type_gate');
         }
 
+        if (($request->get('staff_start_date') && $request->get('staff_end_date')) && empty($request->get('staff_today'))) {
+            $data = Gate::typeGate($gate)->startDate($request->get('staff_start_date'))
+                        ->endDate($request->get('staff_end_date'))
+                        ->orderByID()->with(['user', 'team'])->get();
+        } elseif($request->get('staff_today')) {
+            $data = Gate::typeGate($gate)->today()->orderByID()->with(['user', 'team'])->get();
+        } else {
+            $data = Gate::typeGate($gate)->orderByID()->with(['user', 'team'])->get();
+        }
+  
         $dataGroup = $data->groupBy('count_request');
         foreach($dataGroup as $key => &$datas) {
             if (count($datas) > 0) {

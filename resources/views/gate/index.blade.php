@@ -30,13 +30,13 @@
             </ul>
             <div class="tab-content pt-2" id="borderedTabContent">
                 <div class="tab-pane {{ Request::get('tab') == 'tab1' ? 'show active' : 'fade' }} {{ empty(Request::get('tab')) ? 'show active' : '' }}" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="col-lg-8">
+                    <div class="col-lg-9">
                         <form id="form-staff" action="" method="get">
                             <div class="row mb-3">
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <label for="inputPassword" class="col-sm-5 col-form-label">Ngày bắt đầu:</label>
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-6">
                                             <input type="date" value="{{ \Request::get('staff_start_date') }}" name="staff_start_date" class="form-control">
                                         </div>
                                     </div>
@@ -44,12 +44,21 @@
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <label for="inputPassword" class="col-sm-5 col-form-label">Ngày kết thúc:</label>
-                                        <div class="col-sm-7">
+                                        <div class="col-sm-6">
                                             <input type="date" value="{{ \Request::get('staff_end_date') }}" name="staff_end_date" class="form-control">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 ps-0">
+                                <div class="col-sm-1">
+                                    <div class="row">
+                                        <select class="form-select" name="type_gate" aria-label="Default select example">
+                                            @foreach(\App\Models\Gate::INFOR_GATE as $key => $value)
+                                                <option {{ $key == Request::get('type_gate') ? 'selected' : '' }}  value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
                                     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                     <button type="button" {{Request::get('staff_today') ? 'disabled' : ''}} class="btn btn-success today-search">Hôm nay</button>
                                 </div>
@@ -85,7 +94,7 @@
                                         @endphp
                                         @if (isset($gate->rowspan))
                                         <td rowspan="{{ @$gate->rowspan }}" class="text-center align-middle">
-                                            {!! (empty($gate->number_of_drug_addicts)) ? '<span class="badge rounded-pill bg-warning">không có</span>' : $html !!}
+                                            {!! (empty($gate->number_of_drug_addicts)) ? '' : $html !!}
                                         </td>
                                         <td rowspan="{{ @$gate->rowspan }}" class="align-middle">{{ $gate->note }}</td>
                                         <td rowspan="{{ @$gate->rowspan }}" class="align-middle">{!! $gate->type_gate == 0 ? '<span class="badge rounded-pill bg-danger">Ra cổng</span>' : '<span class="badge rounded-pill bg-success">Vào cổng</span>' !!}</td>

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Team;
+use Carbon\Carbon;
 
 class Gate extends Model
 {
@@ -25,6 +26,16 @@ class Gate extends Model
         'count_request',
     ];
     
+    const OUT = 0;
+    const IN = 1;
+    const ALL = 2;
+
+    const INFOR_GATE = [
+        self::ALL => 'Tất cả',
+        self::OUT => 'Ra cổng',
+        self::IN => 'Vào cổng',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class)->select(['name','status', 'image', 'team_id', 'id']);
@@ -33,5 +44,33 @@ class Gate extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'department', 'id')->select(['name','id']);
+    }
+
+    public function scopeStartDate($query, $date)
+    {
+        return $query->whereDate('created_at', '>=', $date);
+    }
+
+    public function scopeEndDate($query, $date)
+    {
+        return $query->whereDate('created_at', '<=', $date);
+    }
+
+    public function scopeTypeGate($query, $gate)
+    {
+        if ($gate == self::ALL) {
+            return $query;
+        }
+        return $query->where('type_gate', $gate);
+    }
+
+    public function scopeOrderByID($query)
+    {
+        return $query->orderBy('id', 'DESC');
+    }
+
+    public function scopeToday($query)
+    {
+        return $query->whereDate('created_at', Carbon::today());
     }
 }
