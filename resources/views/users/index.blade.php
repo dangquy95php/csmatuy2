@@ -17,6 +17,16 @@
          <div class="card pt-3">
             <div class="card-body table-responsive">
                <!-- Table with stripped rows -->
+                <form class="mt-2" id="form-staff" action="" method="get">
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <input name="search" type="text" value="{{request()->input('search')}}" class="form-control" id="colFormLabel" placeholder="Nhập tên nhân viên tìm kiếm">
+                        </div>
+                        <div class="col-sm-2 ps-0">
+                            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </form>
                <table class="table table-striped">
                 <thead>
                   <tr>
@@ -52,19 +62,20 @@
                             <div class="modal fade" id="exampleModal{{ $key + 1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">{{ $user->team->name }}: <b>{{ $user->name }}</b></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img class="img-fluid w-100" src="{{ !file_exists('storage/profile/'.$user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image) }}" alt="">
-                                    </div>
-                                    <div class="modal-footer d-flex justify-content-center">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                    </div>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ $user->team->name }}: <b>{{ $user->name }}</b></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img class="img-fluid w-100" src="{{ !file_exists('storage/profile/'.$user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image) }}" alt="">
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </td>
                         <td>
                         @if( $user->status == \App\Models\User::ENABLE)
                             <span class="badge rounded-pill bg-success">Đang hoạt động</span>

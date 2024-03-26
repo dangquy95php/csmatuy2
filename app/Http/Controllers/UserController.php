@@ -37,7 +37,12 @@ class UserController extends Controller
      */
     public function list(Request $request)
     {
-        $data = User::with('team')->paginate(20);
+        if (!empty($request->input('search'))) {
+            $search = $request->input('search');;
+            $data = User::where('name', 'like', "%$search%")->with('team')->paginate(20);
+        } else {
+            $data = User::with('team')->paginate(20);
+        }
         
         foreach ($data as &$user) {
             $user->user_role = $user->roles->pluck('name', 'name')->all();
@@ -197,16 +202,29 @@ class UserController extends Controller
     public function postProfile(Request $request)
     {
         try {
-            $unix_timestamp = now()->timestamp;
-            $fileName = Auth::user()->username . '_' . $unix_timestamp;
-            $file = $request->file('image'); // Retrieve the uploaded file from the request
-            Storage::disk('local')->put('public/profile/'. $fileName .'_'. $file->getClientOriginalName(), file_get_contents($file));
+            $user = User::find(Auth::user()->id);
+            if ($request->file('image')) {
+                $unix_timestamp = now()->timestamp;
+                $fileName = Auth::user()->username . '_' . $unix_timestamp;
+                $file = $request->file('image'); // Retrieve the uploaded file from the request
+                Storage::disk('local')->put('public/profile/'. $fileName .'_'. $file->getClientOriginalName(), file_get_contents($file));
+                
+                $user = auth()->user();
+                $user->image = $fileName .'_'. $file->getClientOriginalName();
+            }
+            $user->name = $request->input('name');
+            $user->save();
+    
+            if ($user->wasChanged()) {
+                Toastr::success('Cập nhật thông tin cá nhân thành công!');
+            } else {
+                Toastr::warning('Dữ liệu không có thay đổi');
+            }
         } catch (\Exception $ex) {
             Toastr::error('Cập nhật thất bại '. $ex->getMessage());
             return redirect()->back();
         }
 
-        Toastr::success('Cập nhật người dùng thành công!');
         return redirect()->back();
     }
 }

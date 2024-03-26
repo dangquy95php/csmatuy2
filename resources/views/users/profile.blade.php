@@ -23,7 +23,7 @@
                         <div class="row mb-3">
                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Ảnh cá nhân:</label>
                             <div class="col-md-8 col-lg-9">
-                            <img src="{{ url('admin_library/assets/img/profile-img.jpg') }}" alt="Profile">
+                            <img src="{{ !empty(Auth::user()->image) ? asset('storage/profile/'. Auth::user()->image) : asset('storage/profile/default.jpg') }}" alt="Profile" class="img-thumbnail">
                             <div class="pt-2">
                                 <span class="btn btn-primary btn-sm" title="Upload new profile image">
                                     <input name="image" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" accept="image/png, image/jpeg" />
@@ -37,21 +37,21 @@
                         <div class="row mb-3">
                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên:</label>
                             <div class="col-md-8 col-lg-9">
-                                <input name="fullName" type="text" class="form-control" id="fullName" value="{{Auth::user()->name}}">
+                                <input name="name" type="text" class="form-control" id="fullName" value="{{Auth::user()->name}}">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="about" class="col-md-4 col-lg-3 col-form-label">Username:</label>
                             <div class="col-md-8 col-lg-9">
-                                <input name="about" type="text" class="form-control" id="about" readonly value="{{Auth::user()->username}}">
+                                <input name="username" type="text" class="form-control" id="about" readonly value="{{Auth::user()->username}}">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="company" class="col-md-4 col-lg-3 col-form-label">Email:</label>
                             <div class="col-md-8 col-lg-9">
-                                <input name="company" type="text" class="form-control" id="company" readonly value="{{Auth::user()->email}}">
+                                <input name="email" type="text" class="form-control" id="company" readonly value="{{Auth::user()->email}}">
                             </div>
                         </div>
 
@@ -69,14 +69,14 @@
                                         }
                                     }
                                 @endphp
-                                <input name="job" type="text" class="form-control" id="Job" readonly value="{{ @$khu }}">
+                                <input name="role" type="text" class="form-control" id="Job" readonly value="{{ @$khu }}">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="Country" class="col-md-4 col-lg-3 col-form-label">Khu:</label>
                             <div class="col-md-8 col-lg-9">
-                                <input name="country" type="text" class="form-control" id="Country" readonly value="{{ auth()->user()->load(['team'])->team->name; }}">
+                                <input name="team" type="text" class="form-control" id="Country" readonly value="{{ auth()->user()->load(['team'])->team->name; }}">
                             </div>
                         </div>
                         <div class="row mb-3">
