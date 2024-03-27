@@ -20,9 +20,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest'], function () {
 
 // , , 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled']], function () {
-    Route::get('/excel', 'ExcelImportController@index')->name('excel.index');
-    Route::post('/excel', 'ExcelImportController@import')->name('excel.import');
-
+    Route::group(['prefix' => 'excel'], function () {
+        Route::get('/import', 'ExcelImportController@import')->name('excel.import');
+        Route::post('/import', 'ExcelImportController@postImport');
+    });
 
     Route::get('/logout', 'DashboardController@logout')->name('logout');
     Route::get('/', 'DashboardController@index')->name('dashboard')->middleware('permission:user-list');

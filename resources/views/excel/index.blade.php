@@ -15,7 +15,7 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Nhập danh sách viên chức - NLĐ</h5>
-            <form action="{{ route('excel.import') }}" method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data">
             @csrf 
                 <div class="row mb-3">
                     <label for="inputNumber" class="col-sm-1 col-form-label">File Upload:</label>

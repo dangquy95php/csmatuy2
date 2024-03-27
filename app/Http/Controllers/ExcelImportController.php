@@ -15,12 +15,12 @@ class ExcelImportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function import()
     {
         return view('excel.index');
     }
 
-    public function import(Request $request)
+    public function postImport(Request $request)
     {
         \DB::beginTransaction();
         try {
@@ -28,7 +28,7 @@ class ExcelImportController extends Controller
             \DB::commit();
         } catch (\Exception $ex) {
             Toastr::error('Import excel thất bại!');
-            return redirect()->route('excel.index');
+            return redirect()->route('excel.import');
         }
         Toastr::success('Import dữ liệu thành công!');
         return redirect()->route('user.list');
