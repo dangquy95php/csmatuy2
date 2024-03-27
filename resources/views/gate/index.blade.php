@@ -53,7 +53,7 @@
                                     <div class="row">
                                         <select class="form-select" name="type_gate" aria-label="Default select example">
                                             @foreach(\App\Models\Gate::INFOR_GATE as $key => $value)
-                                                <option {{ $key == Request::get('type_gate') ? 'selected' : '' }}  value="{{$key}}">{{$value}}</option>
+                                                <option {{ !is_null(Request::get('type_gate')) && $key === (int)Request::get('type_gate') ? 'selected' : '' }} value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
                                         </select>
                                     </div>

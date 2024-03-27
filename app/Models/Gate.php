@@ -58,6 +58,9 @@ class Gate extends Model
 
     public function scopeTypeGate($query, $gate)
     {
+        if (is_null($gate)) {
+            return $query;
+        }
         if ($gate == self::ALL) {
             return $query;
         }

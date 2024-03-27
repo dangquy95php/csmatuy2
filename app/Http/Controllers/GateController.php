@@ -40,7 +40,9 @@ class GateController extends Controller
     public function index(Request $request)
     {
         $gate = '';
-        if ($request->get('type_gate')) {
+        if (is_null($request->get('type_gate'))) {
+            $gate = Gate::ALL;
+        } else {
             $gate = $request->get('type_gate');
         }
 
