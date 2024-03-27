@@ -198,7 +198,7 @@
 <script>
 $(document).ready(function() {
     $(".today-search").click(function() {
-        $("#form-staff").append('<input type="text" name="staff_today" value="today" />');
+        $("#form-staff").append('<input type="text" class="d-none" name="staff_today" value="today" />');
         $('#form-staff').submit();
     });
 
