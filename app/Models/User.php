@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Hash;
 use Auth;
+use App\Models\Message;
+use App\Models\Team;
 
 class User extends Authenticatable
 {
@@ -36,7 +38,9 @@ class User extends Authenticatable
         'status',
         'email',
         'password',
-        'is_account_enabled'
+        'is_account_enabled',
+        'team_id',
+        'image',
     ];
 
     /**
@@ -61,5 +65,20 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    /**
+     * A user can have many messages
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+    
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }

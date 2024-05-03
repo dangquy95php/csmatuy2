@@ -19,18 +19,28 @@ Route::group(['prefix' => 'admin', 'middleware' => 'guest'], function () {
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled']], function () {
-    
+    Route::group(['prefix' => 'excel'], function () {
+        Route::get('/import', 'ExcelImportController@import')->name('excel.import');
+        Route::post('/import', 'ExcelImportController@postImport');
+    });
+
     Route::get('/logout', 'DashboardController@logout')->name('logout');
-    Route::get('/', 'DashboardController@index')->name('dashboard');
+    Route::get('/', 'DashboardController@index')->name('dashboard')->middleware('permission:user-list');
+    // Route::resource('users', UserController::class);
+
+    
+    Route::get('/profile', 'UserController@profile')->name('user.profile');
+    Route::post('/profile', 'UserController@postProfile');
     Route::get('/list', 'UserController@list')->name('user.list');
     Route::get('/show', 'UserController@show')->name('user.show');
     Route::get('/create', 'UserController@create')->name('user.create');
     Route::post('/create', 'UserController@store')->name('user.store');
     Route::get('/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::post('/{id}/edit', 'UserController@update')->name('user.update');
+    Route::get('/{id}/destroy', 'UserController@destroy')->name('user.destroy');
 
     Route::group(['prefix' => 'roles'], function () {
-        Route::get('/list', 'RoleController@list')->name('roles.list');
+        Route::get('/list', 'RoleController@index')->name('roles.list');
         Route::get('/create', 'RoleController@create')->name('roles.create');
         Route::post('/create', 'RoleController@store')->name('roles.store');
         Route::get('/{id}/edit', 'RoleController@edit')->name('roles.edit');
@@ -45,8 +55,35 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/{id}/edit', 'PermissionController@update')->name('permission.update');
         Route::get('/{id}/destroy', 'PermissionController@destroy')->name('permission.destroy');
     });
+
+    Route::group(['prefix' => 'team'], function () {
+        Route::get('/index', 'TeamController@index')->name('team.index');
+        Route::get('/create', 'TeamController@create')->name('team.create');
+        Route::post('/create', 'TeamController@store')->name('team.store');
+        Route::get('/{id}/edit', 'TeamController@edit')->name('team.edit');
+        Route::post('/{id}/edit', 'TeamController@update')->name('team.update');
+        Route::get('/{id}/destroy', 'TeamController@destroy')->name('team.destroy');
+    });
+
+    Route::group(['prefix' => 'gate'], function () {
+        Route::get('/create', 'GateController@create')->name('gate.create');
+        Route::post('/staff', 'GateController@createStaff')->name('gate.create.staff');
+        Route::post('/relatives-of-drug-addicts', 'GateController@relativesOfDrugAddicts')->name('gate.create.relatives_of_drug_addicts');
+        Route::post('/guest-student', 'GateController@guestStudent')->name('gate.create.guest_student');
+        
+        Route::get('/index', 'GateController@index')->name('gate.index');
+        Route::get('/note', 'GateController@note')->name('gate.note');
+        Route::get('/note/create', 'GateController@noteCreate')->name('gate.note-create');
+        Route::post('/note/create', 'GateController@noteStore')->name('gate.note-store');
+        Route::get('/note/{id}/edit', 'GateController@noteEdit')->name('gate.note-edit');
+        Route::post('/note/{id}/edit', 'GateController@noteUpdate')->name('gate.note-update');
+        Route::get('/note/{id}/destroy', 'GateController@noteDestroy')->name('gate.note-destroy');
+    });
 });
 
+Route::get('/', 'ChatsController@index');
+Route::get('messages', 'ChatsController@fetchMessages');
+Route::post('messages', 'ChatsController@sendMessage');
 
 // Route::group(['prefix' => 'admin'], function () {
     

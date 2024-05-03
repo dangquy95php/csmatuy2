@@ -22,7 +22,7 @@
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
 
-                <div class="filter">
+                <!-- <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
@@ -33,19 +33,19 @@
                     <li><a class="dropdown-item" href="#">This Month</a></li>
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
-                </div>
+                </div> -->
 
                 <div class="card-body">
-                  <h5 class="card-title">Sales <span>| Today</span></h5>
+                  <h5 class="card-title">Tổng số nhân viên</h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cart"></i>
+                      <!-- <i class="bi bi-cart"></i> -->
+                      <i class="ri-user-3-line"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-
+                      <h6>{{ \App\Models\User::all()->count() }}</h6>
+                      <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
                     </div>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card revenue-card">
 
-                <div class="filter">
+                <!-- <div class="filter">
                   <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
@@ -68,28 +68,27 @@
                     <li><a class="dropdown-item" href="#">This Month</a></li>
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
-                </div>
+                </div> -->
 
                 <div class="card-body">
-                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                  <h5 class="card-title">Tổng số ROLES</h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-currency-dollar"></i>
+                      <i class="ri-admin-fill"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>$3,264</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <h6>{{ \Spatie\Permission\Models\Role::all()->count() }}</h6>
+                      <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
 
                     </div>
                   </div>
                 </div>
-
               </div>
             </div><!-- End Revenue Card -->
 
             <!-- Customers Card -->
-            <div class="col-xxl-4 col-xl-12">
+            <!-- <div class="col-xxl-4 col-xl-12">
 
               <div class="card info-card customers-card">
 
@@ -123,10 +122,11 @@
                 </div>
               </div>
 
-            </div><!-- End Customers Card -->
+            </div> -->
+            <!-- End Customers Card -->
 
             <!-- Reports -->
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div class="card">
 
                 <div class="filter">
@@ -145,7 +145,6 @@
                 <div class="card-body">
                   <h5 class="card-title">Reports <span>/Today</span></h5>
 
-                  <!-- Line Chart -->
                   <div id="reportsChart"></div>
                   <script>
                     document.addEventListener("DOMContentLoaded", () => {
@@ -200,15 +199,15 @@
                     });
                   </script>
                 
-                  <!-- End Line Chart -->
 
                 </div>
 
               </div>
-            </div><!-- End Reports -->
+            </div> -->
+            <!-- End Reports -->
 
             <!-- Recent Sales -->
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div class="card recent-sales overflow-auto">
 
                 <div class="filter">
@@ -279,10 +278,11 @@
                 </div>
 
               </div>
-            </div><!-- End Recent Sales -->
+            </div> -->
+            <!-- End Recent Sales -->
 
             <!-- Top Selling -->
-            <div class="col-12">
+            <!-- <div class="col-12">
               <div class="card top-selling overflow-auto">
 
                 <div class="filter">
@@ -353,7 +353,8 @@
                 </div>
 
               </div>
-            </div><!-- End Top Selling -->
+            </div> -->
+            <!-- End Top Selling -->
 
           </div>
         </div><!-- End Left side columns -->
@@ -361,8 +362,7 @@
         <!-- Right side columns -->
         <div class="col-lg-4">
 
-          <!-- Recent Activity -->
-          <div class="card">
+          <!-- <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -387,7 +387,7 @@
                   <div class="activity-content">
                     Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
                   </div>
-                </div><!-- End activity item-->
+                </div>
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">56 min</div>
@@ -395,7 +395,7 @@
                   <div class="activity-content">
                     Voluptatem blanditiis blanditiis eveniet
                   </div>
-                </div><!-- End activity item-->
+                </div>
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">2 hrs</div>
@@ -403,7 +403,7 @@
                   <div class="activity-content">
                     Voluptates corrupti molestias voluptatem
                   </div>
-                </div><!-- End activity item-->
+                </div>
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">1 day</div>
@@ -411,7 +411,7 @@
                   <div class="activity-content">
                     Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
                   </div>
-                </div><!-- End activity item-->
+                </div>
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">2 days</div>
@@ -419,7 +419,7 @@
                   <div class="activity-content">
                     Est sit eum reiciendis exercitationem
                   </div>
-                </div><!-- End activity item-->
+                </div>
 
                 <div class="activity-item d-flex">
                   <div class="activite-label">4 weeks</div>
@@ -427,15 +427,16 @@
                   <div class="activity-content">
                     Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
                   </div>
-                </div><!-- End activity item-->
+                </div>
 
               </div>
 
             </div>
-          </div><!-- End Recent Activity -->
+          </div> -->
+          <!-- End Recent Activity -->
 
           <!-- Budget Report -->
-          <div class="card">
+          <!-- <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -460,7 +461,6 @@
                       data: ['Allocated Budget', 'Actual Spending']
                     },
                     radar: {
-                      // shape: 'circle',
                       indicator: [{
                           name: 'Sales',
                           max: 6500
@@ -505,10 +505,11 @@
               </script>
 
             </div>
-          </div><!-- End Budget Report -->
+          </div> -->
+          <!-- End Budget Report -->
 
           <!-- Website Traffic -->
-          <div class="card">
+          <!-- <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -582,10 +583,11 @@
               </script>
               
             </div>
-          </div><!-- End Website Traffic -->
+          </div> -->
+          <!-- End Website Traffic -->
 
           <!-- News & Updates Traffic -->
-          <div class="card">
+          <!-- <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -633,10 +635,11 @@
                   <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
                 </div>
 
-              </div><!-- End sidebar recent posts-->
+              </div>
 
             </div>
-          </div><!-- End News & Updates -->
+          </div> -->
+          <!-- End News & Updates -->
 
         </div><!-- End Right side columns -->
 

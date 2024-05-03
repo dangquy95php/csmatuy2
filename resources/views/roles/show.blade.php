@@ -18,11 +18,11 @@
             <div class="card-body">
                 <div class="lead">
                     <strong>Name:</strong>
-                    {{ $user->name }}
+                   
                 </div>
                 <div class="lead">
                     <strong>Email:</strong>
-                    {{ $user->email }}
+                  
                 </div>
                 <div class="lead">
                     <strong>Password:</strong>

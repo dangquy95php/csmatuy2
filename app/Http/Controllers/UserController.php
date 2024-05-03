@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Hash;
 use App\Models\User;
+use App\Models\Team;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -12,6 +13,7 @@ use Spatie\Permission\Models\Role;
 use App\Http\Requests\User\CreateUserRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -22,7 +24,7 @@ class UserController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:user-list', ['only' => ['list','show']]);
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['list','store']]);
         $this->middleware('permission:user-create', ['only' => ['create','store']]);
         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
@@ -35,7 +37,12 @@ class UserController extends Controller
      */
     public function list(Request $request)
     {
-        $data = User::all();
+        if (!empty($request->input('search'))) {
+            $search = $request->input('search');;
+            $data = User::where('name', 'like', "%$search%")->with('team')->paginate(20);
+        } else {
+            $data = User::with('team')->paginate(20);
+        }
         
         foreach ($data as &$user) {
             $user->user_role = $user->roles->pluck('name', 'name')->all();
@@ -52,8 +59,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
+        $teams = Team::select('id', 'name')->get();
 
-        return view('users.create', compact('roles'));
+        return view('users.create', compact('roles', 'teams'));
     }
 
     /**
@@ -67,21 +75,20 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required_with:password_confirmation|same:password_confirmation',
-            'roles' => 'required'
+            'username' => 'required|alpha_dash|unique:users,username',
+            'password' => 'required',
+            'team_id' => 'required',
+            'roles' => 'required',
         ]);
-    
+
         $input = $request->all();
-        $input['password'] = trim($input['password']);
-        try {
-            $user = User::create($input);
-            $user->assignRole($request->input('roles'));
-            Toastr::success('Tạo người dùng thành công!');
-        } catch (\Exception $ex) {
-            Toastr::error('Tạo người dùng thất bại '. $ex->getMessage());
-        }
-        
-        return redirect()->route('user.list');
+        $input['password'] = $input['password'];
+    
+        $user = User::create($input);
+        $user->assignRole($request->input('roles'));
+    
+        return redirect()->route('user.list')
+            ->with('success', 'User created successfully.');
     }
 
     /**
@@ -172,7 +179,53 @@ class UserController extends Controller
     {
         User::find($id)->delete();
 
-        return redirect()->route('users.list')
+        return redirect()->route('user.list')
             ->with('success', 'User deleted successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        return view('users.profile');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function postProfile(Request $request)
+    {
+        try {
+            $user = User::find(Auth::user()->id);
+            if ($request->file('image')) {
+                $unix_timestamp = now()->timestamp;
+                $fileName = Auth::user()->username . '_' . $unix_timestamp;
+                $file = $request->file('image'); // Retrieve the uploaded file from the request
+                Storage::disk('local')->put('public/profile/'. $fileName .'_'. $file->getClientOriginalName(), file_get_contents($file));
+                
+                $user = auth()->user();
+                $user->image = $fileName .'_'. $file->getClientOriginalName();
+            }
+            $user->name = $request->input('name');
+            $user->save();
+    
+            if ($user->wasChanged()) {
+                Toastr::success('Cập nhật thông tin cá nhân thành công!');
+            } else {
+                Toastr::warning('Dữ liệu không có thay đổi');
+            }
+        } catch (\Exception $ex) {
+            Toastr::error('Cập nhật thất bại '. $ex->getMessage());
+            return redirect()->back();
+        }
+
+        return redirect()->back();
     }
 }
