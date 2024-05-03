@@ -10,6 +10,11 @@ use Brian2694\Toastr\Facades\Toastr;
 
 class ExcelImportController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:excel-import', ['only' => ['import','postImport']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

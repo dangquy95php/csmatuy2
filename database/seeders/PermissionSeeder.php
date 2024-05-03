@@ -41,5 +41,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'team-delete']);
         Permission::create(['name' => 'gate-create-staff']);
         Permission::create(['name' => 'gate-guest-student']);
+
+        Permission::create(['name' => 'excel-import']);
     }
 }

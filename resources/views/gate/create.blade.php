@@ -3,9 +3,9 @@
 
 @section('breadcrumb')
 
-   <h1>TẠO PHIẾU RA VÀO CỔNG</h1>
+  <h1>TẠO PHIẾU RA VÀO CỔNG</h1>
 
-   {{ Breadcrumbs::render('gate.create') }}
+  {{ Breadcrumbs::render('gate.create') }}
 
 @endsection
 
