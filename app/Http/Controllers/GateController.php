@@ -14,6 +14,8 @@ use App\Models\GuestStudents;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
+use Storage;
+use Auth;
 
 class GateController extends Controller
 {
@@ -94,10 +96,17 @@ class GateController extends Controller
         foreach ($teams as $items) {
             $data = [];
             foreach ($items->user as $value) {
+                $nameFile = '';
+                if (file_exists('storage/profile/'. $value->image)) {
+                    $nameFile = $value->image;
+                } else {
+                    $nameFile = 'default.jpg';
+                }
+
                 $object = new \stdClass;
                 $object->id = $value->id .'_'. $items->id;
                 $object->text = $value->name;
-                $object->image = 'hinh anh';
+                $object->image = $nameFile;
                 $object->department = $items->name;
 
                 array_push($data, $object);
@@ -309,6 +318,7 @@ class GateController extends Controller
                 $gate->user_id = @$idUserAndDepartment[0];
                 $gate->department = @$idUserAndDepartment[1];
                 $gate->count_request = $id;
+                $gate->auth_id = Auth::id();
                 
                 if($request->has('number_of_drug_addicts')) {
                     $gate->number_of_drug_addicts =  $request->get('number_of_drug_addicts');
@@ -369,6 +379,7 @@ class GateController extends Controller
             $drugAddict->type_gate = $request->get('type_gate');
             $drugAddict->kind_of_detox = $request->get('kind_of_detox');
             $drugAddict->car_number = $request->get('car_number');
+            $drugAddict->auth_id = Auth::id();
             if ($request->get('name_of_drug_addict')) {
                 $nameAddict = implode(",", $request->get('name_of_drug_addict'));
                 $drugAddict->name_of_drug_addict =  $nameAddict;
@@ -401,6 +412,7 @@ class GateController extends Controller
         $guestStudent->number_of_drug_addicts = $request->get('number_of_drug_addicts1');
         $guestStudent->type_gate = $request->get('type_gate');
         $guestStudent->note = $request->get('note2');
+        $guestStudent->auth_id = Auth::id();
         $guestStudent->created_at = $request->get('time2');
 
         $guestStudent->save();

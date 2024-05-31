@@ -20,6 +20,7 @@ class CreateGuestStudentsTable extends Migration
             $table->string('number_of_drug_addicts')->nullable();
             $table->boolean('type_gate');// 0 ra cong, 1 vao cong
             $table->string('note')->nullable();
+            $table->integer('auth_id');
             $table->timestamps();
         });
     }

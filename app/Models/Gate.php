@@ -40,7 +40,7 @@ class Gate extends Model
     {
         return $this->belongsTo(User::class)->select(['name','status', 'image', 'team_id', 'id']);
     }
-
+    
     public function team()
     {
         return $this->belongsTo(Team::class, 'department', 'id')->select(['name','id']);

@@ -73,6 +73,7 @@
                                     <th scope="col">Ghi chú</th>
                                     <th scope="col">Loại hình</th>
                                     <th scope="col">Bộ phận</th>
+                                    <th scope="col">Người tạo</th>
                                     <th scope="col">Thời gian</th>
                                 </tr>
                             </thead>
@@ -99,8 +100,8 @@
                                         <td rowspan="{{ @$gate->rowspan }}" class="align-middle">{{ $gate->note }}</td>
                                         <td rowspan="{{ @$gate->rowspan }}" class="align-middle">{!! $gate->type_gate == 0 ? '<span class="badge rounded-pill bg-danger">Ra cổng</span>' : '<span class="badge rounded-pill bg-success">Vào cổng</span>' !!}</td>
                                         @endif
-
                                         <td>{{ $gate->team->name }}</td>
+                                        <td>{{ App\Models\User::where('id', $gate->auth_id)->first()->name }}</td>
                                         @if (isset($gate->rowspan))
                                         <td rowspan="{{ @$gate->rowspan }}" class="align-middle">{{ $gate->created_at }}</td>
                                         @endif
@@ -127,6 +128,7 @@
                                     <th scope="col" class="type-gate">Loại hình</th>
                                     <th scope="col">Tên người cai nghiện</th>
                                     <th scope="col">Bản số xe</th>
+                                    <th scope="col">Người tạo</th>
                                     <th scope="col" class="time-title">Thời gian</th>
                                 </tr>
                             </thead>
@@ -140,6 +142,7 @@
                                     <td>{!! $item->kind_of_detox == 1 ? '<span class="badge rounded-pill bg-warning text-dark">Bắt buộc</span>' : '<span class="badge rounded-pill bg-info text-dark">Tự nguyện</span>' !!}</td>
                                     <td>{{ $item->name_of_drug_addict }}</td>
                                     <td>{{ $item->car_number }}</td>
+                                    <td>{{ App\Models\User::where('id', $item->auth_id)->first()->name }}</td>
                                     <td>{{ $item->created_at }}</td>
                                 </tr>
                                 @endforeach
@@ -159,6 +162,7 @@
                                     <th scope="col" class="type-gate">Loại hình</th>
                                     <th class="text-center" scope="col">Số người cai nghiện</th>
                                     <th scope="col">Bản số xe</th>
+                                    <th scope="col">Người tạo</th>
                                     <th scope="col" class="time-title">Thời gian</th>
                                 </tr>
                             </thead>
@@ -171,6 +175,7 @@
                                     <td>{!! $item->type_gate == 0 ? '<span class="badge rounded-pill bg-danger">Ra cổng</span>' : '<span class="badge rounded-pill bg-success">Vào cổng</span>' !!}</td>
                                     <td class="text-center">{{ $item->number_of_drug_addicts }}</td>
                                     <td>{{ $item->car_number }}</td>
+                                    <td>{{ App\Models\User::where('id', $item->auth_id)->first()->name }}</td>
                                     <td>{{ $item->created_at }}</td>
                                 </tr>
                                 @endforeach

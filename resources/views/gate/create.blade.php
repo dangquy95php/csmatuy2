@@ -577,9 +577,9 @@
       if (state.selected == false) {
         return state.text;
       }
-      var baseUrl = "/user/pages/images/flags";
+      var baseUrl = "<?php echo asset('storage/profile/'); ?>"+"/"+ state.image;
       var $state = $(
-        '<span><img src="https://www.dalattrip.com/media/2012/10/Dalat-city-from-flycam.jpg" class="image-team" />&nbsp;&nbsp;' + state.text + '</span>'
+        '<span><img src="'+ baseUrl +'" class="image-team" />&nbsp;&nbsp;' + state.text + '</span>'
       );
       return $state;
     };

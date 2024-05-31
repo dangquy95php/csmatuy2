@@ -21,6 +21,7 @@ class CreateGatesTable extends Migration
             $table->boolean('type_gate')->default(0);
             $table->integer('department');
             $table->integer('count_request');
+            $table->integer('auth_id');
             $table->timestamps();
         });
     }
