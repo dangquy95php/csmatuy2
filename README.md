@@ -1,5 +1,5 @@
 ### Hướng dẫn chạy code local
-`composer install --ignore-platform-reqs`
+`composer i --ignore-platform-req=ext-gd`
 ### File cài đặt xampp
 `xampp-windows-x64-8.0.28-0-VS16-installer`
 ### Phiên bản php
