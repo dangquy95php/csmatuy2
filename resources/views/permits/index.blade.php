@@ -22,6 +22,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Người tải ảnh</th>
+                    <th scope="col">Ghi chú</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
                         <a href="{{ route('permit.create') }}" type="button" class="btn btn-primary btn-sm">Thêm</a>
@@ -52,6 +53,7 @@
                             </div>
                         </td>
                         <td>{{ $permit->user->username }}</td>
+                        <td>{{ $permit->note }}</td>
                         <td>{{ $permit->created_at }}</td>
                         <td>
                             <a href="{{ route('permit.edit', $permit->id) }}" class="btn btn-success btn-sm">Sửa</a>

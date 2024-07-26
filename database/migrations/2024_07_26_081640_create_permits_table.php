@@ -17,6 +17,7 @@ class CreatePermitsTable extends Migration
             $table->id();
             $table->string('image')->nullable();
             $table->integer('user_id');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

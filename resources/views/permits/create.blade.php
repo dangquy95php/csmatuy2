@@ -20,11 +20,16 @@
             <form class="row g-3" method="POST" enctype="multipart/form-data">
             @csrf
                 <div class="col-12">
-                    <label for="inputNanme4" class="form-label">Tải hình ảnh phép:</label>
+                    <label for="inputNanme4" class="form-label">
+                        <b>Tải hình ảnh phép:</b>
+                    </label>
                     <input name="image" accept="image/png, image/jpeg" class="form-control" type="file" id="formFile">
                     @include('_partials.alert', ['field' => 'image'])
+                    <label for="inputNanme4" class="form-label mt-3">
+                        <b>Ghi chú:</b>
+                    </label>
+                    <textarea class="form-control area-note" name="note" placeholder="Vui lòng nhập ghi chú" id="floatingTextarea" style="height: 200px;"></textarea>
                 </div>
-                
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                 </div>

@@ -60,6 +60,11 @@ class PermitController extends Controller
           'image.mimes' => 'Có lỗi đã xảy ra!',
         ]);
 
+        try {
+            //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         $model = new Permit();
         $unix_timestamp = now()->timestamp;
         $fileName = Auth::user()->username . '_' . $unix_timestamp;
@@ -75,8 +80,11 @@ class PermitController extends Controller
         
         $model->image = $fileName .'_'. $file->getClientOriginalName();
         $model->user_id = Auth::user()->id;
+        $model->note = $request->get('note');
+
         $model->save();
-        
+        Toastr::success('Tải ảnh phép lên thành công!');
+
         return redirect()->route('permit.index');
     }
 
