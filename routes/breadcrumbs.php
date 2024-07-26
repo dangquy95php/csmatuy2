@@ -97,6 +97,17 @@ Breadcrumbs::for('team.edit', function ($trail, $teams) {
     $trail->push('Chỉnh sửa Phòng/Khu '. $teams->name, route('team.edit', $teams->id));
 });
 
+Breadcrumbs::for('permit.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách phép', route('permit.index'));
+});
+
+Breadcrumbs::for('permit.create', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tạo phép', route('permit.create'));
+});
+
+
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');
 //     $trail->push('Cập nhật nhân viên', route('user.edit'));

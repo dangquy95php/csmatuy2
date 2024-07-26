@@ -79,6 +79,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/note/{id}/edit', 'GateController@noteUpdate')->name('gate.note-update');
         Route::get('/note/{id}/destroy', 'GateController@noteDestroy')->name('gate.note-destroy');
     });
+
+    Route::group(['prefix' => 'permit'], function () {
+        Route::get('/index', 'PermitController@index')->name('permit.index');
+        Route::get('/create', 'PermitController@create')->name('permit.create');
+        Route::post('/create', 'PermitController@store')->name('permit.store');
+        Route::get('/{id}/edit', 'PermitController@edit')->name('permit.edit');
+        Route::post('/{id}/edit', 'PermitController@update')->name('permit.update');
+        Route::get('/{id}/destroy', 'PermitController@destroy')->name('permit.destroy');
+    });
 });
 
 Route::get('/', 'ChatsController@index');

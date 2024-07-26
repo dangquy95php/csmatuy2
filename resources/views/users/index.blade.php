@@ -39,7 +39,7 @@
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
-                    @canany(['user-edit', 'user-delete', 'user-create'])
+                    @canany('user-create')
                     <th scope="col">
                         <a href="{{ route('user.create') }}" type="button" class="btn btn-primary btn-sm">Thêm</a>
                     </th>
@@ -89,8 +89,12 @@
                         </td>
                         <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
                         <td>
+                            @canany('user-edit')
                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success  btn-sm">Sửa</a>
+                            @endcanany
+                            @canany('user-delete')
                             <a href="{{ route('user.destroy', $user->id) }}" onclick="return confirm('Bạn có muốn xóa {{ $user->name }} không?')" class="btn btn-danger btn-sm">Xóa</a>
+                            @endcanany
                         </td>
                     </tr>
                     @endforeach

@@ -12,6 +12,7 @@ use Hash;
 use Auth;
 use App\Models\Message;
 use App\Models\Team;
+use App\Models\Permit;
 
 class User extends Authenticatable
 {

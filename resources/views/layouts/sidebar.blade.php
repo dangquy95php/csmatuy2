@@ -1,6 +1,5 @@
 
   <!-- ======= Sidebar ======= -->
-  @role('admin')
   <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -11,6 +10,8 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
+      @role('admin')
+
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/roles/*') || request()->is('admin/permission/*') ? '' : 'collapsed' }}" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="ri-parent-line"></i><span>Quản lý phân quyền</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -28,6 +29,7 @@
           </li>
         </ul>
       </li><!-- End Forms Nav -->
+    @endrole
       
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/team/*') || request()->is('admin/team/*') ? '' : 'collapsed' }}" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
@@ -92,7 +94,7 @@
           </li>
         </ul>
       </li><!-- End Tables Nav -->
-
+      @role('admin')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/excel/*') || request()->is('admin/excel/*') ? '' : 'collapsed' }}" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
           <i class="ri-file-excel-2-line"></i><span>Excel</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -115,6 +117,20 @@
           </li> -->
         </ul>
       </li><!-- End Icons Nav -->
+      @endrole
+
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/permit/*') || request()->is('admin/permit/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav1" data-bs-toggle="collapse" href="#">
+          <i class="ri-ancient-gate-line"></i><span>Quản lý phép</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav1" class="nav-content collapse {{ request()->is('admin/permit/*') || request()->is('admin/permit/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('permit.index') }}" class="{{ request()->is('admin/permit/index') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách phép</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
 
       <!-- <li class="nav-heading">Quản lý lịch nghỉ phép</li>
 
@@ -177,4 +193,3 @@
     </ul>
 
   </aside><!-- End Sidebar-->
-  @endrole

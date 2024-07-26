@@ -40,7 +40,7 @@ class GateController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {       
         $gate = '';
         if (is_null($request->get('type_gate'))) {
             $gate = Gate::ALL;
@@ -65,10 +65,9 @@ class GateController extends Controller
             }
         }
         // $dataGroup = $data;
-        $data = $dataGroup->paginate(20);
+        $data = $dataGroup->paginate(2);
 
         $drugAddict = DrugAddict::orderBy('id', 'DESC')->paginate(20);
-
         $guestStudent = GuestStudents::orderBy('id', 'DESC')->paginate(20);
 
         return view('gate.index', compact('data', 'drugAddict', 'guestStudent'));

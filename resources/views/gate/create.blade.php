@@ -39,7 +39,7 @@
                                 <!-- <h5 class="card-title">Horizontal Form</h5> -->
                                 <!-- Horizontal Form -->
                                 <form action="{{ route('gate.create.staff') }}#home-tab" method="post" accept-charset="UTF-8">
-                                @csrf 
+                                @csrf
                                     <div class="row mb-3">
                                       <label for="inputEmail3" class="col-sm-3 col-form-label">Tên nhân viên:<code>*</code></label>
                                       <div class="col-sm-9">
