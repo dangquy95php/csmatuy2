@@ -36,7 +36,7 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Phòng/Khu:</h6>
-              <span>{{ auth()->user()->load(['team'])->team->name; }}</span>
+              <span>{{ auth()->user()->load(['team'])->team ? auth()->user()->load(['team'])->team->name : 'Không thuộc Team'; }}</span>
             </li>
             <li>
               <hr class="dropdown-divider">

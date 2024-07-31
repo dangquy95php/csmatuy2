@@ -88,6 +88,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/{id}/edit', 'PermitController@update')->name('permit.update');
         Route::get('/{id}/destroy', 'PermitController@destroy')->name('permit.destroy');
     });
+
+    Route::group(['prefix' => 'log'], function () {
+        Route::get('/index', 'LogController@index')->name('log.index');
+        Route::get('/create', 'LogController@create')->name('log.create');
+        Route::post('/create', 'LogController@store')->name('log.store');
+        Route::get('/{id}/edit', 'LogController@edit')->name('log.edit');
+        Route::post('/{id}/edit', 'LogController@update')->name('log.update');
+        Route::get('/{id}/destroy', 'LogController@destroy')->name('log.destroy');
+    });
 });
 
 Route::get('/', 'ChatsController@index');

@@ -25,11 +25,10 @@ class TeamSeeder extends Seeder
         
 
         Team::create(['name' => 'Ban Giám Đốc', 'note' => 'Ban Giám đốc']);
-        Team::create(['name' => 'Phòng TC-HC', 'note' => 'Phòng Tổ chức - Hành chính']);
-        Team::create(['name' => 'Phòng GD-TV', 'note' => 'Phòng Giáo dục - Tư vấn']);
-        Team::create(['name' => 'Phòng KH-TC', 'note' => 'Phòng Kế hoạch - Tài chính']);
-        Team::create(['name' => 'Phòng ANTT', 'note' => 'Phòng ANTT - QLHV']);
-        Team::create(['name' => 'Phòng Y-Te', 'note' => 'Phòng Y tế']);
-
+        Team::create(['name' => 'Phòng TC-HC', 'note' => 'Phòng Tổ chức - Hành chính', 'type' => 2]);
+        Team::create(['name' => 'Phòng GD-TV', 'note' => 'Phòng Giáo dục - Tư vấn', 'type' => 2]);
+        Team::create(['name' => 'Phòng KH-TC', 'note' => 'Phòng Kế hoạch - Tài chính', 'type' => 2]);
+        Team::create(['name' => 'Phòng ANTT', 'note' => 'Phòng ANTT - QLHV', 'type' => 2]);
+        Team::create(['name' => 'Phòng Y-Te', 'note' => 'Phòng Y tế', 'type' => 2]);
     }
 }

@@ -57,7 +57,7 @@
                                 <span class="badge bg-secondary">{{$value}}</span>
                             @endforeach
                         </td>
-                        <td>{{ $user->team->name }}</td>
+                        <td>{{ $user->team ? $user->team->name : 'Không thuộc team' }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
                             <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}" src="{{ !file_exists('storage/profile/'.$user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image)}}" style="width:70px;" class="img-fluid img-thumbnail" alt="">
@@ -65,7 +65,7 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">{{ $user->team->name }}: <b>{{ $user->name }}</b></h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ $user->team ? $user->team->name : 'Không thuộc team' }}: <b>{{ $user->name }}</b></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">

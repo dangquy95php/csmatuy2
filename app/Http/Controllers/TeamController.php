@@ -60,6 +60,8 @@ class TeamController extends Controller
     
         $team = Team::create([
             'name' => trim($request->input('name')),
+            'note' => trim($request->input('note')),
+            'type' => trim($request->input('type')) != '' ? trim($request->input('type')) : null,
         ]);
        
         Toastr::success('Tạo khu thành công!');
@@ -107,6 +109,8 @@ class TeamController extends Controller
         ]);
         $team = Team::find($id);
         $team->name = trim($request->input('name'));
+        $team->note = trim($request->input('note'));
+        $team->type = trim($request->input('type')) != '' ? trim($request->input('type')) : null;
         $team->save();
 
         if ($team->wasChanged()) {

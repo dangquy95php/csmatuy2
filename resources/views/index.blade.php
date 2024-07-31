@@ -44,7 +44,7 @@
                       <i class="ri-user-3-line"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>{{ \App\Models\User::all()->count() }}</h6>
+                      <h6>{{ \App\Models\User::where('team_id', '<>', '')->count() }}</h6>
                       <!-- <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span> -->
                     </div>
                   </div>
@@ -356,12 +356,42 @@
             </div> -->
             <!-- End Top Selling -->
 
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Danh Sách Cán Bộ Phòng Chưa Vào Cổng Trong Ngày.</h5>
+
+                  <!-- Default Table -->
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Start Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">5</th>
+                        <td>Raheem Lehner</td>
+                        <td>Dynamic Division Officer</td>
+                        <td>47</td>
+                        <td>2011-04-19</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- End Default Table Example -->
+                </div>
+              </div>
+            </div>
           </div>
         </div><!-- End Left side columns -->
 
         <!-- Right side columns -->
         <div class="col-lg-4">
-
+            
           <!-- <div class="card">
             <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -642,7 +672,7 @@
           <!-- End News & Updates -->
 
         </div><!-- End Right side columns -->
-
+       
       </div>
     </section>
 

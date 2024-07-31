@@ -20,8 +20,8 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Hình ảnh</th>
-                    <th scope="col">Người tải ảnh</th>
+                    <th scope="col">Tên tập tin</th>
+                    <th scope="col">Người tải file</th>
                     <th scope="col">Ghi chú</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
@@ -34,7 +34,8 @@
                     <tr>
                         <th scope="row">{{ $key + 1 }}</th>
                         <td>
-                            <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}" src="{{ !file_exists('storage/permit/'.$permit->image) ? asset('storage/permit/default.jpg') : asset('storage/permit/'.$permit->image)}}" style="width:70px;" class="img-fluid img-thumbnail" alt="">
+                        <a href="{{ Storage::url('permit/'. $permit->name_file) }}" download><span role="button" class="text-success"><i class="bi bi-file-earmark-excel"></i></span>{{ $permit->name_file }}</a>
+                            <!-- <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}" src="{{ !file_exists('storage/permit/'.$permit->image) ? asset('storage/permit/default.jpg') : asset('storage/permit/'.$permit->image)}}" style="width:70px;" class="img-fluid img-thumbnail" alt=""> -->
                             <div class="modal fade" id="exampleModal{{ $key + 1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -56,8 +57,7 @@
                         <td>{{ $permit->note }}</td>
                         <td>{{ $permit->created_at }}</td>
                         <td>
-                            <a href="{{ route('permit.edit', $permit->id) }}" class="btn btn-success btn-sm">Sửa</a>
-                            <a href="{{ route('permit.destroy', $permit->id) }}" onclick="return confirm('Bạn có muốn xóa {{ $permit->name }} không?')" class="btn btn-danger btn-sm">Xóa</a>
+                            <a href="{{ route('permit.destroy', $permit->id) }}" onclick="return confirm('Bạn có muốn xóa {{ $permit->name_file }} không?')" class="btn btn-danger btn-sm">Xóa</a>
                         </td>
                     </tr>
                     @endforeach

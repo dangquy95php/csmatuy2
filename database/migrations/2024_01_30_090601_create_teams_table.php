@@ -17,6 +17,7 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('name', 200)->unique();
             $table->string('note', 200)->unique();
+            $table->integer('type')->nullable();
             $table->timestamps();
         });
     }

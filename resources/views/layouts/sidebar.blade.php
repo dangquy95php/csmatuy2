@@ -132,6 +132,19 @@
         </ul>
       </li><!-- End Tables Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/log/*') || request()->is('admin/log/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav2" data-bs-toggle="collapse" href="#">
+          <i class="bx bxl-blogger"></i><span>Quản lý log</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav2" class="nav-content collapse {{ request()->is('admin/log/*') || request()->is('admin/log/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('log.index') }}" class="{{ request()->is('admin/log/index') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách log</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
       <!-- <li class="nav-heading">Quản lý lịch nghỉ phép</li>
 
       <li class="nav-item">

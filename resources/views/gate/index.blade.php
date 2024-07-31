@@ -80,13 +80,16 @@
                             <tbody>
                                 @php
                                 $id = 1;
+                                if ($data->currentPage() != 1) {
+                                    $id = $data->currentPage() * $data->perPage();
+                                }
                                 @endphp
                                 @foreach ($data as $key => $gates)
                                     @foreach ($gates as $k => $gate)
                                     <tr>
                                         <th scope="row">{{ $id }}</th>
                                         <td>
-                                            {{ $gate->user->name }}
+                                            {{ $gate->user ? $gate->user->name : 'Không tồn tại'}}
                                         </td>
                                         @php
                                             $html = '<span class="badge rounded-pill bg-danger">';

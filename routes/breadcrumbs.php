@@ -107,6 +107,11 @@ Breadcrumbs::for('permit.create', function ($trail) {
     $trail->push('Tạo phép', route('permit.create'));
 });
 
+Breadcrumbs::for('log.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách log', route('log.index'));
+});
+
 
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');

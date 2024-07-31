@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\Permit;
+use App\Models\Log;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use Image;
 
-class PermitController extends Controller
+class LogController extends Controller
 {
     /**
      * create a new instance of the class
@@ -21,7 +21,7 @@ class PermitController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:permit-list', ['only' => ['index']]);
+        $this->middleware('permission:log-list', ['only' => ['index']]);
     }
 
     /**
@@ -31,9 +31,9 @@ class PermitController extends Controller
      */
     public function index(Request $request)
     {       
-        $data = Permit::with('user')->paginate(20);
+        $data = Log::with('user')->orderBy('created_at','desc')->paginate(20);
 
-        return view('permits.index', compact('data'));
+        return view('log.index', compact('data'));
     }
 
     /**

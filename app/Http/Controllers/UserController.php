@@ -14,6 +14,9 @@ use App\Http\Requests\User\CreateUserRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Database\Eloquent\Model;
 
 class UserController extends Controller
 {
@@ -178,9 +181,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
+        Toastr::success('Xóa người dùng thành công!');
 
-        return redirect()->route('user.list')
-            ->with('success', 'User deleted successfully.');
+        return redirect()->route('user.list');
     }
 
     /**

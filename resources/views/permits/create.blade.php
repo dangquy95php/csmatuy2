@@ -21,9 +21,9 @@
             @csrf
                 <div class="col-12">
                     <label for="inputNanme4" class="form-label">
-                        <b>Tải hình ảnh phép:</b>
+                        <b>Tải tập tin phép:</b>
                     </label>
-                    <input name="image" accept="image/png, image/jpeg" class="form-control" type="file" id="formFile">
+                    <input name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" class="form-control" type="file" id="formFile">
                     @include('_partials.alert', ['field' => 'image'])
                     <label for="inputNanme4" class="form-label mt-3">
                         <b>Ghi chú:</b>

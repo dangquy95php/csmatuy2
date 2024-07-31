@@ -13,10 +13,15 @@ use Auth;
 use App\Models\Message;
 use App\Models\Team;
 use App\Models\Permit;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    use LogsActivity;
 
     const NOT_ACTIVATED = 0;
     const ENABLE = 1;
@@ -62,6 +67,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['name', 'email', 'image', 'status', 'is_account_enabled', 'team_id']);
+    }
 
     public function setPasswordAttribute($value)
     {

@@ -24,6 +24,18 @@
                     <input type="text" name="name" value="{{old('name', $team->name)}}" class="form-control" id="inputNanme4">
                     @include('_partials.alert', ['field' => 'name'])
                 </div>
+                <div class="col-12">
+                    <label for="inputNanme4" class="form-label">Ghi chú:</label>
+                    <textarea class="form-control" name="note" placeholder="Vui lòng nhập ghi chú" id="floatingTextarea" style="height: 100px;">{{ $team->note }}</textarea>
+                </div>
+                <div class="col-12">
+                    <label for="inputNanme4" class="form-label">Loại hình:</label>
+                    <select class="form-select" name="type" aria-label="Default select example">
+                        @foreach(\App\Models\Team::WORK_HOUR as $key => $value)
+                            <option  value="{{ $key }}" {{ $key == $team->type ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>

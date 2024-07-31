@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Team;
 use Carbon\Carbon;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Gate extends Model
 {
     use HasFactory;
+
+    use LogsActivity;
 
     /**
      * Fields that are mass assignable
@@ -35,6 +39,8 @@ class Gate extends Model
         self::OUT => 'Ra cổng',
         self::IN => 'Vào cổng',
     ];
+
+
 
     public function user()
     {
@@ -72,5 +78,11 @@ class Gate extends Model
     public function scopeToday($query)
     {
         return $query->whereDate('created_at', Carbon::today());
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['user_id', 'number_of_drug_addicts', 'note', 'type_gate', 'department', 'created_at']);
     }
 }

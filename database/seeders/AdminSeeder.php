@@ -25,7 +25,7 @@ class AdminSeeder extends Seeder
             'status' => '1',
             'email_verified_at' => now(),
             'password' => 'username1',
-            'team_id' => 2,
+            'team_id' => null,
         ]);
 
         $role = Role::create(['name' => 'staff']);
@@ -42,7 +42,7 @@ class AdminSeeder extends Seeder
             'status' => '1',
             'email_verified_at' => now(),
             'password' => 'admin',
-            'team_id' => 2,
+            'team_id' => null
         ]);
 
         $role1 = Role::create(['name' => 'admin']);
@@ -59,7 +59,7 @@ class AdminSeeder extends Seeder
             'status' => '1',
             'email_verified_at' => now(),
             'password' => 'phophong',
-            'team_id' => 3,
+            'team_id' => null
         ]);
 
         $role = Role::create(['name' => 'deputy']);
@@ -76,7 +76,7 @@ class AdminSeeder extends Seeder
             'status' => '1',
             'email_verified_at' => now(),
             'password' => 'truongphong',
-            'team_id' => 4,
+            'team_id' =>  null
         ]);
 
         $role = Role::create(['name' => 'manager']);
