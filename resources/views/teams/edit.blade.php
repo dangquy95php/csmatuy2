@@ -36,7 +36,6 @@
                         @endforeach
                     </select>
                 </div>
-                
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
                 </div>

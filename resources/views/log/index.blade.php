@@ -26,9 +26,9 @@
                         <th scope="col">Sự kiện</th>
                         <th scope="col">Subject ID</th>
                         <th scope="col">Causer type</th>
-                        <th scope="col">Thuộc tính</th>
                         <th scope="col">Người tạo</th>
                         <th scope="col">Ngày tạo</th>
+                        <th scope="col">Thuộc tính</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,6 +47,8 @@
                         <td>{{ $log->event }}</td>
                         <td>{{ $log->subject_id }}</td>
                         <td>{{ $log->causer_type }}</td>
+                        <td>{{ @$log->user->name }}</td>
+                        <td>{{ $log->created_at }}</td>
                         <td>
                            <span class="badge bg-primary"><?php
                            print_r(@$json['attributes']);
@@ -55,8 +57,6 @@
                            print_r(@$json['old']);
                            ?></span>
                         </td>
-                        <td>{{ @$log->user->name }}</td>
-                        <td>{{ $log->created_at }}</td>
                     </tr>
                     @php
                     $id++;

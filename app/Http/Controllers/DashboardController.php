@@ -7,7 +7,8 @@ use Brian2694\Toastr\Facades\Toastr;
 use Auth;
 use Carbon\Carbon;
 use App\Models\Gate;
-
+use App\Models\Team;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -18,14 +19,17 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        $timeNow = Carbon::now();
-        // dd($timeNow);
-        // $data = Gate::with('team')->whereDate('created_at', Carbon::today())->get();
+        $gateIDUsers = Gate::whereDate('gates.created_at', Carbon::today())
+                        ->join('teams', 'teams.id', '=', 'gates.department')
+                        ->where('teams.type', Team::OFFICE_HOUR)->pluck('user_id');
 
-        $data = Gate::with(['team' => fn($query) => $query->where('type', '=', 2)])->whereDate('created_at', Carbon::today())->get();
+        $datas = User::
+            join('teams', 'teams.id', '=', 'users.team_id')
+            ->where('teams.type', '=', Team::OFFICE_HOUR)
+            ->select('users.name', 'users.email', 'users.image', 'users.team_id')
+            ->whereNotIn('users.id', $gateIDUsers)->paginate(10);
 
-
-        return view('index');
+        return view('index', compact('datas'));
     }
 
     public function logout(Request $request)

@@ -356,39 +356,50 @@
             </div> -->
             <!-- End Top Selling -->
 
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Danh Sách Cán Bộ Phòng Chưa Vào Cổng Trong Ngày.</h5>
+          </div>
+        
+        </div><!-- End Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+              <div class="col-md-8">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Danh Sách Cán Bộ Phòng Chưa Vào Cổng Trong Ngày.</h5>
 
-                  <!-- Default Table -->
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Position</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Start Date</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">5</th>
-                        <td>Raheem Lehner</td>
-                        <td>Dynamic Division Officer</td>
-                        <td>47</td>
-                        <td>2011-04-19</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!-- End Default Table Example -->
+                    <!-- Default Table -->
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Tên</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Phòng</th>
+                          <th scope="col">Hình ảnh</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($datas as $key => $value)
+                        <tr>
+                          <th scope="row">{{ $key + 1 }}</th>
+                          <td>{{ $value->name  }}</td>
+                          <td>{{ $value->email }}</td>
+                          <td>{{ @$value->team->name }}</td>
+                          <td>
+                            <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}"
+                            src="{{ !file_exists('storage/profile/'. @$value->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'. @$value->image)}}"
+                            style="width:70px;" class="img-fluid img-thumbnail" alt="">
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                    <!-- End Default Table Example -->
+                    {!! $datas->links('_partials.pagination') !!}
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
-        </div><!-- End Left side columns -->
-
+        </div>
         <!-- Right side columns -->
         <div class="col-lg-4">
             

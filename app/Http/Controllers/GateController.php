@@ -65,7 +65,7 @@ class GateController extends Controller
             }
         }
         // $dataGroup = $data;
-        $data = $dataGroup->paginate(5);
+        $data = $dataGroup->paginate(20);
 
         $drugAddict = DrugAddict::orderBy('id', 'DESC')->paginate(20);
         $guestStudent = GuestStudents::orderBy('id', 'DESC')->paginate(20);
