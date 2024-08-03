@@ -36,7 +36,7 @@
 
     @include('layouts.sidebar')
 
-    <main id="{{ (Auth::user()->hasRole('admin')) ? 'main' : '' }}" class="main">
+    <main id="main" class="main">
 
         <div class="pagetitle">
 

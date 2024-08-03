@@ -16,7 +16,7 @@ class CreatePermitsTable extends Migration
         Schema::create('permits', function (Blueprint $table) {
             $table->id();
             $table->string('name_file')->nullable();
-            $table->integer('user_id');
+            $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('note')->nullable();
             $table->timestamps();
         });

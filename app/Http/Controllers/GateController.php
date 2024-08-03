@@ -106,7 +106,7 @@ class GateController extends Controller
                 $object->id = $value->id .'_'. $items->id;
                 $object->text = $value->name;
                 $object->image = $nameFile;
-                $object->department = $items->name;
+                $object->team_id = $items->name;
 
                 array_push($data, $object);
             }
@@ -315,7 +315,7 @@ class GateController extends Controller
 
                 $gate = new Gate();
                 $gate->user_id = @$idUserAndDepartment[0];
-                $gate->department = @$idUserAndDepartment[1];
+                $gate->team_id = @$idUserAndDepartment[1];
                 $gate->count_request = $id;
                 $gate->auth_id = Auth::id();
                 

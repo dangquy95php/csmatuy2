@@ -45,7 +45,7 @@ class UserImport implements ToModel, WithHeadingRow, WithStartRow, WithChunkRead
     
                 DB::beginTransaction();
                 $input['name'] = $row['ho_va_ten'];
-                $input['password'] = Hash::make(12345678);
+                $input['password'] = 12345678;
                 $input['team_id'] = $teamId->id;
                 $input['image'] = \Illuminate\Support\Str::upper($row['ho_va_ten']).'.jpg';
                 if ($row['ho_va_ten'] == 'Cao Văn Tuấn') {

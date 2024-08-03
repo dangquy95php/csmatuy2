@@ -13,6 +13,7 @@ use Auth;
 use App\Models\Message;
 use App\Models\Team;
 use App\Models\Permit;
+use App\Models\UserInfor;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
@@ -92,5 +93,10 @@ class User extends Authenticatable
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function user_infor()
+    {
+        return $this->hasOne(UserInfor::class);
     }
 }

@@ -26,7 +26,7 @@ class Gate extends Model
         'note',
         'type_gate',
         'user_id',
-        'department',
+        'team_id',
         'count_request',
     ];
     
@@ -49,7 +49,7 @@ class Gate extends Model
     
     public function team()
     {
-        return $this->belongsTo(Team::class, 'department', 'id')->select(['name','id']);
+        return $this->belongsTo(Team::class, 'team_id', 'id')->select(['name','id']);
     }
 
     public function scopeStartDate($query, $date)
@@ -83,6 +83,6 @@ class Gate extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['user_id', 'number_of_drug_addicts', 'note', 'type_gate', 'department', 'created_at']);
+        ->logOnly(['user_id', 'number_of_drug_addicts', 'note', 'type_gate', 'team_id', 'created_at']);
     }
 }

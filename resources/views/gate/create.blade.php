@@ -588,7 +588,7 @@
       if(/Location\:/.test(data.text)) {
         return '<span class="location">'+ data.text +'</span>';
       } else {
-        return data.text +' - '+ '<span class="badge rounded-pill bg-primary">'+ data.department +'</span>';
+        return data.text +' - '+ '<span class="badge rounded-pill bg-primary">'+ data.team_id +'</span>';
       }
     }
 

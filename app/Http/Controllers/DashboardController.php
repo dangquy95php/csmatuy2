@@ -20,7 +20,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $gateIDUsers = Gate::whereDate('gates.created_at', Carbon::today())
-                        ->join('teams', 'teams.id', '=', 'gates.department')
+                        ->join('teams', 'teams.id', '=', 'gates.team_id')
                         ->where('teams.type', Team::OFFICE_HOUR)->pluck('user_id');
 
         $datas = User::

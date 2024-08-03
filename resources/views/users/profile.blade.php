@@ -23,7 +23,19 @@
                         <div class="row mb-3">
                             <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Ảnh cá nhân:</label>
                             <div class="col-md-8 col-lg-9">
-                            <img src="{{ !empty(Auth::user()->image) ? asset('storage/profile/'. Auth::user()->image) : asset('storage/profile/default.jpg') }}" alt="Profile" class="img-thumbnail">
+                            @php
+                            $image = '';
+                            if(empty(Auth::user()->image)) {
+                                if (@Auth::user()->user_infor->gioi_tinh == 1) {
+                                    $image = 'default-male.jpg';
+                                } else {
+                                    $image = 'default-female.jpg';
+                                }
+                            } else {
+                                $image = Auth::user()->image;
+                            }
+                            @endphp
+                            <img src="{{asset('storage/profile/'.$image)}}" alt="Profile" class="w-25 img-thumbnail">
                             <div class="pt-2">
                                 <span class="btn btn-primary btn-sm" title="Upload new profile image">
                                     <input name="image" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" accept="image/png, image/jpeg" />
@@ -31,6 +43,29 @@
                                 </span>
                                 <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                             </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title">Thông tin</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Vui lòng kiểm tra lại thông tin của bạn.<br/>
+                                                <span class="text-danger">Hình đại diện bắt buộc phải tải lên.<br/></span>
+                                                <span class="text-danger">Email bắt buộc phải có.<br/></span>
+                                                Nếu thông tin chưa được cập nhật. Xin vui lòng hãy cập nhật.
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div><!-- End Basic Modal-->
+                                </div>
                             </div>
                         </div>
 
@@ -76,7 +111,8 @@
                         <div class="row mb-3">
                             <label for="Country" class="col-md-4 col-lg-3 col-form-label">Khu:</label>
                             <div class="col-md-8 col-lg-9">
-                                <input name="team" type="text" class="form-control" id="Country" readonly value="{{ auth()->user()->load(['team'])->team->name; }}">
+                                <input name="team" type="text" class="form-control" id="Country"
+                                readonly value="{{ auth()->user()->load(['team'])->team ? auth()->user()->load(['team'])->team->name : 'Không có hình ảnh'; }}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -96,3 +132,15 @@
     </div>
 </section>
 @endsection
+
+@push('scripts')
+isHasData
+<script type="text/javascript">
+    var isHasData = JSON.parse("{{ $isHasData }}");
+    $(document).ready(function() {
+        if (isHasData) {
+            $('#basicModal').modal('show');
+        }
+    });
+</script>
+@endpush

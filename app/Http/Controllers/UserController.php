@@ -194,7 +194,13 @@ class UserController extends Controller
      */
     public function profile()
     {
-        return view('users.profile');
+        $user = Auth::user();
+        $isHasData = false;
+        if (empty($user->email) || empty($user->image)) {
+            $isHasData = true;
+        }
+
+        return view('users.profile', compact('isHasData'));
     }
 
     /**

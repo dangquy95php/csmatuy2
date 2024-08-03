@@ -21,7 +21,7 @@ class CreateDrugAddictsTable extends Migration
             $table->boolean('kind_of_detox')->default(0);// 0 tu nguyen, 1 bat buoc
             $table->string('name_of_drug_addict')->nullable();
             $table->string('car_number')->nullable();
-            $table->integer('auth_id');
+            $table->integer('auth_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
