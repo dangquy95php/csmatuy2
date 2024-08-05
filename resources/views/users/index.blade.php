@@ -70,7 +70,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <img class="img-fluid w-100" src="{{ !file_exists('storage/profile/'.$user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image) }}" alt="">
+                                            <img class="img-fluid w-100" src="{{ !file_exists('storage/profile/'.$user->image) || empty($user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image) }}" alt="">
                                         </div>
                                         <div class="modal-footer d-flex justify-content-center">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

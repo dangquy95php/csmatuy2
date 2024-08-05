@@ -43,11 +43,7 @@ class Team extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        // return LogOptions::defaults()
-        // ->logOnly(['name', 'note', 'created_at']);
-        activity()
-            ->causedBy(Auth::user())
-            ->performedOn($subjectModel)
-            ->log('added/edited/deleted');
+        return LogOptions::defaults()
+        ->logOnly(['name', 'note', 'created_at']);
     }
 }

@@ -86,6 +86,27 @@ class AdminSeeder extends Seeder
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
 
+
+        $user = User::create([
+            'name' => 'Test',
+            'username' => 'test',
+            'email' => 'test@gmail.com',
+            'status' => '1',
+            'email_verified_at' => now(),
+            'password' => 'test',
+            'team_id' =>  null
+        ]);
+
+        // $role = Role::create(['name' => 'manager']);
+
+        $manager = Role::where('name', '=', 'admin')->first()->id;
+     
+        $permissions = Permission::pluck('id','id')->all();
+   
+        $role->syncPermissions($permissions);
+        $user->assignRole([$manager]);
+
+
         // --------------------------------------
     //     $user2 = User::create([
     //         'name' => 'Nguyễn Ngọc Tuân',
