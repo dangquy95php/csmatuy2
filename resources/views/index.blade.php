@@ -385,6 +385,7 @@
                           <td>{{ $value->email }}</td>
                           <td>{{ @$value->team->name }}</td>
                           <td>
+                          
                             <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}"
                             src="{{ !file_exists('storage/profile/'. @$value->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'. @$value->image)}}"
                             style="width:70px;" class="img-fluid img-thumbnail" alt="">

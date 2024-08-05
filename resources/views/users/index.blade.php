@@ -60,7 +60,8 @@
                         <td>{{ $user->team ? $user->team->name : 'Không thuộc team' }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}" src="{{ !file_exists('storage/profile/'.$user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image)}}" style="width:70px;" class="img-fluid img-thumbnail" alt="">
+                            <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}" src="{{ !file_exists('storage/profile/'.$user->image) || empty($user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image)}}" style="width:70px;" class="img-fluid img-thumbnail" alt="">
+                            
                             <div class="modal fade" id="exampleModal{{ $key + 1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
