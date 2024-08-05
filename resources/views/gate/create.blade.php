@@ -592,6 +592,10 @@
       }
     }
 
+    $('#staff').on('select2:select', function (e) {
+      console.log(e);
+    });
+
     $("#staff").select2({
       placeholder: "Chọn cán bộ của cơ sở ma túy số 2",
       allowClear: true,

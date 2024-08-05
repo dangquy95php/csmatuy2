@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activity;
 
 class Team extends Model
 {
@@ -42,7 +43,11 @@ class Team extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()
-        ->logOnly(['name', 'note', 'created_at']);
+        // return LogOptions::defaults()
+        // ->logOnly(['name', 'note', 'created_at']);
+        activity()
+            ->causedBy(Auth::user())
+            ->performedOn($subjectModel)
+            ->log('added/edited/deleted');
     }
 }

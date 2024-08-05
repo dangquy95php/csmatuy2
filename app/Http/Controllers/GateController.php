@@ -51,21 +51,18 @@ class GateController extends Controller
         if (($request->get('staff_start_date') && $request->get('staff_end_date')) && empty($request->get('staff_today'))) {
             $data = Gate::typeGate($gate)->startDate($request->get('staff_start_date'))
                         ->endDate($request->get('staff_end_date'))
-                        ->orderByID()->with(['user', 'team'])->get();
+                        ->orderByID()->with(['user', 'team'])->take(500)->get()->groupBy('count_request')->paginate(20);
         } elseif($request->get('staff_today')) {
-            $data = Gate::typeGate($gate)->today()->orderByID()->with(['user', 'team'])->get();
+            $data = Gate::typeGate($gate)->today()->orderByID()->with(['user', 'team'])->take(500)->get()->groupBy('count_request')->paginate(20);
         } else {
-            $data = Gate::typeGate($gate)->orderByID()->with(['user', 'team'])->get();
+            $data = Gate::typeGate($gate)->orderByID()->with(['user', 'team'])->take(500)->get()->groupBy('count_request')->paginate(20);
         }
-  
-        $dataGroup = $data->groupBy('count_request');
-        foreach($dataGroup as $key => &$datas) {
+
+        foreach($data as $key => &$datas) {
             if (count($datas) > 0) {
                 $datas[0]->rowspan = count($datas);
             }
         }
-        // $dataGroup = $data;
-        $data = $dataGroup->paginate(20);
 
         $drugAddict = DrugAddict::orderBy('id', 'DESC')->paginate(20);
         $guestStudent = GuestStudents::orderBy('id', 'DESC')->paginate(20);
@@ -78,7 +75,7 @@ class GateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $gateNote = GateNote::all();
         $teams    = Team::with('user')->orderBy('name','ASC')->get();
