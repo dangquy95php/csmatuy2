@@ -279,13 +279,13 @@ class GateController extends Controller
             'name' => 'required|unique:teams,name',
         ]);
     
-        $team = Team::create([
+        $team = GateNote::create([
             'name' => trim($request->input('name')),
         ]);
        
         Toastr::success('Tạo khu thành công!');
 
-        return redirect()->route('team.index');
+        return redirect()->route('gate.note');
     }
 
     public function createStaff(Request $request)

@@ -103,7 +103,7 @@
                                         <td rowspan="{{ @$gate->rowspan }}" class="align-middle">{{ $gate->note }}</td>
                                         <td rowspan="{{ @$gate->rowspan }}" class="align-middle">{!! $gate->type_gate == 0 ? '<span class="badge rounded-pill bg-danger">Ra cổng</span>' : '<span class="badge rounded-pill bg-success">Vào cổng</span>' !!}</td>
                                         @endif
-                                        <td>{{ $gate->team->name }}</td>
+                                        <td>{{ @$gate->team->name }}</td>
                                         <td>{{ App\Models\User::where('id', $gate->auth_id)->first()->name }}</td>
                                         @if (isset($gate->rowspan))
                                         <td rowspan="{{ @$gate->rowspan }}" class="align-middle">{{ $gate->created_at }}</td>
