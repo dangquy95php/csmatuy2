@@ -328,6 +328,9 @@ class GateController extends Controller
                 if($request->has('time')) {
                     $gate->created_at = $request->get('time');
                 }
+                if($request->has('car_number')) {
+                    $gate->car_number = $request->get('car_number');
+                }
             
                 $gate->save();
             }

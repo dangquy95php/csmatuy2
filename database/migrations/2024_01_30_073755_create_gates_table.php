@@ -22,6 +22,7 @@ class CreateGatesTable extends Migration
             $table->integer('team_id')->references('id')->on('teams')->onDelete('cascade');
             $table->integer('count_request');
             $table->integer('auth_id');
+            $table->string('car_number', 100)->nullable();
             $table->timestamps();
         });
     }

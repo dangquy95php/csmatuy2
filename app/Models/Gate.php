@@ -28,6 +28,7 @@ class Gate extends Model
         'user_id',
         'team_id',
         'count_request',
+        'car_number',
     ];
     
     const OUT = 0;
@@ -39,8 +40,6 @@ class Gate extends Model
         self::OUT => 'Ra cổng',
         self::IN => 'Vào cổng',
     ];
-
-
 
     public function user()
     {
