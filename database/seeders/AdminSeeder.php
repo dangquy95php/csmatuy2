@@ -19,7 +19,8 @@ class AdminSeeder extends Seeder
     {
         $role = Role::create(['name' => 'user']);
         $user = User::create([
-            'name' => 'username1',
+            'first_name' => 'username1',
+            'last_name' => 'username1',
             'username' => 'username1',
             'email' => 'username1@gmail.com',
             'status' => '1',
@@ -36,7 +37,8 @@ class AdminSeeder extends Seeder
         $user->assignRole([$role->id]);
 
         $user1 = User::create([
-            'name' => 'admin',
+            'first_name' => 'admin',
+            'last_name' => 'admin',
             'username' => 'admin',
             'email' => 'admin@gmail.com',
             'status' => '1',
@@ -53,7 +55,8 @@ class AdminSeeder extends Seeder
         $user1->assignRole([$role1->id]);
 
         $user = User::create([
-            'name' => 'phó phòng',
+            'first_name' => 'phó',
+            'last_name' => 'phòng',
             'username' => 'phophong',
             'email' => 'phophong@gmail.com',
             'status' => '1',
@@ -70,7 +73,8 @@ class AdminSeeder extends Seeder
         $user->assignRole([$role->id]);
 
         $user = User::create([
-            'name' => 'trưởng phòng',
+            'first_name' => 'trưởng',
+            'last_name' => 'phòng',
             'username' => 'truongphong',
             'email' => 'truongphong@gmail.com',
             'status' => '1',
@@ -88,7 +92,8 @@ class AdminSeeder extends Seeder
 
 
         $user = User::create([
-            'name' => 'Test',
+            'first_name' => 'Test',
+            'last_name' => 'Test',
             'username' => 'test',
             'email' => 'test@gmail.com',
             'status' => '1',

@@ -44,7 +44,13 @@ class UserImport implements ToModel, WithHeadingRow, WithStartRow, WithChunkRead
                 $teamId = Team::where('note', $row[1])->select('id')->first();
     
                 DB::beginTransaction();
-                $input['name'] = $row['ho_va_ten'];
+
+                $explodeData = explode(" ", trim($row['ho_va_ten']));
+                $firstName = $explodeData[count($explodeData) - 1];
+                $lastName = str_replace($firstName, "", trim($row['ho_va_ten']));
+
+                $input['first_name'] = $firstName;
+                $input['last_name'] = trim($lastName);
                 $input['password'] = 12345678;
                 $input['team_id'] = $teamId->id;
                 $input['image'] = \Illuminate\Support\Str::upper($row['ho_va_ten']).'.jpg';

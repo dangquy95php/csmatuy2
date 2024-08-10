@@ -335,7 +335,7 @@
 @endsection
 
 @push('styles')
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
   <style>
     .create-note .form-check-input_out:checked {
       background-color: #dc3545;
@@ -366,7 +366,6 @@
 
 @push('scripts')
   <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   
   <script>
     function employerFunction(data) {

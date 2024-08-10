@@ -78,6 +78,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::get('/note/{id}/edit', 'GateController@noteEdit')->name('gate.note-edit');
         Route::post('/note/{id}/edit', 'GateController@noteUpdate')->name('gate.note-update');
         Route::get('/note/{id}/destroy', 'GateController@noteDestroy')->name('gate.note-destroy');
+
+        Route::get('/show', 'GateController@showAll')->name('gate.show');
     });
 
     Route::group(['prefix' => 'permit'], function () {

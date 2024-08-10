@@ -72,7 +72,7 @@
                         <div class="row mb-3">
                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên:</label>
                             <div class="col-md-8 col-lg-9">
-                                <input name="name" type="text" class="form-control" id="fullName" value="{{Auth::user()->name}}">
+                                <input name="name" type="text" class="form-control" id="fullName" value="{{Auth::user()->last_name .' '. Auth::user()->first_name}}">
                             </div>
                         </div>
 
