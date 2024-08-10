@@ -203,6 +203,7 @@
             }
         });
 
+        
         $(".staff").select2({
             placeholder: "Chọn nhân viên",
             allowClear: true,
