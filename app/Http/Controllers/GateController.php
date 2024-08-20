@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Gate;
+use App\Models\User;
 use App\Models\Team;
 use App\Models\GateNote;
 use App\Models\DrugAddict;
@@ -417,5 +418,36 @@ class GateController extends Controller
         $guestStudent->save();
 
         return redirect()->route('gate.index', ['tab' => 'tab3']);
+    }
+
+    public function showAll(Request $request)
+    {
+        $getData = User::with(['team' => function($query) {
+            $query->select('id','name');
+        }])->whereNotNull('team_id')->select('first_name', 'last_name', 'team_id', 'id')->get();
+
+        $datas = "";
+        foreach($getData as $key => $item) {
+            // array_push($datasArray, $item->id ."_". $item->team->id ."--". $item->last_name .' '. $item->first_name .' - '. $item->team->name);
+            
+            if ($key < count($getData) - 1 ) {
+                $datas .=  '&#39;'.$item->id .'_'. $item->team->id ."--". $item->last_name .' '. $item->first_name .' - '. $item->team->name .'&#39;'.',';
+            } else {
+                $datas .=  '&#39;'. $item->id .'_'. $item->team->id ."--". $item->last_name .' '. $item->first_name .' - '. $item->team->name.'&#39;';
+            }
+        }
+// dd($datas);
+        return view('gate.show', compact('datas'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('query');
+        $results = User::with('team')->where('status',"=", User::ENABLE)
+                        ->where('first_name', 'like', "%{$search}%")
+                        ->whereNotNull('team_id')
+                        ->select("first_name", "last_name", "id", "team_id", "image")->get();
+                        
+        return response()->json($results);
     }
 }

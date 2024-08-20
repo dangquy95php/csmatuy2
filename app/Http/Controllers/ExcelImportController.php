@@ -32,7 +32,7 @@ class ExcelImportController extends Controller
             Excel::queueImport(new UserImport, $request->file('file'));
             \DB::commit();
         } catch (\Exception $ex) {
-            Toastr::error('Import excel thất bại!');
+            Toastr::error('Import excel thất bại!'. $ex->getMessage());
             return redirect()->route('excel.import');
         }
         Toastr::success('Import dữ liệu thành công!');

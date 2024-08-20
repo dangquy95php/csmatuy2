@@ -26,7 +26,7 @@ class DashboardController extends Controller
         $datas = User::
             join('teams', 'teams.id', '=', 'users.team_id')
             ->where('teams.type', '=', Team::OFFICE_HOUR)
-            ->select('users.name', 'users.email', 'users.image', 'users.team_id')
+            ->select('users.first_name', 'users.last_name', 'users.email', 'users.image', 'users.team_id')
             ->whereNotIn('users.id', $gateIDUsers)->paginate(10);
 
         return view('index', compact('datas'));
