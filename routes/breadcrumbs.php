@@ -112,6 +112,21 @@ Breadcrumbs::for('log.index', function ($trail) {
     $trail->push('Danh sách log', route('log.index'));
 });
 
+Breadcrumbs::for('department.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách đơn vị', route('department.index'));
+});
+
+Breadcrumbs::for('department.create', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tạo đơn vị', route('department.create'));
+});
+
+
+Breadcrumbs::for('department.edit', function ($trail, $department) {
+    $trail->parent('department.index');
+    $trail->push('Chỉnh sửa tên đơn vị ngoài '. $department->name, route('department.edit', $department->id));
+});
 
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');

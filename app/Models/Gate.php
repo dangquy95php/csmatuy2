@@ -22,15 +22,18 @@ class Gate extends Model
      * @var array
      */
     protected $fillable = [
-        'number_of_drug_addicts',
-        'note',
-        'type_gate',
         'user_id',
+        'staff_out',
+        'staff_in',
+        'student_out',
+        'student_in',
+        'note',
         'team_id',
         'count_request',
-        'car_number',
+        'auth_id',
+        'gate_note_id',
     ];
-    
+
     const OUT = 0;
     const IN = 1;
     const ALL = 2;

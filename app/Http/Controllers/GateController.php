@@ -11,12 +11,16 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\GateNote;
 use App\Models\DrugAddict;
+use App\Models\Department;
 use App\Models\GuestStudents;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use Storage;
 use Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class GateController extends Controller
 {
@@ -420,24 +424,43 @@ class GateController extends Controller
         return redirect()->route('gate.index', ['tab' => 'tab3']);
     }
 
-    public function showAll(Request $request)
+    public function showAll($id = null, Request $request)
     {
+        if (!empty($request->the_end)) {
+            $this->updateStaffOutAndIn($request->the_end);
+            Toastr::success('Kết thúc thành công!');
+        }
+        $gateNote = GateNote::all();
         $getData = User::with(['team' => function($query) {
             $query->select('id','name');
         }])->whereNotNull('team_id')->select('first_name', 'last_name', 'team_id', 'id')->get();
 
-        $datas = "";
+        $datasUserAndArea = array();
         foreach($getData as $key => $item) {
-            // array_push($datasArray, $item->id ."_". $item->team->id ."--". $item->last_name .' '. $item->first_name .' - '. $item->team->name);
-            
-            if ($key < count($getData) - 1 ) {
-                $datas .=  '&#39;'.$item->id .'_'. $item->team->id ."--". $item->last_name .' '. $item->first_name .' - '. $item->team->name .'&#39;'.',';
-            } else {
-                $datas .=  '&#39;'. $item->id .'_'. $item->team->id ."--". $item->last_name .' '. $item->first_name .' - '. $item->team->name.'&#39;';
+            array_push($datasUserAndArea, $item->id ."_". $item->team->id ."--". $item->last_name .' '. $item->first_name .' - '. $item->team->name);
+        }
+        $department = Department::all();
+        $dataGate = Gate::orderByID()->with(['team', 'user' => function($query) {
+            $query->select('*');
+        }])->take(500)->get()->groupBy('count_request');
+
+
+        return view('gate.show', compact('gateNote', 'department', 'datasUserAndArea', 'dataGate'));
+    }
+
+    public function updateStaffOutAndIn($countRequest)
+    {
+        $gates = Gate::where('count_request', $countRequest)->get();
+        if (empty($gates)) {
+            return abort(404);
+        } else {
+            if (empty($gates[0]->staff_out) && !empty($gates[0]->staff_in)) {
+                Gate::where('count_request', $countRequest)->updated(['staff_out' => \Carbon\Carbon::now()]);
+            } else if (!empty($gates[0]->staff_out) && empty($gates[0]->staff_in)) {
+                Gate::where('count_request', $countRequest)->updated(['staff_in' => \Carbon\Carbon::now()]);
             }
         }
-// dd($datas);
-        return view('gate.show', compact('datas'));
+            
     }
 
     public function search(Request $request)
@@ -449,5 +472,116 @@ class GateController extends Controller
                         ->select("first_name", "last_name", "id", "team_id", "image")->get();
                         
         return response()->json($results);
+    }
+
+    public function add(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'gate_note' => 'required',
+        ], [
+            'name.required' => 'Tên bắt buộc nhập',
+            'gate_note.required' => 'Công việc bắt buộc chọn',
+        ]);
+
+        if ($request->input('staff_out') == 0 && $request->input('staff_in') == 0 ) {
+            throw ValidationException::withMessages(['staff' => 'Chọn ra hoặc vào']);
+        }
+
+        $id = 1;
+        $record = Gate::orderBy('count_request', 'DESC')->orderBy('created_at', 'DESC')->select('count_request')->first();
+
+        $flag = false;
+        try {
+            if (is_string($request->input('name'))) {
+                $request->request->add(['name' => [$request->input('name')]]);
+                $flag = true;
+            }
+            $data = "";
+            foreach($request->input('name') as $item) {
+                $gate = [];
+    
+                if (!empty($record)) {
+                    $id = $record->count_request + 1;
+                }
+
+                if($request->input('staff_out') == 1) {
+                    $gate['staff_out'] =  \Carbon\Carbon::now();
+                }
+   
+                if($request->input('staff_in') == 1) {
+                    $gate['staff_in'] =  \Carbon\Carbon::now();
+                }
+    
+                if($request->input('student_out')) {
+                    $gate['student_out'] =  $request->input('student_out');
+                }
+                
+                if($request->input('student_in')) {
+                    $gate['student_in'] =  $request->input('student_in');
+                }
+
+                if($request->has('note')) {
+                    $gate['note'] =  trim($request->input('note'));
+                }
+                
+                if ($flag) {
+                    $gate['user_id'] = $request->input('name')[0];
+                    $gate['team_id'] = $request->input('team');
+                } else {
+                    $gate['user_id'] =  $item['user_id'];
+                    $gate['team_id'] =  $item['team_id'];
+                }
+    
+                if($request->input('gate_note')) {
+                    $gate['gate_note_id'] = trim($request->input('gate_note'));
+                }
+    
+                $gate['count_request'] = $id;
+                $gate['auth_id']       = Auth::id();
+    
+                $data = Gate::create($gate);
+            }
+        } catch (\Exception $ex) {
+            return response()->json(['message' => 'Có lỗi đã xảy ra!'. $ex->getMessage()], 500);
+        }
+
+        return response()->json(['message' => 'Thành công', 'data' => $data], 200);
+    }
+
+    public function updateOutAndIn(Request $request)
+    {
+        $gates = Gate::where('count_request', $request->get('count_request'))->get();
+        if (empty($gates)) {
+            return response()->json(['message' => 'Có lỗi đã xảy ra'], 404);
+        }
+
+        $gate = [];
+        if($request->input('staff_in')) {
+            $gate['staff_in'] = \Carbon\Carbon::now();
+        }
+        if($request->input('staff_out')) {
+            $gate['staff_out'] = \Carbon\Carbon::now();
+        }
+        if($request->input('student_out')) {
+            $gate['student_out'] = $request->input('student_out');
+        }
+        if($request->input('student_in')) {
+            $gate['student_in'] = $request->input('student_in');
+        }
+        if($request->input('note')) {
+            $gate['note'] = $request->input('note');
+        }
+        if($request->input('gate_note_id')) {
+            $gate['gate_note_id'] = $request->input('gate_note_id');
+        }
+
+        try {
+            Gate::where('count_request', $request->get('count_request'))->update($gate);
+        } catch (\Exception $ex) {
+            return response()->json(['message' => 'Có lỗi đã xảy ra!'. $ex->getMessage()], 500);
+        }
+
+        return response()->json(['message' => 'Cập nhật thành công'], 200);
     }
 }

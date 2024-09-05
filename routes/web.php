@@ -79,8 +79,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/note/{id}/edit', 'GateController@noteUpdate')->name('gate.note-update');
         Route::get('/note/{id}/destroy', 'GateController@noteDestroy')->name('gate.note-destroy');
 
-        Route::get('/show', 'GateController@showAll')->name('gate.show');
+        // Route::get('/show', 'GateController@showAll');
+        Route::get('/show/{id?}', 'GateController@showAll')->name('gate.show');
         Route::get('/search', 'GateController@search')->name('gate.search');
+        Route::post('/add', 'GateController@add')->name('gate.add');
+        Route::post('/update', 'GateController@updateOutAndIn')->name('gate.updateOutAndIn');
     });
 
     Route::group(['prefix' => 'permit'], function () {
@@ -99,6 +102,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::get('/{id}/edit', 'LogController@edit')->name('log.edit');
         Route::post('/{id}/edit', 'LogController@update')->name('log.update');
         Route::get('/{id}/destroy', 'LogController@destroy')->name('log.destroy');
+    });
+    
+    Route::group(['prefix' => 'department'], function () {
+        Route::get('/index', 'DepartmentController@index')->name('department.index');
+        Route::get('/create', 'DepartmentController@create')->name('department.create');
+        Route::post('/create', 'DepartmentController@store')->name('department.store');
+        Route::get('/{id}/edit', 'DepartmentController@edit')->name('department.edit');
+        Route::post('/{id}/edit', 'DepartmentController@update')->name('department.update');
+        Route::get('/{id}/destroy', 'DepartmentController@destroy')->name('department.destroy');
     });
 });
 

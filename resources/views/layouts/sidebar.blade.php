@@ -73,6 +73,19 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/department/index') || request()->is('admin/department/create') ? '' : 'collapsed' }} " data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
+          <i class="ri-user-3-line"></i><span>Quản lý đơn vị ngoài</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav1" class="nav-content collapse {{ request()->is('admin/department/index') || request()->is('admin/department/create') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('department.index') }}" class="{{ request()->is('admin/department/index') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/gate/*') || request()->is('admin/gate/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="ri-ancient-gate-line"></i><span>Quản lý ra vào cổng</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>

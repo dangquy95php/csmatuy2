@@ -26,7 +26,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('admin_library/assets/css/style.css')}}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('css/select2.min.css')}}" rel="stylesheet" />
     
     @stack('styles')
 </head>
@@ -74,11 +74,26 @@
     @stack('scripts')
 
     <script src="{{ asset('admin_library/assets/js/toastr.min.js')}} "></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('js/select2.min.js')}}"></script>
 
     <script src="{{ asset('js/moment.js') }}"></script>
     <script src="{{ asset('js/moment-with-locales.js') }}"></script>
     <script src="{{ asset('js/moment-timezone.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            if (localStorage.getItem('toggle-sidebar')) {
+                $('body').addClass('toggle-sidebar');
+            }
+        });
+        $(".toggle-sidebar-btn").click(function() {
+            if ($('body.toggle-sidebar').length == 0) {
+                localStorage.removeItem('toggle-sidebar');
+            } else {
+                localStorage.setItem('toggle-sidebar', true);
+            }
+        });
+    </script>
     
     {!! Toastr::message() !!}
 </body>

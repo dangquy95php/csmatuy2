@@ -22,5 +22,6 @@ class GateNoteSeeder extends Seeder
         GateNote::create(['name' => 'hái cà phê A8']);
         GateNote::create(['name' => 'đi mua đồ']);
         GateNote::create(['name' => 'làm cà tím']);
+        GateNote::create(['name' => 'khác']);
     }
 }
