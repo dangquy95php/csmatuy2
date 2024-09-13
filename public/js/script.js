@@ -128,11 +128,9 @@ pureScriptSelect = (selector)=>{
                     // });
 
                     var filter = arry.filter((el, index) => {
-                        
                         if (el !== "") {
-                            let re = /\d+.*?--(.*?)-[\s\S]*/;
+                            let re = /\d.(.*?)--/;
                             let data = re.exec(el);
-                            console.log(data[1]);
                             
                             let last_text = data[1].trim().split(/(\s+)/);
                             let rel = new RegExp(itemValue, 'gi');
@@ -192,6 +190,31 @@ pureScriptSelect = (selector)=>{
                 }
                 );
                 eventDelegation('click', 'li', function(e) {
+                    // let text = $(e.target).text();
+                    // let dot = text.split('.')[0];
+                    // console.log('click');
+                    
+                    // $.ajax({
+                    //     url : "/admin/find",
+                    //     content: e,
+                    //     data : {
+                    //         "_token": $('meta[name="csrf-token"]').attr('content'),
+                    //         id: dot,
+                    //     },
+                    //     type : 'POST',
+                    //     dataType : 'json',
+                    //     success : function(result) {
+                    //         let data = result.data.team.name;
+
+                    //         $(e.target.closest('.root-tr')).find('.is-department').append(`<input type="text" readonly class="form-control araeId-${dot}" value="${data}">`);
+                    //     },
+                    //     error: function (data) {
+                    //        console.log(data);
+                           
+                    //     }
+                    // });
+                    
+
                     var index = e.target.getAttribute('data-key');
                     var closestId = e.target.closest('.directorist-select').getAttribute('id');
                     if (isMax[closestId] === null && defaultValues[closestId]) {

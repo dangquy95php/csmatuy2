@@ -15,16 +15,16 @@ class CreateGatesTable extends Migration
     {
         Schema::create('gates', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->nullable();
-            $table->timestamp('staff_out')->nullable()->default(null);
-            $table->timestamp('staff_in')->nullable()->default(null);
+            $table->integer('user_id')->nullable();
+            $table->time('staff_out')->nullable();
+            $table->time('staff_in')->nullable();
             $table->string('student_out')->nullable();
             $table->string('student_in')->nullable();
             $table->text('note')->nullable();
             $table->integer('team_id')->references('id')->on('teams')->onDelete('cascade');
-            $table->integer('count_request');
-            $table->integer('auth_id');
-            $table->integer('gate_note_id')->default(0);
+            $table->integer('count_request')->nullable();
+            $table->integer('auth_id')->nullable();
+            $table->integer('gate_note_id')->nullable();
             $table->timestamps();
         });
     }

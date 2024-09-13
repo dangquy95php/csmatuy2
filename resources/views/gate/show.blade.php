@@ -20,8 +20,8 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <a href="{{route('gate.show')}}" class="card-title">Cổng ngày: <b class="time-now text-danger">{{ date('d-m-Y') }}</b></a>    
                         <div class="search-bar">
-                            <form class="search-form d-flex align-items-center" method="POST" action="">
-                                <input type="text" name="end" placeholder="Tìm kiếm" title="Tìm kiếm">
+                            <form class="search-form d-flex align-items-center" method="GET" action="">
+                                <input type="text" name="search" value="{{ request()->query('search') }}" placeholder="Tìm kiếm" title="Tìm kiếm">
                                 <button type="submit" title="Tìm kiếm"><i class="bi bi-search"></i></button>
                             </form>
                         </div>
@@ -30,11 +30,10 @@
                         <thead>
                             <tr>
                                 <th rowspan="2" class="align-middle text-center w-25 bg-primary text-white border border-white">Họ và tên</th>
-                                <th rowspan="2" class="align-middle text-center bg-primary text-white border border-white" style="width: 180px;">Đơn vị</th>
                                 <th class="align-middle text-center bg-primary text-white border border-white" colspan="2">Cán bộ</th>
                                 <th class="align-middle text-center bg-primary text-white border border-white" colspan="2">Học viên</th>
                                 <th rowspan="2" class="align-middle text-center bg-primary text-white border border-white">Ghi chú</th>
-                                <th rowspan="2" class="align-middle text-center bg-primary text-white border border-white">Công việc</th>
+                                <th style="width:250px;" rowspan="2" class="align-middle text-center bg-primary text-white border border-white">Công việc</th>
                                 <th rowspan="2" class="align-middle text-center bg-primary text-white border border-white" style="width:140px;">
                                     <button type="button" class="btn btn-success is-add border border-white">Thêm</button>
                                 </th>
@@ -47,108 +46,71 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($dataGate as $k => $gate)
-                            <tr class="root-tr {{ @$gate[0]->count_request == request()->id ? 'table-danger' : '' }}">
-                                <td>
-                                    <div class="directorist-select directorist-select-multi" id="multiSelect{{$k}}" data-isSearch="true" data-multiSelect='[
-                                        <?php
-                                            foreach($gate as $k => $item) {
-                                                if (is_null(@$item->team->id)) {
-                                                    echo '{"value": "'. $item->id ."__". @$item->user_id .' - '. @$item->team_id .'", "key": '. $k .'},';
-                                                } else {
-                                                    echo '{"value": "'. $item->id ."_". @$item->team->id ."--". @$item->user->last_name .' '. @$item->user->first_name .' - '. @$item->team->name .'", "key": '. $k .'},';
-                                                }
-                                            }
-                                            ?>
-                                        ]' data-max="5">
-                                        <select name="mySelect" >
-                                            <option value="">Select Item</option>
-                                            @foreach($gate as $k => $item)
-                                                @if (is_null(@$item->team->id))
-                                                    <option value="{{$item->id .'__'. @$item->user_id .' - '. @$item->team_id }}">{{$item->id .'__'. @$item->user_id .' - '. @$item->team_id }}</option>
-                                                @else
-                                                    <option value="{{ $item->id .'_'. @$item->team->id .'--'. @$item->user->last_name .' '. @$item->user->first_name .' - '. @$item->team->name }}">{{ $item->id .'_'. @$item->team->id .'--'. @$item->user->last_name .' '. @$item->user->first_name .' - '. @$item->team->name }}</option>
-                                                @endif
-                                            @endforeach
-                                            @foreach($datasUserAndArea as $key => $item)
-                                                <option value="{{$item}}">{{ $item }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    
-                                    <!-- <span class="text-danger show-error-name mt-1 d-flex"></span> -->
-                                    <p class="text-danger d-flex" id="name" class="name"></p>
-                                </td>
-                                <td>
-                                    <select class="department form-select is-team" name="department" aria-label="Default select example">
-                                        <option value="">Chọn đơn vị ngoài</option>
-                                        @foreach ($department as $key => $data)
-                                            <option value="{{ $data->id }}" @if($data->id == @$gate[0]->team_id) selected @endif>{{ $data->name }}</option>
+                            @php
+                            $index = 1;
+                            @endphp
+                            @foreach($dataGate as $k => $gates)
+                            <tr class="root-tr">
+                                <td class="is-pointer-events1">
+                                    <select style="width:100%;" class="employer" multiple="" tabindex="-1" aria-hidden="true">
+                                        @foreach($dataEmployer as $k => $items)
+                                            <optgroup class="select2-result-selectable" label="{{ $items->text }}">
+                                                @foreach($items->children as $key => $child)
+                                                    @php
+                                                    $flag = false;
+                                                    @endphp
+                                                    @foreach($gates as $kk => $gate)
+                                                        @if ($gate->user_id == $child->id && $gate->team_id == $child->area_id)
+                                                            <option value="{{ $child->text }}" selected>{{ $child->text }} - {{ $child->area }}</option>
+                                                            @php
+                                                            $flag = true;
+                                                            @endphp
+                                                        @endif
+                                                    @endforeach
+
+                                                    @if ($flag == false)
+                                                        <option value="{{ $child->text }}">{{ $child->text }} - {{ $child->area }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </optgroup>
                                         @endforeach
-                                        <option value="">{{ $gate[0]->team_id }}</option>
                                     </select>
+                                    <p class="text-danger d-flex" id="employers"></p>
                                 </td>
-                                <td>
-                                    @if(is_null(@$gate[0]->staff_out))
-                                        <div class="form-check d-flex justify-content-center">
-                                            <input class="form-check-input justify-content-center" name="staff_out" type="checkbox">
-                                        </div>
-                                    @else
-                                        <span><b>{{ date('H:i:s', strtotime(@$gate[0]->staff_out)) }}</b></span>
-                                    @endif
+                                
+                                <td class="is-pointer-events">
+                                    <input type="time" step="2" name="staff_out" class="staff_out form-control" value="{{ !empty(@$gates[0]->staff_out) ? date('H:i:s', strtotime(@$gates[0]->staff_out)) : '' }}">
+                                    <span class="text-danger d-flex" id="staff"></span>
                                 </td>
-                                <td>
-                                    @if(is_null(@$gate[0]->staff_in))
-                                        <div class="form-check d-flex justify-content-center">
-                                            <input class="form-check-input justify-content-center" name="staff_in" type="checkbox">
-                                        </div>
-                                    @else
-                                        <span><b>{{ date('H:i:s', strtotime(@$gate[0]->staff_in)) }}</b></span>
-                                    @endif
+                                <td class="is-pointer-events">
+                                    <input type="time" step="2" name="staff_in" class="staff_in form-control" value="{{ !empty(@$gates[0]->staff_in) ? date('H:i:s', strtotime(@$gates[0]->staff_in)) : '' }}">
                                 </td>
-                                <td>
-                                    @if(is_null(@$gate[0]->student_out))
-                                        <input class="form-control" name="student_out" type="number" min="0">
-                                    @elseif(@$gate[0]->count_request == request()->id)
-                                        <input class="form-control" name="student_out" value="{{ @$gate[0]->student_out }}" type="number" min="0">
-                                    @else
-                                        <span><b>{{ @$gate[0]->student_out }}</b></span>
-                                    @endif
+                                <td class="is-pointer-events">
+                                    <input class="form-control" name="student_out" value="{{ @$gates[0]->student_out }}" type="number" min="0">
                                 </td>
-                                <td>
-                                    @if(is_null(@$gate[0]->student_in))
-                                        <input class="form-control" name="student_in" type="number" min="0">
-                                    @elseif(@$gate[0]->count_request == request()->id)
-                                        <input class="form-control" name="student_in" value="{{ @$gate[0]->student_in }}" type="number" min="0">
-                                    @else
-                                        <span><b>{{ @$gate[0]->student_in }}</b></span>
-                                    @endif
+                                <td class="is-pointer-events">
+                                    <input class="form-control" name="student_in" value="{{ @$gates[0]->student_in }}" type="number" min="0">
                                 </td>
-                                <td>
-                                    <textarea class="form-control note" style="height:50px">{{@$gate[0]->note}}</textarea>
+                                <td class="is-pointer-events">
+                                    <textarea class="form-control" name="note" style="height:50px">{{@$gates[0]->note}}</textarea>
                                 </td>
-                                <td>
-                                    <select class="myselect form-select" name="gate_note" aria-label="Default select example">
+                                <td class="is-pointer-events">
+                                    <select class="form-select select_job{{ $index }}" name="gate_note" aria-label="Default select example">
                                         <option value="">Chọn công việc</option>
                                         @foreach ($gateNote as $key => $data)
-                                            <option value="{{ $data->id }}" @if($data->id == @$gate[0]->gate_note_id) selected @endif>{{ $data->name }}</option>
+                                            <option value="{{ $data->id }}" @if($data->id == @$gates[0]->gate_note_id) selected @endif>{{ $data->name }}</option>
                                         @endforeach
                                     </select>
-                                    <p class="text-danger mt-1" id="gate_note"></p>
+                                    <p class="text-danger mt-1" id="gate_note_id"></p>
                                 </td>
                                 <td>
-                                    @if((!empty(@$gate[0]->staff_out) || !empty(@$gate[0]->staff_in)) && @$gate[0]->count_request != request()->get('update'))
-                                        <a href="{{ route('gate.show', [ 'the_end' => $gate[0]->count_request ]) }}" class="btn btn-dark btn-sm mb-1">Kết thúc</a>
-                                    @endif
-
-                                    @if(@$gate[0]->id && @$gate[0]->count_request != request()->id)
-                                        <!-- <button type="button" onclick="clickUpdated(this)"  class="btn btn-warning is-updated">Sửa</button> -->
-                                        <a href="{{ route('gate.show', @$gate[0]->count_request) }}?update={{ @$gate[0]->count_request }}" class="btn btn-warning">Sửa</a>
-                                    @else
-                                        <button id="{{ @$gate[0]->count_request }}" type="button" class="btn btn-success is-finished">Xong</button>
-                                    @endif
+                                    <button type="button" count_request="{{ $gates[0]->count_request }}" onClick="btnKetthuc(this)" class="btn btn-secondary btn-sm btn-ketthuc">Kết thúc</button>
+                                    <button type="button" count_request="{{ $gates[0]->count_request }}" onClick="btnSua(this)" class="btn btn-warning btn-sm btn-sua">Sửa</button>
                                 </td>
                             </tr>
+                            @php
+                            $index++;
+                            @endphp
                             @endforeach
                         </tbody>
                     </table>
@@ -187,11 +149,11 @@
         transition: 0.3s;
         width: 100%;
     }
-    #table1 thead.fixedToTop {
+    /* #table1 thead.fixedToTop {
         position: sticky;
         top:60px;
         z-index: 10000;
-    }
+    } */
 
     #table1 thead + .content{
         margin-top:8rem;
@@ -199,52 +161,81 @@
     #table1 thead tr th {
         /* background-color: red; */
     }
-    .is-pointer-events {
+    .is-pointer-events, .is-pointer-events1 {
         pointer-events: none;
     }
 </style>
 @endpush
 
 @push('scripts')
-<script src="{{ asset('js/script.js') }}"></script>
-
 <script>
+    function getTimeStaff(that) {
+        var d = new Date(),        
+            h = d.getHours(),
+            m = d.getMinutes();
+            s = d.getSeconds();
+        if(h < 10) h = '0' + h; 
+        if(m < 10) m = '0' + m;
+        if(s < 10) s = '0' + s;
+        $(that).prev().val(h + ':' + m + ':'+ s);
+    }
+
+    function btnKetthuc(that) {
+        let id = $(that).attr('count_request');
+        staffOut =  $(that).closest('.root-tr').find('input[name="staff_out"]').val();
+        staffIn = $(that).closest('.root-tr').find('input[name="staff_in"]').val();
+
+        $(that).closest('.root-tr').find("#staff_out").html("");
+        $(that).closest('.root-tr').find("#staff_in").html("");
+
+        $.ajax({
+            url : "{{ route('gate.end') }}",
+            context: that,
+            data : {
+                "_token": "{{ csrf_token() }}",
+                staff_out: staffOut,
+                staff_in: staffIn,
+                count_request: id,
+            },
+            type : 'POST',
+            dataType : 'json',
+            success : function(result) {
+                toastr.success('Kết thúc thành công');
+                $(that).closest('.root-tr').remove();
+            },
+            error: function (data) {
+                if (data.status == 422) {
+                    let resp = data.responseJSON.errors;
+
+                    for (index in resp) {
+                        $("#staff").html(resp[index]);
+                    }
+                } else {
+                    toastr.error('Thất bại '+ data.responseJSON.message)
+                }
+            }
+        });
+    }
+
     $(".is-add").click(function() {
         let countTr = $('#table1 tbody tr').length + 1;
-        let zindex = $(".directorist-select").length + 1;
+        if ($('#table1 tbody tr').length > 0) {
+            var selected = $($('#table1 tbody tr')[0]).find('select[name="gate_note"] option:selected')[0].getAttribute("value");
+        }
 
         let htmlData = `<tr class="root-tr">
                 <td style="max-width: 150px;">
-                    <div style="z-index:${zindex}" class="directorist-select directorist-select-multi" id="multiSelect${countTr}" data-isSearch="true" data-max="5" data-multiSelect="[]">
-                        <select name="mySelect">
-                            <option value="">Select Item</option>
-                            <?php foreach($datasUserAndArea as $data) { ?>
-                                <option value="<?php echo @$data ?>"><?php echo @$data ?></option>
-                            <?php } ?>
-                            ?>
-                        </select>
-                    </div>
-                    <p class="text-danger d-flex" id="name" class="name"></p>
+                    <select name="employers[]" class="select_employer${countTr} form-select" aria-label="Default select example"></select>
+                    <p class="text-danger d-flex" id="employers"></p>
                 </td>
                 <td>
-                    <select id="select-area${countTr}" class="department form-select is-team" name="department" aria-label="Default select example">
-                        <option value="">Chọn đơn vị ngoài</option>
-                        <?php foreach($department as $data) { ?>
-                            <option value="<?php echo @$data->name ?>"><?php echo @$data->name ?></option>
-                        <?php } ?>
-                        ?>
-                    </select>
+                    <input type="time" name="staff_out" class="form-control" step="2">
+                    <button type="button" class="btn btn-primary btn-sm text-sm-left p-0 ps-1 pe-1" onClick=getTimeStaff(this)>Lấy thời gian</button>
+                    <span class="text-danger d-flex" id="staff"></span>
                 </td>
                 <td>
-                    <div class="form-check d-flex justify-content-center">
-                        <input class="form-check-input justify-content-center" name="staff_out" type="checkbox">
-                    </div>
-                    <p class="text-danger d-flex" id="staff" class="staff"></p>
-                </td>
-                <td>
-                    <div class="form-check d-flex justify-content-center">
-                        <input class="form-check-input justify-content-center" name="staff_in" type="checkbox">
-                    </div>
+                    <input type="time" name="staff_in" class="form-control" step="2">
+                    <button type="button" class="btn btn-primary btn-sm text-sm-left p-0 ps-1 pe-1" onClick=getTimeStaff(this)>Lấy thời gian</button>
                 </td>
                 <td>
                     <input class="form-control" name="student_out" type="number" min="0">
@@ -253,101 +244,125 @@
                     <input class="form-control" name="student_in" type="number" min="0">
                 </td>
                 <td>
-                    <textarea class="form-control note" style="height:50px"></textarea>
+                    <textarea class="form-control note" name="note" style="height:50px"></textarea>
                 </td>
                 <td>
-                    <select id="select-job${countTr}" class="myselect form-select select-job" name="gate_note" aria-label="Default select example">
+                    <select class="form-select select_job${countTr}" name="gate_note" aria-label="Default select example">
                         <option value="">Chọn công việc</option>
-                        <?php foreach($gateNote as $key => $data) { ?>
-                            <option value="<?php echo  $data->id; ?>" <?php if($data->id == @$gate[0]->gate_note_id) echo 'selected' ?>><?php echo $data->name; ?></option>
+                        <?php foreach($gateNote as $data) { ?>
+                            <option value="<?php echo @$data->id ?>"><?php echo @$data->name ?></option>
                         <?php } ?>
+                        ?>
                     </select>
-                    <p class="text-danger mt-1" id="gate_note"></p>
+                    <p class="text-danger mt-1" id="gate_note_id"></p>
                 </td>
                 <td>
-                    <button type="button" onclick="clickFinished(this)" class="btn btn-primary is-finished">Xong</button>
+                    <button type="button" onclick="clickFinished(this)" class="btn btn-primary">Xong</button>
                 </td>
             </tr>`;
-
+      
         if ($('#table1 tbody tr:last').length == 0) {
             $('#table1 tbody').append(`${htmlData}`);
         } else {
             $('#table1 tbody tr:first').before(`${htmlData}`);
-        }
-        function addFunction(el) {
-            return pureScriptSelect(el);
-        }
-        
-        addFunction(`#multiSelect${countTr}`);
-
-        $("#select-area"+ countTr).select2({
-            // tags: true,
-            escapeMarkup: function (markup) {
-                return markup;
-            }
-        });
-
-        $("#select-job"+ countTr).select2();
-        
-    });
-
-    $(".is-updated").click(function() {
-
-    });
-
-    function clickFinished(that) {
-        data = $(that).closest('.root-tr').find('.is-name span');
-        let dataName = [];
-        
-        if (data.length == 0) {
-            dataName = $($(that).closest('.root-tr').children().find('.is-name')).next().val();
-        } else {
-            data.each(function( index, value ) {
-                const name_staff = {};
-                var regex = /\d+(.*?)\d+/gm.exec($(value).text());
-                name_staff.user_id = regex[0].split("_")[0];
-                name_staff.team_id = regex[0].split("_")[1];
-
-                dataName.push(name_staff);
+            $($('#table1 tbody tr')[0]).find('select[name="gate_note"] option').each(function() {
+                let id = $(this).val();
+                if (id == selected) {
+                    $(this).attr('selected', 'selected');
+                }
             });
         }
 
-        team = $(that).closest('.root-tr').find('.is-team').val().trim();
-        staffOut =  $(that).closest('.root-tr').find('input[name="staff_out"]:checked').length > 0 ? 1 : 0;
-        staffIn = $(that).closest('.root-tr').find('input[name="staff_in"]:checked').length > 0 ? 1 : 0;
+        $(".select_job"+ countTr).select2({
+            "language": {
+                "noResults": function() {
+                    return "Kết quả không tìm thấy";
+                }
+            },escapeMarkup: function (markup) {
+                    return markup;
+            }
+        });
+
+        $(".select_employer"+ countTr).select2({
+            tags: true,
+            multiple:true,
+            maximumSelectionLength: 5,
+            placeholder: 'Vui lòng chọn nhân viên',
+            data: <?php echo json_encode($dataEmployer); ?>,
+            templateSelection: function(selection) {
+                if(selection.selected) {
+                    return $.parseHTML(`<span class="is-employer" user_id="${selection.id}" team_id="${selection.area_id}">${selection.text} - ${selection.area}</span>`);
+                }
+                else {
+                    return $.parseHTML(`<span class="is-employer" user_id="${selection.id}" team_id="${selection.area_id}">${selection.text} - ${selection.area}</span>`);
+                }
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            },
+            matcher: function(params, data){
+                return modelMatcher(params, data);
+            },
+            language: {
+                maximumSelected: function (e) {
+                    return 'Chỉ chọn tối đa ' + e.maximum + " nhân viên";
+                }
+            }
+        }).on("change", function (e) {
+            var selected_element = $(e.currentTarget);
+            var select_val = selected_element.data;
+            
+        });
+    });
+
+    function clickFinished(that) {
+        let datas = $(that).closest('.root-tr').find('.is-employer');
+        const employersData = [];
+        for(item of datas) {
+            let employer = {};
+            employer.user_id = $(item).attr('user_id');
+            employer.team_id = $(item).attr('team_id');
+            employersData.push(employer);
+        }
+        staffOut =  $(that).closest('.root-tr').find('input[name="staff_out"]').val();
+        staffIn = $(that).closest('.root-tr').find('input[name="staff_in"]').val();
         studentOut = $(that).closest('.root-tr').find('input[name="student_out"]').val();
         studentIn = $(that).closest('.root-tr').find('input[name="student_in"]').val();
         note = $(that).closest('.root-tr').find('.note').val();
         gateNote = $(that).closest('.root-tr').find("select[name='gate_note']").val();
 
-        $(that).closest('.root-tr').find("#name").html("");
-        $(that).closest('.root-tr').find("#gate_note").html("");
+        $(that).closest('.root-tr').find("#employers").html("");
+        $(that).closest('.root-tr').find("#gate_note_id").html("");
         $(that).closest('.root-tr').find("#staff").html("");
-
         $.ajax({
             url : "{{ route('gate.add') }}",
-            context: that,
+            context: this,
             data : {
                 "_token": "{{ csrf_token() }}",
-                name: dataName,
-                team: team,
+                employers: employersData,
                 staff_out: staffOut,
                 staff_in: staffIn,
                 student_out: studentOut,
                 student_in: studentIn,
                 note: note.trim(),
-                gate_note: gateNote,
+                gate_note_id: gateNote,
             },
             type : 'POST',
             dataType : 'json',
             success : function(result) {
-                console.log(result);
-                toastr.success('Tạo phiếu thành công');
-                // $(this).closest('.root-tr').find("input,textarea,select").attr("disabled", "disabled");
-                // $(this).closest('.root-tr').find('.directorist-select__container').addClass("is-pointer-events");
-                //     window.location.reload();
-                $(this).parent().html(`<a href="/admin/gate/show/${result.data.count_request}/?update=${result.data.count_request}" class="btn btn-warning">Sửa</a>`);
-                $(this).remove();
+                toastr.success('Cập nhật thành công');
+                $(that).parent().append(`<button type="button" onClick="btnSua(this)" count_request="${result.data.count_request}" class="btn btn-warning btn-sm btn-sua">Sửa</button>`);
+                $(that).closest('.root-tr').find('td').each(function(k, value) {
+                    if ($(that).closest('.root-tr').find('td').length - 1 > k) {
+                        $(this).addClass('is-pointer-events');
+                    }
+                    if (k == 0)
+                    $(this).addClass('is-pointer-events1');
+                });
+                $(`<button type="button" count_request="${result.data.count_request}"
+                onClick="btnKetthuc(this)" class="btn btn-secondary btn-sm btn-ketthuc">Kết thúc</button>`).insertAfter($(that))
+
+                $(that).remove();
             },
             error: function (data) {
                 if (data.status == 422) {
@@ -363,14 +378,146 @@
         });
     }
 
-    function clickUpdated(that) {
-        console.log(that);
+    function modelMatcher (params, data) {
+        data.parentText = data.parentText || "";
+
+        if ($.trim(params.term) === '') {
+            return data;
+        }
+
+        if (data.children && data.children.length > 0) {
+        var match = $.extend(true, {}, data);
+
+        for (var c = data.children.length - 1; c >= 0; c--) {
+            var child = data.children[c];
+            child.parentText += data.parentText + " " + data.text;
+
+            var matches = modelMatcher(params, child);
+
+            if (matches == null) {
+                match.children.splice(c, 1);
+            }
+        }
+
+        if (match.children.length > 0) {
+                return match;
+            }
+
+            return modelMatcher(params, match);
+        }
+
+
+        var original = (data.parentText + ' ' + data.first_name).toUpperCase();
+        var term = params.term.toUpperCase();
+
+        if (original.indexOf(term) > -1) {
+            return data;
+        }
+
+        return null;
+    }
+
+    function btnSua(that) {
+        let countRequest = $(that).attr('count_request');
+        let data = $(that).closest('.root-tr').find('td');
+        for(item of data) {
+            $(item).removeClass('is-pointer-events');
+        }
+        let staffIn = $($(that).closest('.root-tr').find('input[name="staff_in"]'));
+        let staffOut = $($(that).closest('.root-tr').find('input[name="staff_out"]'));
+        staffIn.next().remove();
+        staffOut.next().remove();
+
+        $($(that).closest('.root-tr').find('input[name="staff_in"]')).parent().append(`<button type="button" class="btn btn-primary btn-sm text-sm-left p-0 ps-1 pe-1" onClick="getTimeStaff(this)">Lấy thời gian</button>`);
+        $(`<button type="button" class="btn btn-primary btn-sm text-sm-left p-0 ps-1 pe-1" onClick="getTimeStaff(this)">Lấy thời gian</button>`).insertAfter($($(that).closest('.root-tr').find('input[name="staff_out"]')));
         
-        $(that).closest('.root-tr').find("input,textarea,select").removeAttr("disabled");
-        $(that).closest('.root-tr').find('.directorist-select__container').removeClass("is-pointer-events");
+        $(that).parent().append(`<button type="button" onClick="updateGate(this, ${countRequest})" class="btn btn-danger btn-sm is-capnhat mt-1">Cập nhật</button>`);
+
+        $($(that).closest('.root-tr').find('select[name="gate_note"]')).select2({
+            "language": {
+                "noResults": function() {
+                    return "Kết quả không tìm thấy";
+                }
+            },escapeMarkup: function (markup) {
+                    return markup;
+            }
+        });
+        $(that).remove();
+    }
+
+    function updateGate(that, id) {
+        studentOut = $(that).closest('.root-tr').find('input[name="student_out"]').val();
+        studentIn = $(that).closest('.root-tr').find('input[name="student_in"]').val();
+        note = $(that).closest('.root-tr').find('textarea[name="note"]').val();
+        gateNote = $(that).closest('.root-tr').find("select[name='gate_note']").val();
+        staffIn = $(that).closest('.root-tr').find('input[name="staff_in"]').val();
+        staffOut = $(that).closest('.root-tr').find('input[name="staff_out"]').val();
+        
+        $(that).closest('.root-tr').find("#employers").html("");
+        $(that).closest('.root-tr').find("#gate_note_id").html("");
+        $(that).closest('.root-tr').find("#staff").html("");
+        $.ajax({
+            url : "{{ route('gate.update') }}",
+            context: that,
+            data : {
+                "_token": "{{ csrf_token() }}",
+                staff_out: staffOut,
+                staff_in: staffIn,
+                student_out: studentOut,
+                student_in: studentIn,
+                note: note.trim(),
+                gate_note_id: gateNote,
+                count_request: id,
+            },
+            type : 'POST',
+            dataType : 'json',
+            success : function(result) {
+                toastr.success('Cập nhật thành công');
+                let staffIn = $($(that).closest('.root-tr').find('input[name="staff_in"]'));
+                let staffOut = $($(that).closest('.root-tr').find('input[name="staff_out"]'));
+                staffIn.next().remove();
+                staffOut.next().remove();
+
+                if (staffIn.val() != '' && staffOut.val() != '') {
+                   $(that).closest('.root-tr').remove();
+                }
+                
+                $(that).closest('.root-tr').find('td').each(function(k, value) {
+                    if ($(that).closest('.root-tr').find('td').length - 1 > k) {
+                        $(this).addClass('is-pointer-events');
+                    }
+                    if (k == 0)
+                    $(this).addClass('is-pointer-events1');
+                });
+
+                $(that).parent().append(`<button type="button" onClick="btnSua(this)" count_request="${id}" class="btn btn-warning btn-sm btn-sua">Sửa</button>`);
+                $(that).remove();
+            },
+            error: function (data) {
+                if (data.status == 422) {
+                    let resp = data.responseJSON.errors;
+                    
+                    for (index in resp) {
+                        $("#" + index).html(resp[index]);
+                    }
+                } else {
+                    toastr.error('Thất bại '+ data.responseJSON.message)
+                }
+            }
+        });
     }
 
     $(document).ready(function() {
+        $(".employer").select2({
+            tags: true,
+            multiple:true,
+            maximumSelectionLength: 5,
+            placeholder: 'Vui lòng chọn nhân viên',
+            matcher: function(params, data){
+                return modelMatcher(params, data);
+            },
+        });
+
         var prevScrollpos = window.pageYOffset;
 
         /* Get the header element and it's position */
@@ -389,78 +536,6 @@
 
             prevScrollpos = currentScrollPos;
         }
-
-        $(".root-tr").each(function(k) {
-            pureScriptSelect(`#multiSelect${k+1}`);
-            // $(this).find("input,textarea,select").attr("disabled", "disabled");
-            // $(this).find('.directorist-select__container').addClass("is-pointer-events");
-        })
-    
-        let i = <?php echo count($dataGate); ?>;
-        $(".directorist-select").each(function(k, v) {
-            $(this).css('z-index', i)
-            i--;
-        });
-
-        $(".myselect").select2();
-        $(".department").select2({
-            tags: true,
-            escapeMarkup: function (markup) {
-                return markup;
-            }
-        });
-
-        $(".is-finished").click(function() {
-            team = $(this).closest('.root-tr').find('.is-team').val().trim();
-            staffOut =  $(this).closest('.root-tr').find('input[name="staff_out"]:checked').length > 0 ? 1 : 0;
-            staffIn = $(this).closest('.root-tr').find('input[name="staff_in"]:checked').length > 0 ? 1 : 0;
-            studentOut = $(this).closest('.root-tr').find('input[name="student_out"]').val();
-            studentIn = $(this).closest('.root-tr').find('input[name="student_in"]').val();
-            note = $(this).closest('.root-tr').find('.note').val();
-            gateNote = $(this).closest('.root-tr').find("select[name='gate_note']").val();
-
-            console.log('team', team);
-            console.log('staffOut', staffOut);
-            console.log('staffIn', staffIn);
-            console.log('studentOut', team);
-            console.log('note', note);
-            console.log('gateNote', gateNote);
-            
-            $.ajax({
-                url : "{{ route('gate.updateOutAndIn') }}",
-                context: this,
-                data : {
-                    "_token": "{{ csrf_token() }}",
-                    staff_out: staffOut,
-                    staff_in: staffIn,
-                    student_out: studentOut,
-                    student_in: studentIn,
-                    note: note.trim(),
-                    gate_note_id: gateNote,
-                    count_request: $(this).attr('id')
-                },
-                type : 'POST',
-                dataType : 'json',
-                success : function(result) {
-                    toastr.success('Cập nhật thành công');
-                    console.log(result);
-
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1000);
-                    
-                    // toastr.success('Tạo phiếu thành công');
-                    // $(this).closest('.root-tr').find("input,textarea,select").attr("disabled", "disabled");
-                    // $(this).closest('.root-tr').find('.directorist-select__container').addClass("is-pointer-events");
-                    //     window.location.reload();
-
-                },
-                error: function (data) {
-                   console.log('error', data);
-                   
-                }
-            });
-        });
     });
   
 </script>

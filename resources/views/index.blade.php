@@ -395,7 +395,7 @@
                       </tbody>
                     </table>
                     <!-- End Default Table Example -->
-                    {!! $datas->links('_partials.pagination') !!}
+                    <!-- { $datas->links('_partials.pagination') } -->
                   </div>
                 </div>
               </div>

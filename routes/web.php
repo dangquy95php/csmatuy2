@@ -83,7 +83,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::get('/show/{id?}', 'GateController@showAll')->name('gate.show');
         Route::get('/search', 'GateController@search')->name('gate.search');
         Route::post('/add', 'GateController@add')->name('gate.add');
-        Route::post('/update', 'GateController@updateOutAndIn')->name('gate.updateOutAndIn');
+        Route::post('/update', 'GateController@update')->name('gate.update');
+        Route::post('/end', 'GateController@end')->name('gate.end');
+
     });
 
     Route::group(['prefix' => 'permit'], function () {
