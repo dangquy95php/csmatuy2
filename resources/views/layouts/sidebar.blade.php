@@ -73,41 +73,18 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/department/index') || request()->is('admin/department/create') ? '' : 'collapsed' }} " data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
-          <i class="ri-user-3-line"></i><span>Quản lý đơn vị ngoài</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav1" class="nav-content collapse {{ request()->is('admin/department/index') || request()->is('admin/department/create') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('department.index') }}" class="{{ request()->is('admin/department/index') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Danh sách</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
-
-      <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/gate/*') || request()->is('admin/gate/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="ri-ancient-gate-line"></i><span>Quản lý ra vào cổng</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse {{ request()->is('admin/gate/*') || request()->is('admin/gate/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
         <li>
-            <a href="{{ route('gate.show') }}" class="{{ request()->is('admin/gate/show') ? 'active' : '' }}">
+            <a href="{{ route('gate.index') }}" class="{{ request()->is('admin/gate/index') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Danh sách ra/vào</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('gate.create') }}" class="{{ request()->is('admin/gate/create') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Tạo phiếu</span>
             </a>
           </li>
           <li>
             <a href="{{ route('gate.note') }}" class="{{ request()->is('admin/gate/note') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Danh sách thẻ ghi chú</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('gate.index') }}" class="{{ request()->is('admin/gate/index') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Danh sách phiếu</span>
             </a>
           </li>
         </ul>

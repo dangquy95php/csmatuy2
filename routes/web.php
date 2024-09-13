@@ -66,12 +66,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     });
 
     Route::group(['prefix' => 'gate'], function () {
-        Route::get('/create', 'GateController@create')->name('gate.create');
         Route::post('/staff', 'GateController@createStaff')->name('gate.create.staff');
         Route::post('/relatives-of-drug-addicts', 'GateController@relativesOfDrugAddicts')->name('gate.create.relatives_of_drug_addicts');
         Route::post('/guest-student', 'GateController@guestStudent')->name('gate.create.guest_student');
         
-        Route::get('/index', 'GateController@index')->name('gate.index');
         Route::get('/note', 'GateController@note')->name('gate.note');
         Route::get('/note/create', 'GateController@noteCreate')->name('gate.note-create');
         Route::post('/note/create', 'GateController@noteStore')->name('gate.note-store');
@@ -79,8 +77,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/note/{id}/edit', 'GateController@noteUpdate')->name('gate.note-update');
         Route::get('/note/{id}/destroy', 'GateController@noteDestroy')->name('gate.note-destroy');
 
-        // Route::get('/show', 'GateController@showAll');
-        Route::get('/show/{id?}', 'GateController@showAll')->name('gate.show');
+        Route::get('/index', 'GateController@index')->name('gate.index');
         Route::get('/search', 'GateController@search')->name('gate.search');
         Route::post('/add', 'GateController@add')->name('gate.add');
         Route::post('/update', 'GateController@update')->name('gate.update');

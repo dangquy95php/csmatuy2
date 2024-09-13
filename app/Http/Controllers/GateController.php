@@ -40,91 +40,6 @@ class GateController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {       
-        $gate = '';
-        if (is_null($request->get('type_gate'))) {
-            $gate = Gate::ALL;
-        } else {
-            $gate = $request->get('type_gate');
-        }
-
-        if (($request->get('staff_start_date') && $request->get('staff_end_date')) && empty($request->get('staff_today'))) {
-            $data = Gate::typeGate($gate)->startDate($request->get('staff_start_date'))
-                        ->endDate($request->get('staff_end_date'))
-                        ->orderByID()->with(['user', 'team'])->take(500)->get()->groupBy('count_request')->paginate(20);
-        } elseif($request->get('staff_today')) {
-            $data = Gate::typeGate($gate)->today()->orderByID()->with(['user', 'team'])->take(500)->get()->groupBy('count_request')->paginate(20);
-        } else {
-            $data = Gate::typeGate($gate)->orderByID()->with(['user', 'team'])->take(500)->get()->groupBy('count_request')->paginate(20);
-        }
-
-        foreach($data as $key => &$datas) {
-            if (count($datas) > 0) {
-                $datas[0]->rowspan = count($datas);
-            }
-        }
-
-        $drugAddict = DrugAddict::orderBy('id', 'DESC')->paginate(20);
-        $guestStudent = GuestStudents::orderBy('id', 'DESC')->paginate(20);
-        
-        return view('gate.index', compact('data', 'drugAddict', 'guestStudent'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        $gateNote = GateNote::all();
-        $teams    = Team::with('user')->orderBy('name','ASC')->get();
-        // $copyData = $teams;
-
-        // foreach ($copyData as $key => $team) {
-        //     foreach ($team->user as &$value) {
-               
-        //         $value->id_area = $team->id;
-        //     }
-        // }
-        $dataTeamAndEmployer = [];
-
-        foreach ($teams as $items) {
-            $data = [];
-            foreach ($items->user as $value) {
-                $nameFile = '';
-                if (file_exists('storage/profile/'. $value->image)) {
-                    $nameFile = $value->image;
-                } else {
-                    $nameFile = 'default.jpg';
-                }
-
-                $object = new \stdClass;
-                $object->id = $value->id .'_'. $items->id;
-                $object->text = $value->name;
-                $object->image = $nameFile;
-                $object->team_id = $items->name;
-
-                array_push($data, $object);
-            }
-
-            $objectTotal = new \stdClass;
-            $objectTotal->children = $data;
-            $objectTotal->id = $items->id;
-            $objectTotal->text = $items->name;
-
-            array_push($dataTeamAndEmployer, $objectTotal);
-        }
-
-        return view('gate.create', compact('gateNote', 'teams', 'dataTeamAndEmployer'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -387,7 +302,7 @@ class GateController extends Controller
         return redirect()->route('gate.index', ['tab' => 'tab3']);
     }
 
-    public function showAll($id = null, Request $request)
+    public function index(Request $request)
     {
         $gateNote = GateNote::all();
         $userByArea = Team::with(['user'])->orderBy('type', 'desc')->get();
@@ -431,7 +346,7 @@ class GateController extends Controller
             array_push($dataEmployer, $object);
         }
         
-        return view('gate.show', compact('gateNote', 'dataEmployer', 'dataGate'));
+        return view('gate.index', compact('gateNote', 'dataEmployer', 'dataGate'));
     }
     
     public function end(Request $request)
@@ -495,17 +410,6 @@ class GateController extends Controller
         return response()->json(['message' => 'Cập nhật thành công'], 200);
     }
 
-    public function search(Request $request)
-    {
-        $search = $request->input('query');
-        $results = User::with('team')->where('status',"=", User::ENABLE)
-                        ->where('first_name', 'like', "%{$search}%")
-                        ->whereNotNull('team_id')
-                        ->select("first_name", "last_name", "id", "team_id", "image")->get();
-                        
-        return response()->json($results);
-    }
-
     public function add(Request $request)
     {
         $this->validate($request, [
@@ -567,42 +471,4 @@ class GateController extends Controller
 
         return response()->json(['message' => 'Thêm thành công', 'data' => $data], 200);
     }
-
-    public function updateOutAndIn(Request $request)
-    {
-        $gates = Gate::where('count_request', $request->get('count_request'))->get();
-        if (empty($gates)) {
-            return response()->json(['message' => 'Có lỗi đã xảy ra'], 404);
-        }
-
-        $gate = [];
-        if($request->input('staff_in')) {
-            $gate['staff_in'] = \Carbon\Carbon::now();
-        }
-        if($request->input('staff_out')) {
-            $gate['staff_out'] = \Carbon\Carbon::now();
-        }
-        if($request->input('student_out')) {
-            $gate['student_out'] = $request->input('student_out');
-        }
-        if($request->input('student_in')) {
-            $gate['student_in'] = $request->input('student_in');
-        }
-        if($request->input('note')) {
-            $gate['note'] = $request->input('note');
-        }
-        if($request->input('gate_note_id')) {
-            $gate['gate_note_id'] = $request->input('gate_note_id');
-        }
-
-        try {
-            Gate::where('count_request', $request->get('count_request'))->update($gate);
-        } catch (\Exception $ex) {
-            return response()->json(['message' => 'Có lỗi đã xảy ra!'. $ex->getMessage()], 500);
-        }
-
-       
-    }
-
-    
 }
