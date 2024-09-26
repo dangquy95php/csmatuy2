@@ -78,6 +78,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::get('/note/{id}/destroy', 'GateController@noteDestroy')->name('gate.note-destroy');
 
         Route::get('/index', 'GateController@index')->name('gate.index');
+        Route::get('/input', 'GateController@input')->name('gate.input');
         Route::get('/search', 'GateController@search')->name('gate.search');
         Route::post('/add', 'GateController@add')->name('gate.add');
         Route::post('/update', 'GateController@update')->name('gate.update');

@@ -22,10 +22,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Log name</th>
                         <th scope="col">Mô tả</th>
-                        <th scope="col">Subject type</th>
                         <th scope="col">Sự kiện</th>
-                        <th scope="col">Subject ID</th>
-                        <th scope="col">Causer type</th>
                         <th scope="col">Người tạo</th>
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Thuộc tính</th>
@@ -43,19 +40,16 @@
                         <th scope="row">{{ $key + 1 }}</th>
                         <td>{{ $log->log_name }}</td>
                         <td>{{ $log->description }}</td>
-                        <td>{{ $log->subject_type }}</td>
                         <td>{{ $log->event }}</td>
-                        <td>{{ $log->subject_id }}</td>
-                        <td>{{ $log->causer_type }}</td>
-                        <td>{{ @$log->user->name }}</td>
+                        <td>{{ @$log->user->last_name }} {{ @$log->user->first_name }}</td>
                         <td>{{ $log->created_at }}</td>
                         <td>
-                           <span class="badge bg-primary"><?php
-                           print_r(@$json['attributes']);
-                           ?></span>
-                           <span class="badge bg-danger"><?php
-                           print_r(@$json['old']);
-                           ?></span>
+                           @foreach(@$json['attributes'] as $k1 => $item1)
+                              <div class="d-flex mb-1">
+                                 <span class="badge bg-primary">{{$k1}}: Dữ liệu đã thay đổi là: {{$item1}}</span>
+                                 <span class="badge bg-danger ms-1">{{$k1}}: Dữ liệu trước: {{ @$json['old'][$k1] }}</span>
+                              </div>
+                           @endforeach
                         </td>
                     </tr>
                     @php

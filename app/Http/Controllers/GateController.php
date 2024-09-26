@@ -21,7 +21,7 @@ use Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-
+use Spatie\Activitylog\Models\Activity;
 class GateController extends Controller
 {
     /**
@@ -304,6 +304,14 @@ class GateController extends Controller
 
     public function index(Request $request)
     {
+        $todayOut = Gate::with(['user', 'team', 'gate_note', 'auth'])->whereDate('created_at', Carbon::today())->whereNotNull('staff_out')->paginate(20);
+        $todayIn = Gate::with(['user', 'team', 'gate_note', 'auth'])->whereDate('created_at', Carbon::today())->whereNotNull('staff_in')->paginate(20);
+
+        return view('gate.index', compact('todayIn', 'todayOut'));
+    }
+
+    public function input(Request $request)
+    {
         $gateNote = GateNote::all();
         $userByArea = Team::with(['user'])->orderBy('type', 'desc')->get();
         $search = $request->input('search');
@@ -346,7 +354,7 @@ class GateController extends Controller
             array_push($dataEmployer, $object);
         }
         
-        return view('gate.index', compact('gateNote', 'dataEmployer', 'dataGate'));
+        return view('gate.input', compact('gateNote', 'dataEmployer', 'dataGate'));
     }
     
     public function end(Request $request)
@@ -402,7 +410,7 @@ class GateController extends Controller
             $dataUpdate['staff_out'] = $request->input('staff_out');
         }
         try {
-            $gate = Gate::where('count_request', $id)->update($dataUpdate);
+            $gate = Gate::where('count_request', $id)->firstOrFail()->update($dataUpdate);
         } catch (\Exception $ex) {
             return response()->json(['message' => 'Có lỗi đã xảy ra!'. $ex->getMessage()], 500);
         }

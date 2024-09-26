@@ -12,9 +12,14 @@ use Spatie\Activitylog\LogOptions;
 
 class Gate extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
-    use LogsActivity;
+    protected static $recordEvents = ['deleted', 'updated'];
+    protected static $logName = 'Cổng';
+
+    protected static $logOnlyDirty = true; 
+
+    // protected static $logDescription = 'Cập nhật';
 
     /**
      * Fields that are mass assignable
@@ -44,6 +49,12 @@ class Gate extends Model
         self::IN => 'Vào cổng',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->logOnly(['staff_out', 'staff_in', 'student_out', 'student_in', 'note', 'team_id', 'auth_id', 'gate_note_id'])->logOnlyDirty()->dontSubmitEmptyLogs();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class)->select(['first_name', 'last_name','status', 'image', 'team_id', 'id']);
@@ -52,6 +63,16 @@ class Gate extends Model
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id', 'id')->select(['name','id']);
+    }
+
+    public function gate_note()
+    {
+        return $this->belongsTo(GateNote::class, 'gate_note_id', 'id')->select(['name','id']);
+    }
+
+    public function auth()
+    {
+        return $this->belongsTo(User::class, 'auth_id', 'id')->select(['first_name', 'last_name','status', 'image', 'team_id', 'id']);
     }
 
     public function scopeStartDate($query, $date)
@@ -80,11 +101,5 @@ class Gate extends Model
     public function scopeToday($query)
     {
         return $query->whereDate('created_at', Carbon::today());
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-        ->logOnly(['user_id', 'number_of_drug_addicts', 'note', 'type_gate', 'team_id', 'created_at']);
     }
 }

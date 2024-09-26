@@ -60,7 +60,12 @@ Breadcrumbs::for('permission.edit', function ($trail, $permission) {
 
 Breadcrumbs::for('gate.index', function ($trail) {
     $trail->parent('dashboard');
-    $trail->push('Danh sách ra vào cổng', route('gate.index'));
+    $trail->push('Danh sách ra/vào cổng', route('gate.index'));
+});
+
+Breadcrumbs::for('gate.input', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Nhập thông tin ra/vào cổng', route('gate.input'));
 });
 
 Breadcrumbs::for('gate.note', function ($trail) {

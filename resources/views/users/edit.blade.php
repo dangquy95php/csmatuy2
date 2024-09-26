@@ -20,9 +20,14 @@
             <form class="row g-3" method="POST">
             @csrf
                 <div class="col-12">
-                    <label for="inputNanme4" class="form-label">Họ tên:</label>
-                    <input type="text" name="name" placeholder="Nhập họ tên" value="{{ $user->name }}" class="form-control" id="inputNanme4">
-                    @include('_partials.alert', ['field' => 'name'])
+                    <label for="inputNanme4" class="form-label">Họ:</label>
+                    <input type="text" name="first_name" placeholder="Nhập họ" value="{{ $user->first_name }}" class="form-control" id="inputNanme4">
+                    @include('_partials.alert', ['field' => 'first_name'])
+                </div>
+                <div class="col-12">
+                    <label for="inputNanme4" class="form-label">Tên:</label>
+                    <input type="text" name="last_name" placeholder="Nhập tên" value="{{ $user->last_name }}" class="form-control" id="inputNanme1">
+                    @include('_partials.alert', ['field' => 'last_name'])
                 </div>
                 <div class="col-12">
                     <label for="inputEmail4" class="form-label">Email:</label>

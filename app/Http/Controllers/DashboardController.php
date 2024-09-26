@@ -14,22 +14,21 @@ class DashboardController extends Controller
 {
     function __construct()
     {
-        // $this->middleware('permission:user-list', ['only' => ['index']]);
+        $this->middleware('permission:user-list', ['only' => ['index']]);
     }
 
     public function index(Request $request)
     {
-        // $gateIDUsers = Gate::whereDate('gates.created_at', Carbon::today())
-        //                 ->join('teams', 'teams.id', '=', 'gates.team_id')
-        //                 ->where('teams.type', Team::OFFICE_HOUR)->pluck('user_id');
+        $gateIDUsers = Gate::whereDate('gates.created_at', Carbon::today())
+                        ->join('teams', 'teams.id', '=', 'gates.team_id')
+                        ->where('teams.type', Team::OFFICE_HOUR)->pluck('user_id');
 
-        // $datas = User::
-        //     join('teams', 'teams.id', '=', 'users.team_id')
-        //     ->where('teams.type', '=', Team::OFFICE_HOUR)
-        //     ->select('users.first_name', 'users.last_name', 'users.email', 'users.image', 'users.team_id')
-        //     ->whereNotIn('users.id', $gateIDUsers)->paginate(10);
+        $datas = User::
+            join('teams', 'teams.id', '=', 'users.team_id')
+            ->where('teams.type', '=', Team::OFFICE_HOUR)
+            ->select('users.first_name', 'users.last_name', 'users.email', 'users.image', 'users.team_id')
+            ->whereNotIn('users.id', $gateIDUsers)->paginate(10);
 
-        $datas = [];
         return view('index', compact('datas'));
     }
 

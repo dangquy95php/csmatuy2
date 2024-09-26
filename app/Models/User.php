@@ -73,7 +73,7 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-        ->logOnly(['name', 'email', 'image', 'status', 'is_account_enabled', 'team_id']);
+        ->logOnly(['first_name', 'last_name', 'email', 'image', 'status', 'team_id'])->logOnlyDirty()->dontSubmitEmptyLogs();
     }
 
     public function setPasswordAttribute($value)

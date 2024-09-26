@@ -381,7 +381,7 @@
                         @foreach($datas as $key => $value)
                         <tr>
                           <th scope="row">{{ $key + 1 }}</th>
-                          <td>{{ $value->name  }}</td>
+                          <td>{{ $value->last_name  }} {{ $value->first_name  }}</td>
                           <td>{{ $value->email }}</td>
                           <td>{{ @$value->team->name }}</td>
                           <td>
