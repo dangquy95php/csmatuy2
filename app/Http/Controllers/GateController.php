@@ -12,7 +12,6 @@ use App\Models\Team;
 use App\Models\GateNote;
 use App\Models\DrugAddict;
 use App\Models\Department;
-use App\Models\GuestStudents;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
@@ -22,6 +21,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Spatie\Activitylog\Models\Activity;
+
 class GateController extends Controller
 {
     /**
@@ -35,8 +35,7 @@ class GateController extends Controller
         $this->middleware('permission:gate-create', ['only' => ['create','store']]);
         $this->middleware('permission:gate-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:gate-delete', ['only' => ['destroy']]);
-        $this->middleware('permission:gate-create-staff', ['only' => ['createStaff']]);
-        $this->middleware('permission:gate-guest-student', ['only' => ['guestStudent']]);
+        $this->middleware('permission:gate-input', ['only' => ['input']]);
     }
 
     /**
@@ -171,143 +170,17 @@ class GateController extends Controller
         return redirect()->route('gate.note');
     }
 
-    public function createStaff(Request $request)
-    {
-        $this->validate($request, [
-            'staff' => 'required',
-            'time' => 'required',
-        ], [
-            'staff.required'=> 'Chọn tên nhân viên',
-            'time.required'=> 'Xin vui lòng chọn thời gian',
-        ]);
-
-        try {
-            $users = $request->get('staff');
-            $record = Gate::orderBy('count_request', 'DESC')->select('count_request')->first();
-            $id = 1;
-
-            if (!empty($record)) {
-                $id = $record->count_request + 1;
-            }
-
-            foreach ($users as $key => $user) {
-                $idUserAndDepartment = explode('_', $user);
-
-                $gate = new Gate();
-                $gate->user_id = @$idUserAndDepartment[0];
-                $gate->team_id = @$idUserAndDepartment[1];
-                $gate->count_request = $id;
-                $gate->auth_id = Auth::id();
-                
-                if($request->has('number_of_drug_addicts')) {
-                    $gate->number_of_drug_addicts =  $request->get('number_of_drug_addicts');
-                }
-                if($request->has('note')) {
-                    $gate->note = $request->get('note');
-                }
-                if($request->has('type_gate')) {
-                    $gate->type_gate = $request->get('type_gate');
-                }
-                if($request->has('time')) {
-                    $gate->created_at = $request->get('time');
-                }
-                if($request->has('car_number')) {
-                    $gate->car_number = $request->get('car_number');
-                }
-            
-                $gate->save();
-            }
-        } catch (\Exception $ex) {
-            Toastr::error('Tạo vé thất bại'. $ex->getMessage());
-            return redirect()->back();
-        }
-        Toastr::success('Tạo phiếu thành công!');
-
-        return redirect()->route('gate.index');
-    }
-
-    public function relativesOfDrugAddicts(Request $request)
-    {
-        $rules = [
-            "personal_name"    => "required|array|min:1",
-            'personal_name.*'  => 'required|string|distinct|min:1',
-            'time1' => 'required',
-        ];
-        $messages = [
-            'time1.required'=> 'Xin vui lòng chọn thời gian',
-            'personal_name.*.required' => 'Vui lòng nhập tên thân nhân',
-            'personal_name.*.min' => 'Vui lòng nhập ít nhất 1 người thân nhân',
-            'personal_name.*.distinct' => 'Người thân nhân đã bị trùng tên',
-        ];
-        if ($request->get('type_gate') == 1) {
-            $rules = array_merge($rules, [
-                'name_of_drug_addict' => 'required|array|min:1',
-                'name_of_drug_addict.*' => 'required|string|distinct|min:1',
-            ]);
-            $messages = array_merge($messages, [
-                'name_of_drug_addict.*.required' => 'Vui lòng nhập tên người cai nghiện',
-                'name_of_drug_addict.*.min' => 'Vui lòng nhập ít nhất 1 người cai nghiện',
-                'name_of_drug_addict.*.distinct' => 'Người cai nghiện đã bị trùng tên',
-            ]);
-        }
-
-        $this->validate($request, $rules, $messages);
-        $personalName = implode(",", $request->get('personal_name'));
-
-        try {
-            $drugAddict = new DrugAddict();
-            $drugAddict->personal_name = $personalName;
-            $drugAddict->note = $request->get('note1');
-            $drugAddict->type_gate = $request->get('type_gate');
-            $drugAddict->kind_of_detox = $request->get('kind_of_detox');
-            $drugAddict->car_number = $request->get('car_number');
-            $drugAddict->auth_id = Auth::id();
-            if ($request->get('name_of_drug_addict')) {
-                $nameAddict = implode(",", $request->get('name_of_drug_addict'));
-                $drugAddict->name_of_drug_addict =  $nameAddict;
-            }
-            $drugAddict->created_at = $request->get('time1');
-
-            $drugAddict->save();
-        } catch (\Exception $ex) {
-            Toastr::error('Tạo vé người thân của người cai nghiện đưa lên thất bại '. $ex->getMessage());
-            return redirect()->back();
-        }
-        Toastr::success('Tạo phiếu thành công!');
-
-        return redirect()->route('gate.index', ['tab' => 'tab2']);
-    }
-
-    public function guestStudent(Request $request)
-    {
-        $this->validate($request, [
-            'staff_name' => 'required',
-            'time2' => 'required',
-        ], [
-            'staff_name.required'=> 'Chọn tên nhân viên',
-            'time2.required'=> 'Xin vui lòng chọn thời gian',
-        ]);
-
-        $guestStudent = new GuestStudents();
-        $guestStudent->staff_name = $request->get('staff_name');
-        $guestStudent->car_number = $request->get('car_number');
-        $guestStudent->number_of_drug_addicts = $request->get('number_of_drug_addicts1');
-        $guestStudent->type_gate = $request->get('type_gate');
-        $guestStudent->note = $request->get('note2');
-        $guestStudent->auth_id = Auth::id();
-        $guestStudent->created_at = $request->get('time2');
-
-        $guestStudent->save();
-
-        return redirect()->route('gate.index', ['tab' => 'tab3']);
-    }
-
     public function index(Request $request)
     {
-        $todayOut = Gate::with(['user', 'team', 'gate_note', 'auth'])->whereDate('created_at', Carbon::today())->whereNotNull('staff_out')->paginate(20);
         $todayIn = Gate::with(['user', 'team', 'gate_note', 'auth'])->whereDate('created_at', Carbon::today())->whereNotNull('staff_in')->paginate(20);
+        $listIdUser = Gate::whereDate('created_at', Carbon::today())->whereNotNull('staff_in')->pluck('user_id')->toArray();
 
-        return view('gate.index', compact('todayIn', 'todayOut'));
+        $listNotYetIn = User::whereNotNull('team_id')->where('status', User::ENABLE)
+        ->whereNotIn('users.id', $listIdUser)->rightJoin('teams', function($join) {
+            $join->on('users.team_id', '=', 'teams.id')->where('type', Team::OFFICE_HOUR);
+        })->get();
+
+        return view('gate.index', compact('todayIn', 'listNotYetIn'));
     }
 
     public function input(Request $request)

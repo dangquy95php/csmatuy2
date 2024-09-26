@@ -34,13 +34,12 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'gate-list']);
         Permission::create(['name' => 'gate-edit']);
         Permission::create(['name' => 'gate-delete']);
+        Permission::create(['name' => 'gate-input']);
 
         Permission::create(['name' => 'team-index']);
         Permission::create(['name' => 'team-create']);
         Permission::create(['name' => 'team-edit']);
         Permission::create(['name' => 'team-delete']);
-        Permission::create(['name' => 'gate-create-staff']);
-        Permission::create(['name' => 'gate-guest-student']);
 
         Permission::create(['name' => 'excel-import']);
         Permission::create(['name' => 'log-list']);

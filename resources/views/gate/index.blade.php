@@ -27,7 +27,7 @@
                     </ul>
                     <div class="tab-content pt-2" id="borderedTabContent">
                         <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
-                            <table class="table table-hover">
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -58,35 +58,47 @@
                             {!! $todayIn->links('_partials.pagination') !!}
                         </div>
                         <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Tên nhân viên</th>
-                                        <th scope="col">Thời gian ra</th>
-                                        <th scope="col">Số học viên ra</th>
-                                        <th scope="col">Ghi chú</th>
-                                        <th scope="col">Đơn vị</th>
-                                        <th scope="col">Loại công việc</th>
-                                        <th scope="col">Người nhập</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($todayOut as $k => $item)
-                                    <tr>
-                                        <th scope="row">{{ ++$k }}</th>
-                                        <td>{{ $item->user->last_name }} {{ $item->user->first_name }}</td>
-                                        <td>{{ date('H:i:s', strtotime($item->created_at)) }}</td>
-                                        <td>{{ $item->student_out }}</td>
-                                        <td>{{ $item->note }}</td>
-                                        <td>{{ $item->team->name }}</td>
-                                        <td>{{ $item->gate_note->name }}</td>
-                                        <td>{{ $item->auth->last_name }} {{ $item->auth->first_name }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            {!! $todayIn->links('_partials.pagination') !!}
+                            <div class="col-lg-6">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Tên nhân viên</th>
+                                            <th scope="col">Đơn vị</th>
+                                            <th scope="col">Hình ảnh</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($listNotYetIn as $key => $item)
+                                        <tr>
+                                            <th scope="row">{{ ++$key }}</th>
+                                            <td>{{ $item->last_name }} {{ $item->first_name }}</td>
+                                            <td>{{ @$item->team->name }}</td>
+                                            <td>
+                                                <img data-bs-toggle="modal" data-bs-target="#exampleModal{{ $key + 1 }}" src="{{ !file_exists('storage/profile/'.$item->image) || empty($item->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$item->image)}}" style="width:70px;" class="img-fluid img-thumbnail" alt="">
+                                                <div class="modal fade" id="exampleModal{{ $key + 1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">{{ $item->team ? $item->team->name : 'Không thuộc team' }}: <b>{{ $item->name }}</b></h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <img class="img-fluid w-100" src="{{ !file_exists('storage/profile/'.$item->image) || empty($item->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$item->image) }}" alt="">
+                                                            </div>
+                                                            <div class="modal-footer d-flex justify-content-center">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                {!! $todayIn->links('_partials.pagination') !!}
+                            </div>
                         </div>
                     </div>
                 </div>
