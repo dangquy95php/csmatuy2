@@ -11,7 +11,6 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\GateNote;
 use App\Models\DrugAddict;
-use App\Models\Department;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;

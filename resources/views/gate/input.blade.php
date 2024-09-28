@@ -323,7 +323,7 @@
         $(".select_employer"+ countTr).select2({
             tags: true,
             multiple:true,
-            maximumSelectionLength: 1,
+            maximumSelectionLength: 5,
             placeholder: 'Vui lòng chọn nhân viên',
             data: <?php echo json_encode($dataEmployer); ?>,
             templateSelection: function(selection) {

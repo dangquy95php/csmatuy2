@@ -26,6 +26,7 @@
                         <th scope="col">Người tạo</th>
                         <th scope="col">Ngày tạo</th>
                         <th scope="col">Thuộc tính</th>
+                        <th scope="col">Browsers</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -51,6 +52,7 @@
                               </div>
                            @endforeach
                         </td>
+                        <td class="text-danger">{{ $log->browsers }}</td>
                     </tr>
                     @php
                     $id++;

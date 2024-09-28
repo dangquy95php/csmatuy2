@@ -27,6 +27,7 @@ class Log extends Model
         'properties',
         'batch_uuid',
         'created_at',
+        'browsers'
     ];
 
     public function user()

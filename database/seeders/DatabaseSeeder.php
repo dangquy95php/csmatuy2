@@ -18,6 +18,5 @@ class DatabaseSeeder extends Seeder
         $this->call(GateNoteSeeder::class);
         $this->call(PermissionSeeder::class); 
         $this->call(AdminSeeder::class); 
-        $this->call(DepartmentSeeder::class); 
     }
 }

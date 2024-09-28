@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDepartmentTable extends Migration
+class AddBrowserToActivityLogTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateDepartmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 200)->unique();
-            $table->string('note', 200)->nullable();
-            $table->timestamps();
+        Schema::table('activity_log', function (Blueprint $table) {
+            $table->json('browsers')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateDepartmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departments');
+        Schema::table('activity_log', function (Blueprint $table) {
+            $table->dropColumn('browsers');
+        });
     }
 }
