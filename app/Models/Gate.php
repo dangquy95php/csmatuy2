@@ -19,7 +19,6 @@ class Gate extends Model
     use HasFactory, LogsActivity;
 
     protected static $recordEvents = ['deleted', 'updated'];
-    protected static $logCustomAttributes = [['note'=>'xyz']];
 
     protected static $logOnlyDirty = true; 
 

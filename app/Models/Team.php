@@ -8,12 +8,17 @@ use App\Models\User;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Contracts\Activity;
+use Auth;
 
 class Team extends Model
 {
     use HasFactory;
     
     use LogsActivity;
+
+    protected static $recordEvents = ['deleted', 'updated'];
+
+    protected static $logOnlyDirty = true; 
 
     /**
      * Fields that are mass assignable
@@ -43,7 +48,15 @@ class Team extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()
-        ->logOnly(['name', 'note', 'created_at']);
+        return LogOptions::defaults()->useLogName('Khu/Phòng')
+        ->setDescriptionForEvent(function (string $eventName) {
+            if ($eventName === 'updated') {
+                return 'Khu/Phòng được cập nhật bởi ' . Auth::user()->last_name .' '. Auth::user()->first_name;
+            } elseif ($eventName === 'deleted') {
+                return 'Khu/Phòng được xóa bởi ' . Auth::user()->last_name .' '. Auth::user()->first_name;
+            }
+
+            return 'Khu/Phòng event';
+        })->logOnly(['name', 'note', 'type'])->logOnlyDirty()->dontSubmitEmptyLogs();
     }
 }

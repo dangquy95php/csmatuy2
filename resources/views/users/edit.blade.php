@@ -57,7 +57,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-12">
+                <div class="col-10">
                     <label class="form-label">Role:</label>
                     <select class="form-select" name="roles[]" multiple="" aria-label="multiple select example">
                         @foreach($roles as $key => $value)
@@ -78,6 +78,9 @@
                             @endif
                         @endforeach
                     </select>
+                </div>
+                <div class="col-2">
+                    <img class="img-fluid w-100" src="{{ !file_exists('storage/profile/'.$user->image) || empty($user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image) }}" alt="">
                 </div>
               
                 <div class="text-center mt-2">

@@ -32,7 +32,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($data, $remember_me)) {
             Toastr::success('Đăng nhập vào hệ thống thành công!');
-            
+
             return redirect()->route('dashboard');
         } else {
             Toastr::error('Tên người dùng hoặc mật khẩu không chính xác!');

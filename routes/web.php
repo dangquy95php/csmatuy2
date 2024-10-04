@@ -38,6 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     Route::get('/{id}/edit', 'UserController@edit')->name('user.edit');
     Route::post('/{id}/edit', 'UserController@update')->name('user.update');
     Route::get('/{id}/destroy', 'UserController@destroy')->name('user.destroy');
+    Route::get('/export', 'UserController@export')->name('user.export');
 
     Route::group(['prefix' => 'roles'], function () {
         Route::get('/list', 'RoleController@index')->name('roles.list');

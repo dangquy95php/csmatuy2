@@ -24,6 +24,7 @@
                         </div>
                         <div class="col-sm-2 ps-0">
                             <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                            <a href="{{route('user.export')}}" class="btn btn-outline-success">Xuất Excel</a>
                         </div>
                     </div>
                 </form>
@@ -91,7 +92,7 @@
                         <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
                         <td>
                             @canany('user-edit')
-                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success  btn-sm">Sửa</a>
+                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success btn-sm">Sửa</a>
                             @endcanany
                             @canany('user-delete')
                             <a href="{{ route('user.destroy', $user->id) }}" onclick="return confirm('Bạn có muốn xóa {{ $user->name }} không?')" class="btn btn-danger btn-sm">Xóa</a>

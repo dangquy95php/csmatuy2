@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
+use App\Exports\UserExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -33,6 +35,15 @@ class UserController extends Controller
         $this->middleware('permission:user-delete', ['only' => ['destroy']]);
     }
 
+    public function export()
+    {
+        $time = date('Y-m-d H:i:s');
+        $time = str_replace(':', '_', $time);
+        $time = str_replace(' ', '_', $time);
+
+        return Excel::download(new UserExport, $time . 'danh-sach-vien-chuc-nld.xlsx');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -44,7 +55,7 @@ class UserController extends Controller
             $search = $request->input('search');;
             $data = User::where('name', 'like', "%$search%")->with(['team', 'user_infor'])->paginate(20);
         } else {
-            $data = User::with(['team', 'user_infor'])->paginate(20);
+            $data = User::with(['team', 'user_infor'])->whereNotNull('team_id')->paginate(20);
         }
         
         foreach ($data as &$user) {

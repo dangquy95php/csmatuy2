@@ -74,7 +74,8 @@ class UserImport implements ToModel, WithHeadingRow, WithStartRow, WithChunkRead
                 } else {
                     $user->assignRole('staff');
                 }
-        
+                
+                // $date = $row['nam'] ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(@$row['nam'])->format('d/m/Y') : \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(@$row['nu'])->format('d/m/Y');
                 $data = new UserInfor([
                     'user_id'                                 => $user->id,
                     'ngay_sinh'                               => $row['nam'] ? $row['nam'] : $row['nu'],

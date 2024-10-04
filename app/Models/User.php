@@ -22,6 +22,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    protected static $recordEvents = ['deleted', 'updated'];
+    
     use LogsActivity;
 
     const NOT_ACTIVATED = 0;
