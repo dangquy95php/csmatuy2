@@ -115,9 +115,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     });
 });
 
-Route::get('/', 'ChatsController@index');
-Route::get('messages', 'ChatsController@fetchMessages');
-Route::post('messages', 'ChatsController@sendMessage');
+Route::get('/', 'User\HomeController@index');
 
 // Route::group(['prefix' => 'admin'], function () {
     
