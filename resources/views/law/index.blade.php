@@ -75,7 +75,7 @@
                             </div>
 
                             <ul class="list-unstyled d-flex justify-content-end flex-wrap mt-2 border border-success p-2 border-2 is-question">
-                                <li class="mb-2"  onClick=clickQuestion(this)>
+                                <li class="mb-2 is-active"  onClick=clickQuestion(this)>
                                     <button type="button" class="btn btn-outline-dark me-1">1</button>
                                 </li>
                                 <li class="mb-2"  onClick=clickQuestion(this)>
@@ -255,7 +255,7 @@
         }
 
         $(document).ready(function() {
-            
+           
         });
     </script>
 @endpush
