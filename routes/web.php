@@ -113,6 +113,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/{id}/edit', 'DepartmentController@update')->name('department.update');
         Route::get('/{id}/destroy', 'DepartmentController@destroy')->name('department.destroy');
     });
+
+    Route::group(['prefix' => 'contest'], function () {
+        Route::get('/law', 'ContestLawController@index')->name('contest.law');
+    });
 });
 
 Route::get('/', 'User\HomeController@index');

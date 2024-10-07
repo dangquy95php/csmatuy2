@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         if (Auth::check()) {
-
+            return redirect()->route('user.profile');
         } else {
             return redirect()->route('login');
         }

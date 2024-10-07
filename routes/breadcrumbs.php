@@ -112,6 +112,13 @@ Breadcrumbs::for('log.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Danh sách log', route('log.index'));
 });
+
+Breadcrumbs::for('contest.law', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách VC-NLĐ đã thi', route('contest.law'));
+});
+
+
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');
 //     $trail->push('Cập nhật nhân viên', route('user.edit'));

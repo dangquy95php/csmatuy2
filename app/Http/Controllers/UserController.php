@@ -234,7 +234,8 @@ class UserController extends Controller
                 $user = auth()->user();
                 $user->image = $fileName .'_'. $file->getClientOriginalName();
             }
-            $user->name = $request->input('name');
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
             $user->save();
     
             if ($user->wasChanged()) {

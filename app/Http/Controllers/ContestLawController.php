@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DrugAddict;
-use App\Http\Requests\StoreDrugAddictRequest;
-use App\Http\Requests\UpdateDrugAddictRequest;
-
-class DrugAddictController extends Controller
+class ContestLawController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +11,7 @@ class DrugAddictController extends Controller
      */
     public function index()
     {
-        //
+        return view('law.index');
     }
 
     /**

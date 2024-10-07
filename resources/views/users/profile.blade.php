@@ -44,38 +44,39 @@
                                 <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                             </div>
                             </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h5 class="modal-title">Thông tin</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Vui lòng kiểm tra lại thông tin của bạn.<br/>
-                                                <span class="text-danger">Hình đại diện bắt buộc phải tải lên.<br/></span>
-                                                <span class="text-danger">Email bắt buộc phải có.<br/></span>
-                                                Nếu thông tin chưa được cập nhật. Xin vui lòng hãy cập nhật.
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                            </div>
+                            <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title">Thông tin</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+                                        <div class="modal-body">
+                                            Vui lòng kiểm tra lại thông tin của bạn.<br/>
+                                            <span class="text-danger">Hình đại diện bắt buộc phải tải lên.<br/></span>
+                                            <span class="text-danger">Email bắt buộc phải có.<br/></span>
+                                            Nếu thông tin chưa được cập nhật. Xin vui lòng hãy cập nhật.
                                         </div>
-                                    </div><!-- End Basic Modal-->
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </div><!-- End Basic Modal-->
                         </div>
 
                         <div class="row mb-3">
-                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ và tên:</label>
-                            <div class="col-md-8 col-lg-9">
-                                <input name="name" type="text" class="form-control" id="fullName" value="{{Auth::user()->last_name .' '. Auth::user()->first_name}}">
+                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ:</label>
+                            <div class="col-md-4 col-lg-5">
+                                <input name="first_name" type="text" class="form-control" id="fullName" value="{{Auth::user()->first_name}}">
                             </div>
                         </div>
-
+                        <div class="row mb-3">
+                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Tên:</label>
+                            <div class="col-md-4 col-lg-5">
+                                <input name="last_name" type="text" class="form-control" value="{{Auth::user()->last_name}}">
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <label for="about" class="col-md-4 col-lg-3 col-form-label">Username:</label>
                             <div class="col-md-8 col-lg-9">
@@ -134,7 +135,6 @@
 @endsection
 
 @push('scripts')
-isHasData
 <script type="text/javascript">
     var isHasData = JSON.parse("{{ $isHasData }}");
     $(document).ready(function() {
