@@ -34,7 +34,7 @@
                     <tr>
                         <th scope="row">{{ $key + 1}}</th>
                         <td>
-                            <a href="{{ route('contest.law.create') }}">{{ $contest->name}}</a>
+                            <a href="{{ route('contest.law.create', $contest->id) }}">{{ $contest->name}}</a>
                         </td>
                         <td>{{ $contest->description}}</td>
                         <td>{{ $contest->user->last_name }} {{ $contest->user->first_name }}</td>
