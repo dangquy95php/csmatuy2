@@ -104,7 +104,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/{id}/edit', 'LogController@update')->name('log.update');
         Route::get('/{id}/destroy', 'LogController@destroy')->name('log.destroy');
     });
-    
+    Route::group(['prefix' => 'email'], function () {
+        Route::get('/index', 'EmailController@index')->name('email.index');
+    });
+
     Route::group(['prefix' => 'department'], function () {
         Route::get('/index', 'DepartmentController@index')->name('department.index');
         Route::get('/create', 'DepartmentController@create')->name('department.create');
@@ -115,7 +118,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     });
 
     Route::group(['prefix' => 'contest'], function () {
-        Route::get('/law', 'ContestLawController@index')->name('contest.law');
+        Route::get('/law', 'ContestLawController@law')->name('contest.law');
+        Route::get('/index', 'ContestLawController@index')->name('contest.index');
+        Route::get('/create', 'ContestLawController@create')->name('contest.create');
+        
+        
     });
 });
 

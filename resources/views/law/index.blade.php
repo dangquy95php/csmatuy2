@@ -23,7 +23,7 @@
                                 <i class="bi bi-alarm fs-1 d-flex align-items-center"></i>
                                 <div class="d-flex flex-column ps-2">
                                     <span class="">Thời gian còn lại</span>
-                                    <span class="text-danger"><b>14:00:00</b></span>
+                                    <span class="text-danger"><b id="timer"></b></span>
                                 </div>
                             </div>
                         </div>
@@ -151,6 +151,8 @@
         </div>
     </div>
 </section>
+
+
 @endsection
 
 @push('styles')
@@ -208,6 +210,26 @@
 
 @push('scripts')
     <script>
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    var countdownElement = document.getElementById("timer");
+                    countdownElement.innerHTML = "Hết thời gian!";
+                    // timer = duration;
+                    return;
+                }
+            }, 1000);
+        }
+
         function clickPrev() {
             let active = $(".is-question").find('.is-active');
             if (active.length > 0) {
@@ -255,7 +277,9 @@
         }
 
         $(document).ready(function() {
-           
+            var fiveMinutes = 60 * 20,
+            display = document.querySelector('#timer');
+            startTimer(fiveMinutes, display);
         });
     </script>
 @endpush

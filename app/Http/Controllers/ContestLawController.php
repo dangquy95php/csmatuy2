@@ -9,6 +9,16 @@ class ContestLawController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function law()
+    {
+        return view('law.index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('law.index');
@@ -21,7 +31,7 @@ class ContestLawController extends Controller
      */
     public function create()
     {
-        //
+        return view('law.create');
     }
 
     /**

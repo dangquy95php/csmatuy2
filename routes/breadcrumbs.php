@@ -117,7 +117,16 @@ Breadcrumbs::for('contest.law', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Danh sách VC-NLĐ đã thi', route('contest.law'));
 });
+Breadcrumbs::for('contest.create', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Tạo cuộc thi', route('contest.create'));
+});
 
+
+Breadcrumbs::for('email.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách Email', route('email.index'));
+});
 
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');

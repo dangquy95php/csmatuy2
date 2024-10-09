@@ -114,7 +114,7 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>1244</h6>
+                      <h6>124</h6>
                       <a href="{{ route('contest.law') }}" class="btn btn-primary btn-sm">Thi pháp luật</a>
                     </div>
                   </div>

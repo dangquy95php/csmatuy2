@@ -143,7 +143,38 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Tables Nav -->
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/email/*') || request()->is('admin/email/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav3" data-bs-toggle="collapse" href="#">
+          <i class="bx bxl-blogger"></i><span>Quản lý Email</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav3" class="nav-content collapse {{ request()->is('admin/email/*') || request()->is('admin/email/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('email.index') }}" class="{{ request()->is('admin/email/index') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách email</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/contest/*') || request()->is('admin/contest/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav4" data-bs-toggle="collapse" href="#">
+          <i class="bx bxl-blogger"></i><span>Quản lý Cuộc thi</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav4" class="nav-content collapse {{ request()->is('admin/contest/*') || request()->is('admin/contest/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('contest.index') }}" class="{{ request()->is('admin/contest/index') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách cuộc thi</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('contest.create') }}" class="{{ request()->is('admin/contest/create') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Tạo cuộc thi</span>
+            </a>
+          </li>
+        </ul>
+      </li>
 
       <!-- <li class="nav-heading">Quản lý lịch nghỉ phép</li>
 
