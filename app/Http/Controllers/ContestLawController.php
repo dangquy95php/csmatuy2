@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Auth;
+use Brian2694\Toastr\Facades\Toastr;
+use App\Models\Contest;
+
 class ContestLawController extends Controller
 {
     /**
@@ -11,7 +16,7 @@ class ContestLawController extends Controller
      */
     public function law()
     {
-        return view('law.index');
+        return view('law.question.index');
     }
 
     /**
@@ -21,7 +26,9 @@ class ContestLawController extends Controller
      */
     public function index()
     {
-        return view('law.index');
+        $data = Contest::with('user')->orderBy('name','ASC')->get();
+
+        return view('law.index', compact('data'));
     }
 
     /**
@@ -40,9 +47,21 @@ class ContestLawController extends Controller
      * @param  \App\Http\Requests\StoreDrugAddictRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDrugAddictRequest $request)
+    public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|unique:teams,name',
+        ]);
+    
+        Contest::create([
+            'name' => trim($request->input('name')),
+            'description' => trim($request->input('description')),
+            'user_id' => Auth::user()->id,
+        ]);
+       
+        Toastr::success('Tạo cuộc thi thành công!');
+
+        return redirect()->route('contest.index');
     }
 
     /**
@@ -88,5 +107,10 @@ class ContestLawController extends Controller
     public function destroy(DrugAddict $drugAddict)
     {
         //
+    }
+
+    public function createQuestion(Request $request)
+    {
+        return view('law.question.create');
     }
 }

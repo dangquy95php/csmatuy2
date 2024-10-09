@@ -121,7 +121,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::get('/law', 'ContestLawController@law')->name('contest.law');
         Route::get('/index', 'ContestLawController@index')->name('contest.index');
         Route::get('/create', 'ContestLawController@create')->name('contest.create');
-        
+        Route::post('/create', 'ContestLawController@store');
+
+        Route::get('/law/question', 'ContestLawController@createQuestion')->name('contest.law.create');
         
     });
 });
