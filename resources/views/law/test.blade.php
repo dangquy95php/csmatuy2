@@ -17,6 +17,8 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body p-5">
+                    <b class="text-danger" id="message"></b>
+
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="d-flex align-middle">
@@ -28,147 +30,66 @@
                             </div>
                         </div>
                         <div class="col-lg-6 text-end">
-                            <button type="submit" class="btn btn-success">Nộp bài</button>
+                            <button type="button" class="btn btn-success" onClick="submit()">Nộp bài</button>
                         </div>
                     </div>
                     <div class="row mt-4">
                         <div class="col-lg-8">
-                            <h5>Câu hỏi số <b class="text-danger">1</b> trên 20</h5>
-                            <div class="tab-content">
-                                <div class="tab-pane active show" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <p>Câu 1: Các hành vi tham nhũng trong khu vực ngoài nhà nước do người có chức vụ, quyền hạn trong doanh nghiệp, tổ chức khu vực ngoài nhà nước thực hiện bao gồm:</p>
+                            <h5>Câu hỏi số <b class="text-danger" id="question_number">1</b> trên 20</h5>
+                            <form class="tab-content" method="POST" id="myTabContent">
+                                @php
+                                $questionId = 1;
+                                @endphp
+                                @foreach($data as $k => $item)
+                                <div class="tab-pane fade" id="home{{$questionId}}" role="tabpanel" aria-labelledby="home{{$questionId}}-tab">
+                                    <p style="text-align: justify;">Câu {{++$k}}: <span class="title">{{$item->question_name}}</span></p>
 
-                                    <div class="mt-5">
+                                    <div class="mt-3">
                                         <ul class="list-unstyled is-anwser">
                                             <li class="mb-2" onClick=clickDapAn(this)>
-                                                <button type="button" class="btn btn-outline-dark">
-                                                    <span class="pe-2">A.</span>Tham ô tài sản
+                                                <button type="button" class="btn btn-outline-dark text-start">
+                                                    <span class="pe-2">A.</span><span class="answer">{{$item->a}}</span>
                                                 </button>
-                                                <input type="button" hidden value="">
-                                            </li>
-                                            <li class="mb-2" onClick=clickDapAn(this)>
-                                                <button type="button" class="btn btn-outline-dark">
-                                                    <span class="pe-2">B.</span>Nhận hối lộ
-                                                    </button>
-                                                <input type="button" hidden value="">
                                             </li>
                                             <li class="mb-2" onClick=clickDapAn(this)>
                                                 <button type="button" class="btn btn-outline-dark text-start">
-                                                    <span class="pe-2">C.</span>Đưa hối lộ, môi giới hối lộ để giải quyết công việc của doanh nghiệp, tổ chức mình vì vụ lợi</button>
-                                                <input type="button" hidden value="">
+                                                    <span class="pe-2">B.</span><span class="answer">{{$item->b}}</span>
+                                                </button>
+                                            </li>
+                                            <li class="mb-2" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark text-start">
+                                                    <span class="pe-2">C.</span><span class="answer">{{$item->c}}</span>
+                                                </button>
                                             </li>
                                             <li class="" onClick=clickDapAn(this)>
-                                                <button type="button" class="btn btn-outline-dark">
-                                                <span class="pe-2">D.</span>Cả A, B, C nêu trên đều đúng</button>
-                                                <input type="button" hidden value="">
+                                                <button type="button" class="btn btn-outline-dark text-start">
+                                                    <span class="pe-2">D.</span><span class="answer">{{$item->d}}</span>
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="project" role="tabpanel" aria-labelledby="project-tab">
-                                    <p>ssssCâu 2: Các hành vi tham nhũng trong khu vực ngoài nhà nước do người có chức vụ, quyền hạn trong doanh nghiệp, tổ chức khu vực ngoài nhà nước thực hiện bao gồm:</p>
+                                @php
+                                $questionId++;
+                                @endphp
+                                @endforeach
 
-                                    <div class="mt-5">
-                                        <ul class="list-unstyled is-anwser">
-                                            <li class="mb-2" onClick=clickDapAn(this)>
-                                                <button type="button" class="btn btn-outline-dark">
-                                                    <span class="pe-2">A.</span>Tham ô tài sản
-                                                </button>
-                                                <input type="button" hidden value="">
-                                            </li>
-                                            <li class="mb-2" onClick=clickDapAn(this)>
-                                                <button type="button" class="btn btn-outline-dark">
-                                                    <span class="pe-2">B.</span>Nhận hối lộ
-                                                    </button>
-                                                <input type="button" hidden value="">
-                                            </li>
-                                            <li class="mb-2" onClick=clickDapAn(this)>
-                                                <button type="button" class="btn btn-outline-dark text-start">
-                                                    <span class="pe-2">C.</span>Đưa hối lộ, môi giới hối lộ để giải quyết công việc của doanh nghiệp, tổ chức mình vì vụ lợi</button>
-                                                <input type="button" hidden value="">
-                                            </li>
-                                            <li class="" onClick=clickDapAn(this)>
-                                                <button type="button" class="btn btn-outline-dark">
-                                                <span class="pe-2">D.</span>Cả A, B, C nêu trên đều đúng</button>
-                                                <input type="button" hidden value="">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                                @csrf
+                            </form>
                         </div>
                         <div class="col-lg-4">
-                            <!-- <div class="d-flex justify-content-end">
-                                <div class="quiz_progress">
-                                    <svg>
-                                        <circle r="50"></circle>
-                                        <circle id="progress" r="50" style="stroke-dasharray: 0, 9999;"></circle>
-                                    </svg>
-                                    <span id="progress_text">0/10</span>
-                                </div>
-                            </div> -->
-
-                            <ul class="list-unstyled d-flex justify-content-end flex-wrap mt-2 border border-success p-2 border-2 is-question" id="myTabContent">
-                                <li class="mb-2 is-active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" role="tab" aria-controls="home" aria-selected="true" onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">1</button>
+                            <ul class="list-unstyled d-flex justify-content-end flex-wrap mt-2 border border-success p-2 border-2 is-question" id="myTab" role="tablist">
+                                @php
+                                $questionId = 1;
+                                @endphp
+                                @foreach($data as $k => $item)
+                                <li class="mb-2 " onClick=clickQuestion(this) id="home{{$questionId}}-tab" data-bs-toggle="tab" data-bs-target="#home{{$questionId}}" type="button" role="tab" aria-controls="home{{$questionId}}" aria-selected="true" >
+                                    <button type="button" class="btn btn-outline-dark me-1">{{$questionId}}</button>
                                 </li>
-                                <li class="mb-2"  onClick=clickQuestion(this) id="project-tab" data-bs-toggle="tab" data-bs-target="#project" role="tab" aria-controls="project" aria-selected="false">
-                                    <button type="button" class="btn btn-outline-dark me-1">2</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">3</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">4</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">5</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">6</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">7</button>
-                                </li>
-                                <li class=""  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">8</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">9</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">10</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">11</button>
-                                </li>
-                                <li class=""  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">12</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">13</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">14</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">15</button>
-                                </li>
-                                <li class=""  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">16</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">17</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">18</button>
-                                </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">19</button>
-                                </li>
-                                <li class=""  onClick=clickQuestion(this)>
-                                    <button type="button" class="btn btn-outline-dark me-1">20</button>
-                                </li>
+                                @php
+                                $questionId ++;
+                                @endphp
+                                @endforeach
                             </ul>
                             <div class="d-flex justify-content-end">
                                 <button type="button" onClick="clickPrev()" class="btn btn-success me-1">Trước</button>
@@ -187,13 +108,14 @@
 
 @push('styles')
 <style>
-    .is-question li.is-active button, .is-question li button:hover {
+    .is-question li.is-active button, .is-question li button:hover,
+    .is-question li.is-active1 button {
         background-color: #198754 !important;
         color: #ffffff !important;
         border-color: #198754;
     }
 
-    .is-anwser li.is-active button  {
+    .is-anwser li.is-active button {
         background-color: #212529;
         color: white;
     }
@@ -260,6 +182,33 @@
             }, 1000);
         }
 
+        function submit() {
+            $("#basicModalbutton").trigger('click');
+            let flag = false;
+
+            $("#message").text('');
+            $("#myTab li").each(function(k) {
+                if (!$(this).hasClass('is-active1')) {
+                    $("#message").text(`Có lỗi: câu hỏi số ${++k} chưa trả lời`);
+                    flag = true;
+                    return false;
+                }
+            });       
+            
+
+            if (flag == false) {
+                if (confirm('Bạn có chắc chắn muốn nộp bài không?')) {
+                    $("#myTabContent .tab-pane").each(function(k) {
+                        let question = $(this).find('.title').text();
+                        let answer = $(this).find('.is-active').find('.answer').text();
+                        
+                        $("#myTabContent").append(`<input type="hidden" name="data[]" value="${question}@--@${answer}"/>`);
+                        document.getElementById("myTabContent").submit();
+                    });
+                }
+            }
+        }
+
         function clickPrev() {
             let active = $(".is-question").find('.is-active');
             if (active.length > 0) {
@@ -271,6 +220,7 @@
                         }
                     });
                     $(active[0]).prev().addClass('is-active');
+                    $(active[0]).prev().trigger('click');
                 }
             }
         }
@@ -285,24 +235,31 @@
                         }
                     });
                     $(active[0]).next().addClass('is-active');
+                    $(active[0]).next().trigger('click');
                 }
             }
         }
         function clickDapAn(that) {
-            $('.is-anwser li').each(function() {
+            $(that).closest('.is-anwser').find('li').each(function() {
                 if ($(this).hasClass('is-active')) {
                     $(this).removeClass('is-active');
                 }
             });
+
             $(that).addClass('is-active');
+            let id = $(that).closest('.tab-pane').attr('id');
+
+            $("#"+ id + "-tab").addClass('is-active1');
         }
 
-        function clickQuestion(that) {
+        function clickQuestion(that) {            
             $('.is-question li').each(function() {
                 if ($(this).hasClass('is-active')) {
                     $(this).removeClass('is-active');
                 }
             });
+            let id = $(that).text()
+            $("#question_number").text(id);
             $(that).addClass('is-active');
         }
 
@@ -310,6 +267,8 @@
             var fiveMinutes = 60 * 20,
             display = document.querySelector('#timer');
             startTimer(fiveMinutes, display);
+
+            $("#myTab > li:first button").trigger('click');
         });
     </script>
 @endpush

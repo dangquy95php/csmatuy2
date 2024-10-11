@@ -115,7 +115,7 @@ Breadcrumbs::for('log.index', function ($trail) {
 
 Breadcrumbs::for('contest.law', function ($trail, $contest) {
     $trail->parent('dashboard');
-    $trail->push($contest->name, route('contest.law', $contest->id));;
+    $trail->push($contest->name, route('contest.law', $contest->id));
 });
 Breadcrumbs::for('contest.create', function ($trail) {
     $trail->parent('dashboard');

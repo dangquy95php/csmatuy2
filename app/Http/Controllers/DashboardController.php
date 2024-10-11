@@ -10,6 +10,7 @@ use App\Models\Gate;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Contest;
+use App\Models\Answer;
 
 class DashboardController extends Controller
 {
@@ -20,9 +21,12 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        $idContest = Contest::orderBy('created_at', 'DESC')->select('id')->first();
+        $idContest = Contest::orderBy('created_at', 'DESC')->where('status', Contest::ENABLE)->select('id')->first();
+        if ($idContest) {
+            $checkHasAnswer = Answer::where('contest_id', $idContest)->where('user_id', Auth::user()->id)->exists();
+        }
 
-        return view('index', compact('idContest'));
+        return view('index', compact('idContest', 'checkHasAnswer'));
     }
 
     public function logout(Request $request)

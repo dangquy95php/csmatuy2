@@ -1,5 +1,5 @@
 @extends('errors::minimal')
 
-@section('title', __('Not Found'))
+@section('title', __('TRANG KHÔNG CÓ! VUI LÒNG QUAY LẠI TRANG CHỦ'))
 @section('code', '404')
-@section('message', __('Not Found'))
+@section('message', __('TRANG KHÔNG CÓ! VUI LÒNG QUAY LẠI TRANG CHỦ'))

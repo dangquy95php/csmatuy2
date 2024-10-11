@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Contest;
+use App\Models\Answer;
 use App\Models\LawQuestions;
 
 class ContestLawController extends Controller
@@ -31,9 +32,43 @@ class ContestLawController extends Controller
     public function law($id, Request $request)
     {
         $contest = Contest::where('status', Contest::ENABLE)->findOrFail($id);
+        if ($contest) {
+            if (Answer::where('contest_id', $contest->id)->where('user_id', Auth::user()->id)->exists()) {
+                abort(404);
+            }
+        }
         $data = LawQuestions::where('contest_id', $id)->get();
 
+
         return view('law.test', compact('contest', 'data'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function lawPost($id, Request $request)
+    {
+        $data = $request->input('data');
+        $id = 1;
+        foreach($data as $key => $item) {
+            $explode = explode("@--@", $item);
+            $question = $explode[0];
+            $answer = $explode[1];
+
+            $model = new Answer;
+            $model->question_id = $id;
+            $model->question_name = base64_encode($question);
+            $model->answer        = base64_encode($answer);
+            $model->contest_id    = $id;
+            $model->forecast = 100;
+            $model->user_id = Auth::user()->id;
+            $model->save();
+            $id++;
+        }
+
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -78,7 +113,7 @@ class ContestLawController extends Controller
        
         Toastr::success('Tạo cuộc thi thành công!');
 
-        return redirect()->back();
+        return redirect()->route('contest.index');
     }
 
     /**

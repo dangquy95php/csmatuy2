@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContestTable extends Migration
+class CreateAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateContestTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('contests');
-        Schema::create('contests', function (Blueprint $table) {
+        Schema::dropIfExists('answers');
+        Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 200)->unique();
-            $table->text('description')->nullable();
-            $table->boolean('status')->default(0);
+            $table->integer('question_id');
+            $table->text('question_name');
+            $table->integer('contest_id');
+            $table->text('answer');
+            $table->integer('forecast')->default(1);
             $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -31,6 +33,6 @@ class CreateContestTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contests');
+        Schema::dropIfExists('answers');
     }
 }
