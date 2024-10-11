@@ -141,7 +141,7 @@
                                     </div>
                                 </label>
                             </div>
-                        <div class="form-check mb-2">
+                            <div class="form-check mb-2">
                                 <input class="form-check-input" type="radio" name="answer${time}" id="gridRadios${time}3" value="C">
                                 <label class="form-check-label w-100" for="gridRadios${time}3">
                                     <div class="input-group">
@@ -199,13 +199,7 @@
                 })  
             }
         });
-
-        $('input[type=radio]').change(function() {
-            console.log(this);
-            
-        });
-
-        $("#content").submit(function(e){
+        $("form").submit(function(e){
             let data = [];
             $('.accordion').each(function(k, v) {
                 let question_name = $(this).find('.question_name').val().trim();
@@ -252,7 +246,6 @@
                 $("#content").append(`<input type="hidden" name="data[${key}][point]" value="${value.point}"/>`);
                 $("#content").append(`<input type="hidden" name="data[${key}][answer]" value="${value.answer}"/>`);
             }
-            console.log(data);
         });
     });
 </script>

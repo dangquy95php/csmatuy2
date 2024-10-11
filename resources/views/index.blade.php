@@ -87,7 +87,7 @@
               </div>
             </div><!-- End Revenue Card -->
 
-            @if($idContest && $checkHasAnswer)
+            @if($idContest && !$checkHasAnswer)
             <div class="col-xxl-4 col-xl-12">
 
               <div class="card info-card customers-card">

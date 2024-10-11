@@ -48,25 +48,35 @@ class ContestLawController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function lawPost($id, Request $request)
+    public function lawPost($contestId, Request $request)
     {
-        $data = $request->input('data');
-        $id = 1;
-        foreach($data as $key => $item) {
-            $explode = explode("@--@", $item);
-            $question = $explode[0];
-            $answer = $explode[1];
-
-            $model = new Answer;
-            $model->question_id = $id;
-            $model->question_name = base64_encode($question);
-            $model->answer        = base64_encode($answer);
-            $model->contest_id    = $id;
-            $model->forecast = 100;
-            $model->user_id = Auth::user()->id;
-            $model->save();
-            $id++;
+        try {
+            $data = $request->input('data');
+            $id = 1;
+            foreach($data as $key => $item) {
+                $explode = explode("@--@", $item);
+                $question = @$explode[0];
+                $answer = @$explode[1];
+                
+                $model = new Answer;
+                $model->question_id = $id;
+                $model->question_name = base64_encode($question);
+                if ($answer) {
+                    $model->answer = base64_encode($answer);
+                }
+                
+                $model->contest_id = $contestId;
+                $model->forecast = 100;
+                $model->user_id = Auth::user()->id;
+                $model->save();
+                $id++;
+            }
+        } catch (\Exception $ex) {
+            Toastr::error('Có lỗi '. $ex->getMessage());
+            return redirect()->back();
         }
+        
+        Toastr::success('Bạn đã nộp bài thi! Vui lòng đợi kết quả công bố sau.');
 
         return redirect()->route('dashboard');
     }

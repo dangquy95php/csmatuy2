@@ -177,13 +177,27 @@
                     var countdownElement = document.getElementById("timer");
                     countdownElement.innerHTML = "Hết thời gian!";
                     // timer = duration;
+                    submit(true);
                     return;
                 }
             }, 1000);
         }
 
-        function submit() {
-            $("#basicModalbutton").trigger('click');
+        function submit(timeOut = false) {
+            if(timeOut) {
+                $("#myTabContent .tab-pane").each(function(k) {
+                    let question = $(this).find('.title').text();
+                    let answer = '';
+                    if ($(this).find('.is-active').find('.answer').length > 0) {
+                        answer = $(this).find('.is-active').find('.answer').text();
+                    }
+                    
+                    $("#myTabContent").append(`<input type="hidden" name="data[]" value="${question}@--@${answer}"/>`);
+                    document.getElementById("myTabContent").submit();
+                });
+                return false;
+            }
+
             let flag = false;
 
             $("#message").text('');
@@ -195,7 +209,6 @@
                 }
             });       
             
-
             if (flag == false) {
                 if (confirm('Bạn có chắc chắn muốn nộp bài không?')) {
                     $("#myTabContent .tab-pane").each(function(k) {
@@ -264,7 +277,9 @@
         }
 
         $(document).ready(function() {
-            var fiveMinutes = 60 * 20,
+            $("#sidebar").css('display', 'none');
+            $("#main").css('margin-left', 0);
+            var fiveMinutes = 60 * <?php echo count($data); ?>,
             display = document.querySelector('#timer');
             startTimer(fiveMinutes, display);
 

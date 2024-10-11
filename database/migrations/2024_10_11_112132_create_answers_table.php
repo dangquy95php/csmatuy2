@@ -19,8 +19,7 @@ class CreateAnswersTable extends Migration
             $table->integer('question_id');
             $table->text('question_name');
             $table->integer('contest_id');
-            $table->text('answer');
-            $table->integer('forecast')->default(1);
+            $table->text('answer')->nullable();
             $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

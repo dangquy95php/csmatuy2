@@ -22,7 +22,6 @@ class Answer extends Model
         'question_name',
         'contest_id',
         'answer',
-        'forecast',
         'user_id'
     ];
 
