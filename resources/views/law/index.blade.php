@@ -23,6 +23,7 @@
                     <th scope="col">Tên cuộc thi</th>
                     <th scope="col">Mô tả</th>
                     <th scope="col">Người tạo</th>
+                    <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
                         <a href="{{ route('contest.create') }}" type="button" class="btn btn-primary btn-sm">Thêm</a>
@@ -38,9 +39,10 @@
                         </td>
                         <td>{{ $contest->description}}</td>
                         <td>{{ $contest->user->last_name }} {{ $contest->user->first_name }}</td>
+                        <td>{!! $contest->status == 1 ? '<span class="badge rounded-pill bg-success">Đang mở</span>' : '<span class="badge rounded-pill bg-danger">Đã đóng</span>'!!}</td>
                         <td>{{ $contest->created_at}}</td>
                         <td>
-                            <a href="" class="btn btn-success btn-sm">Sửa</a>
+                            <a href="" class="btn btn-warning btn-sm">Sửa</a>
                             <a href="" onclick="return confirm('Bạn có muốn xóa  không?')" class="btn btn-danger btn-sm">Xóa</a>
                         </td>
                     </tr>

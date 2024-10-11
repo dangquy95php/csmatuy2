@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Hash;
 use Illuminate\Database\Seeder;
-use App\Models\ContestQuestions;
+use App\Models\LawQuestions;
 
 class ContestQuestionsTableSeeder extends Seeder
 {
@@ -15,6 +15,8 @@ class ContestQuestionsTableSeeder extends Seeder
      */
     public function run()
     {
-        
+        // Role::create(['name' => 'admin']);
+        // Role::create(['name' => 'writer']);
+        // Role::create(['name' => 'user']);
     }
 }

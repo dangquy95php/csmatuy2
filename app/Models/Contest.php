@@ -12,6 +12,15 @@ class Contest extends Model
 
     protected $table = 'contests';
 
+    
+    const DISABLE = 0;
+    const ENABLE = 1;
+
+    const INFOR_STATUS = [
+        self::ENABLE => 'Đang mở',
+        self::DISABLE => 'Đã đóng',
+    ];
+
     /**
      * Fields that are mass assignable
      *
@@ -21,6 +30,7 @@ class Contest extends Model
         'name',
         'description',
         'user_id',
+        'status'
     ];
 
     public function user()

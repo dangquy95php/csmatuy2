@@ -1,11 +1,11 @@
-@section('title','Danh sách VC-NLĐ đã thi')
+@section('title','Thi Pháp Luật')
 @extends('layouts.template')
 
 @section('breadcrumb')
 
-   <h1>DANH SÁCH VC-NLĐ ĐÃ THI</h1>
+   <h1>THI PHÁP LUẬT</h1>
 
-   {{ Breadcrumbs::render('contest.law') }}
+   {{ Breadcrumbs::render('contest.law', $contest) }}
 
 @endsection
 
@@ -34,37 +34,71 @@
                     <div class="row mt-4">
                         <div class="col-lg-8">
                             <h5>Câu hỏi số <b class="text-danger">1</b> trên 20</h5>
-                            <p>Câu 1: Các hành vi tham nhũng trong khu vực ngoài nhà nước do người có chức vụ, quyền hạn trong doanh nghiệp, tổ chức khu vực ngoài nhà nước thực hiện bao gồm:</p>
+                            <div class="tab-content">
+                                <div class="tab-pane active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <p>Câu 1: Các hành vi tham nhũng trong khu vực ngoài nhà nước do người có chức vụ, quyền hạn trong doanh nghiệp, tổ chức khu vực ngoài nhà nước thực hiện bao gồm:</p>
 
-                            <div class="mt-5">
-                                <ul class="list-unstyled is-anwser">
-                                    <li class="mb-2" onClick=clickDapAn(this)>
-                                        <button type="button" class="btn btn-outline-dark">
-                                            <span class="pe-2">A.</span>Tham ô tài sản
-                                        </button>
-                                        <input type="button" hidden value="">
-                                    </li>
-                                    <li class="mb-2" onClick=clickDapAn(this)>
-                                        <button type="button" class="btn btn-outline-dark">
-                                            <span class="pe-2">B.</span>Nhận hối lộ
-                                            </button>
-                                        <input type="button" hidden value="">
-                                    </li>
-                                    <li class="mb-2" onClick=clickDapAn(this)>
-                                        <button type="button" class="btn btn-outline-dark text-start">
-                                            <span class="pe-2">C.</span>Đưa hối lộ, môi giới hối lộ để giải quyết công việc của doanh nghiệp, tổ chức mình vì vụ lợi</button>
-                                        <input type="button" hidden value="">
-                                    </li>
-                                    <li class="" onClick=clickDapAn(this)>
-                                        <button type="button" class="btn btn-outline-dark">
-                                        <span class="pe-2">D.</span>Cả A, B, C nêu trên đều đúng</button>
-                                        <input type="button" hidden value="">
-                                    </li>
-                                </ul>
+                                    <div class="mt-5">
+                                        <ul class="list-unstyled is-anwser">
+                                            <li class="mb-2" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark">
+                                                    <span class="pe-2">A.</span>Tham ô tài sản
+                                                </button>
+                                                <input type="button" hidden value="">
+                                            </li>
+                                            <li class="mb-2" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark">
+                                                    <span class="pe-2">B.</span>Nhận hối lộ
+                                                    </button>
+                                                <input type="button" hidden value="">
+                                            </li>
+                                            <li class="mb-2" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark text-start">
+                                                    <span class="pe-2">C.</span>Đưa hối lộ, môi giới hối lộ để giải quyết công việc của doanh nghiệp, tổ chức mình vì vụ lợi</button>
+                                                <input type="button" hidden value="">
+                                            </li>
+                                            <li class="" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark">
+                                                <span class="pe-2">D.</span>Cả A, B, C nêu trên đều đúng</button>
+                                                <input type="button" hidden value="">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="project" role="tabpanel" aria-labelledby="project-tab">
+                                    <p>ssssCâu 2: Các hành vi tham nhũng trong khu vực ngoài nhà nước do người có chức vụ, quyền hạn trong doanh nghiệp, tổ chức khu vực ngoài nhà nước thực hiện bao gồm:</p>
+
+                                    <div class="mt-5">
+                                        <ul class="list-unstyled is-anwser">
+                                            <li class="mb-2" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark">
+                                                    <span class="pe-2">A.</span>Tham ô tài sản
+                                                </button>
+                                                <input type="button" hidden value="">
+                                            </li>
+                                            <li class="mb-2" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark">
+                                                    <span class="pe-2">B.</span>Nhận hối lộ
+                                                    </button>
+                                                <input type="button" hidden value="">
+                                            </li>
+                                            <li class="mb-2" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark text-start">
+                                                    <span class="pe-2">C.</span>Đưa hối lộ, môi giới hối lộ để giải quyết công việc của doanh nghiệp, tổ chức mình vì vụ lợi</button>
+                                                <input type="button" hidden value="">
+                                            </li>
+                                            <li class="" onClick=clickDapAn(this)>
+                                                <button type="button" class="btn btn-outline-dark">
+                                                <span class="pe-2">D.</span>Cả A, B, C nêu trên đều đúng</button>
+                                                <input type="button" hidden value="">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="d-flex justify-content-end">
+                            <!-- <div class="d-flex justify-content-end">
                                 <div class="quiz_progress">
                                     <svg>
                                         <circle r="50"></circle>
@@ -72,13 +106,13 @@
                                     </svg>
                                     <span id="progress_text">0/10</span>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <ul class="list-unstyled d-flex justify-content-end flex-wrap mt-2 border border-success p-2 border-2 is-question">
-                                <li class="mb-2 is-active"  onClick=clickQuestion(this)>
+                            <ul class="list-unstyled d-flex justify-content-end flex-wrap mt-2 border border-success p-2 border-2 is-question" id="myTabContent">
+                                <li class="mb-2 is-active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" role="tab" aria-controls="home" aria-selected="true" onClick=clickQuestion(this)>
                                     <button type="button" class="btn btn-outline-dark me-1">1</button>
                                 </li>
-                                <li class="mb-2"  onClick=clickQuestion(this)>
+                                <li class="mb-2"  onClick=clickQuestion(this) id="project-tab" data-bs-toggle="tab" data-bs-target="#project" role="tab" aria-controls="project" aria-selected="false">
                                     <button type="button" class="btn btn-outline-dark me-1">2</button>
                                 </li>
                                 <li class="mb-2"  onClick=clickQuestion(this)>
@@ -136,10 +170,6 @@
                                     <button type="button" class="btn btn-outline-dark me-1">20</button>
                                 </li>
                             </ul>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
                             <div class="d-flex justify-content-end">
                                 <button type="button" onClick="clickPrev()" class="btn btn-success me-1">Trước</button>
                                 <button type="button" onClick="clickNext()" class="btn btn-success">Sau</button>

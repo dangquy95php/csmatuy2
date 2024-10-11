@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContestQuestions extends Model
+class LawQuestions extends Model
 {
     use HasFactory;
 
-    protected $table = 'contest_questions';
+    protected $table = 'law_questions';
 
     /**
      * Fields that are mass assignable
@@ -17,8 +17,15 @@ class ContestQuestions extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'description',
-        'user_id',
+        'question_id',
+        'contest_id',
+        'question_name',
+        'a',
+        'b',
+        'c',
+        'd',
+        'random',
+        'point',
+        'answer',
     ];
 }

@@ -113,9 +113,9 @@ Breadcrumbs::for('log.index', function ($trail) {
     $trail->push('Danh sách log', route('log.index'));
 });
 
-Breadcrumbs::for('contest.law', function ($trail) {
+Breadcrumbs::for('contest.law', function ($trail, $contest) {
     $trail->parent('dashboard');
-    $trail->push('Danh sách VC-NLĐ đã thi', route('contest.law'));
+    $trail->push($contest->name, route('contest.law', $contest->id));;
 });
 Breadcrumbs::for('contest.create', function ($trail) {
     $trail->parent('dashboard');

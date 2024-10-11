@@ -6,17 +6,34 @@ use Illuminate\Http\Request;
 use Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Contest;
+use App\Models\LawQuestions;
 
 class ContestLawController extends Controller
 {
+    /**
+     * create a new instance of the class
+     *
+     * @return void
+     */
+    function __construct()
+    {
+        $this->middleware('permission:contestlaw-index|contestlaw-create|contestlaw-edit|contestlaw-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:contestlaw-create', ['only' => ['create','store']]);
+        $this->middleware('permission:contestlaw-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:contestlaw-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function law()
+    public function law($id, Request $request)
     {
-        return view('law.question.index');
+        $contest = Contest::where('status', Contest::ENABLE)->findOrFail($id);
+        $data = LawQuestions::where('contest_id', $id)->get();
+
+        return view('law.test', compact('contest', 'data'));
     }
 
     /**
@@ -26,7 +43,7 @@ class ContestLawController extends Controller
      */
     public function index()
     {
-        $data = Contest::with('user')->orderBy('name','ASC')->get();
+        $data = Contest::with('user')->orderBy('created_at','DESC')->get();
 
         return view('law.index', compact('data'));
     }
@@ -61,7 +78,7 @@ class ContestLawController extends Controller
        
         Toastr::success('Tạo cuộc thi thành công!');
 
-        return redirect()->route('contest.index');
+        return redirect()->back();
     }
 
     /**
@@ -109,8 +126,75 @@ class ContestLawController extends Controller
         //
     }
 
-    public function createQuestion(Request $request)
+    public function createQuestion($id, Request $request)
     {
-        return view('law.question.create');
+        $data = LawQuestions::where('contest_id', $id)->get();
+
+        return view('law.question.create', compact('data'));
+    }
+
+    public function createQuestionStore($id, Request $request)
+    {
+        $data = $request->input('data');
+        Contest::findOrFail($id);
+        $contestId = $id;
+
+        try {
+            foreach($data as $item) {
+                $model = new LawQuestions;
+    
+                $model->question_name = $item['question_name'];
+                $model->question_id = $item['question_id'];
+                $model->contest_id = $contestId;
+                $model->a = $item['a'];
+                $model->b = $item['b'];
+                $model->c = $item['c'];
+                $model->d = $item['d'];
+                $model->random = $item['random'];
+                $model->point = $item['point'];
+                $model->answer = $item['answer'];
+    
+                $model->save();
+            }
+        } catch (\Exception $ex) {
+            Toastr::error('Có lỗi '. $ex->getMessage());
+            return redirect()->back();
+        }
+       
+        Toastr::success('Tạo câu hỏi thành công!');
+
+        return redirect()->route('contest.index');
+    }
+
+    public function updateQuestion($id, Request $request)
+    {
+        $data = $request->input('data');
+        Contest::findOrFail($id);
+        try {
+            LawQuestions::where('contest_id','=', $id)->delete();
+
+            foreach($data as $item) {
+                $model = new LawQuestions;
+    
+                $model->question_name = $item['question_name'];
+                $model->question_id = $item['question_id'];
+                $model->contest_id = $id;
+                $model->a = $item['a'];
+                $model->b = $item['b'];
+                $model->c = $item['c'];
+                $model->d = $item['d'];
+                $model->random = $item['random'];
+                $model->point = $item['point'];
+                $model->answer = $item['answer'];
+    
+                $model->save();
+            }
+        } catch (\Exception $ex) {
+            Toastr::error('Có lỗi '. $ex->getMessage());
+            return redirect()->back();
+        }
+    
+        Toastr::success('Cập nhật câu hỏi thành công!');
+        return redirect()->back();
     }
 }

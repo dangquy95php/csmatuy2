@@ -44,5 +44,12 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'excel-import']);
         Permission::create(['name' => 'log-list']);
         Permission::create(['name' => 'permit-list']);
+
+
+        Permission::create(['name' => 'contestlaw-index']);
+        Permission::create(['name' => 'contestlaw-create']);
+        Permission::create(['name' => 'contestlaw-edit']);
+        Permission::create(['name' => 'contestlaw-delete']);
+
     }
 }

@@ -115,7 +115,7 @@
                     </div>
                     <div class="ps-3">
                       <h6>124</h6>
-                      <a href="{{ route('contest.law') }}" class="btn btn-primary btn-sm">Thi pháp luật</a>
+                      <a href="{{ route('contest.law', $idContest) }}" class="btn btn-primary btn-sm">Thi pháp luật</a>
                     </div>
                   </div>
 

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Gate;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Contest;
 
 class DashboardController extends Controller
 {
@@ -19,7 +20,9 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        return view('index');
+        $idContest = Contest::orderBy('created_at', 'DESC')->select('id')->first();
+
+        return view('index', compact('idContest'));
     }
 
     public function logout(Request $request)

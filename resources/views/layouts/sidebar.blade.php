@@ -147,7 +147,7 @@
 
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/email/*') || request()->is('admin/email/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav3" data-bs-toggle="collapse" href="#">
-          <i class="bx bxl-blogger"></i><span>Quản lý Email</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-envelope"></i><span>Quản lý Email</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav3" class="nav-content collapse {{ request()->is('admin/email/*') || request()->is('admin/email/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
@@ -160,7 +160,7 @@
 
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/contest/*') || request()->is('admin/contest/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav4" data-bs-toggle="collapse" href="#">
-          <i class="bx bxl-blogger"></i><span>Quản lý Cuộc thi</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-ui-checks-grid"></i></i><span>Quản lý Cuộc thi</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav4" class="nav-content collapse {{ request()->is('admin/contest/*') || request()->is('admin/contest/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
