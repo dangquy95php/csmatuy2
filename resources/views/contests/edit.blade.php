@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-4">
                         <label for="inputNanme5" class="form-label">Thời gian làm bài: (Số phút)</label>
-                        <input min="10" max="100" type="number" name="time_test" value="{{old('time_test', $contest->time_test)}}" class="form-control" id="inputNanme5">
+                        <input min="1" max="100" type="number" name="time_test" value="{{old('time_test', $contest->time_test)}}" class="form-control" id="inputNanme5">
                         @include('_partials.alert', ['field' => 'time_test'])
                     </div>
                     <div class="col-8">

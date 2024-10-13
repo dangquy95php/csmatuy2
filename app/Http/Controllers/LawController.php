@@ -170,13 +170,13 @@ class LawController extends Controller
             foreach($data as $item) {
                 $model = new LawQuestions;
     
-                $model->question_name = $item['question_name'];
+                $model->question_name = base64_encode($item['question_name']);
                 $model->question_id = $item['question_id'];
                 $model->contest_id = $contestId;
-                $model->a = $item['a'];
-                $model->b = $item['b'];
-                $model->c = $item['c'];
-                $model->d = $item['d'];
+                $model->a = base64_encode($item['a']);
+                $model->b = base64_encode($item['b']);
+                $model->c = base64_encode($item['c']);
+                $model->d = base64_encode($item['d']);
                 $model->random = $item['random'];
                 $model->point = $item['point'];
                 $model->answer = $item['answer'];
@@ -203,13 +203,13 @@ class LawController extends Controller
             foreach($data as $item) {
                 $model = new LawQuestions;
     
-                $model->question_name = $item['question_name'];
+                $model->question_name = base64_encode($item['question_name']);
                 $model->question_id = $item['question_id'];
                 $model->contest_id = $id;
-                $model->a = $item['a'];
-                $model->b = $item['b'];
-                $model->c = $item['c'];
-                $model->d = $item['d'];
+                $model->a = base64_encode($item['a']);
+                $model->b = base64_encode($item['b']);
+                $model->c = base64_encode($item['c']);
+                $model->d = base64_encode($item['d']);
                 $model->random = $item['random'];
                 $model->point = $item['point'];
                 $model->answer = $item['answer'];

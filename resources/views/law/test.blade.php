@@ -44,7 +44,7 @@
                                 @endphp
                                 @foreach($data as $k => $item)
                                 <div class="tab-pane fade" id="home{{$questionId}}" role="tabpanel" aria-labelledby="home{{$questionId}}-tab">
-                                    <p style="text-align: justify;">Câu {{++$k}}: <span class="title">{{$item->question_name}}</span></p>
+                                    <p style="text-align: justify;">Câu {{++$k}}: <span class="title">{{ base64_decode($item->question_name) }}</span></p>
                                     @php
                                     if ($item->random == 1) {
                                         array_push($shuffleData, $item->a);
@@ -60,13 +60,13 @@
                                                 <li class="mb-2" onClick=clickDapAn(this)>
                                                     <button type="button" class="btn btn-outline-dark text-start">
                                                         @if($key == 0)
-                                                            <span class="pe-2">A.</span><span class="answer">{{$el}}</span>
+                                                            <span class="pe-2">A.</span><span class="answer">{{ base64_decode($el) }}</span>
                                                         @elseif($key == 1)
-                                                            <span class="pe-2">B.</span><span class="answer">{{$el}}</span>
+                                                            <span class="pe-2">B.</span><span class="answer">{{ base64_decode($el) }}</span>
                                                         @elseif($key == 2)
-                                                            <span class="pe-2">C.</span><span class="answer">{{$el}}</span>
+                                                            <span class="pe-2">C.</span><span class="answer">{{ base64_decode($el) }}</span>
                                                         @elseif($key == 3)
-                                                            <span class="pe-2">D.</span><span class="answer">{{$el}}</span>
+                                                            <span class="pe-2">D.</span><span class="answer">{{ base64_decode($el) }}</span>
                                                         @endif
                                                     </button>
                                                 </li>
@@ -74,22 +74,22 @@
                                         @else
                                             <li class="mb-2" onClick=clickDapAn(this)>
                                                 <button type="button" class="btn btn-outline-dark text-start">
-                                                    <span class="pe-2">A.</span><span class="answer">{{$item->a}}</span>
+                                                    <span class="pe-2">A.</span><span class="answer">{{ base64_decode($item->a)}}</span>
                                                 </button>
                                             </li>
                                             <li class="mb-2" onClick=clickDapAn(this)>
                                                 <button type="button" class="btn btn-outline-dark text-start">
-                                                    <span class="pe-2">B.</span><span class="answer">{{$item->b}}</span>
+                                                    <span class="pe-2">B.</span><span class="answer">{{ base64_decode($item->b)}}</span>
                                                 </button>
                                             </li>
                                             <li class="mb-2" onClick=clickDapAn(this)>
                                                 <button type="button" class="btn btn-outline-dark text-start">
-                                                    <span class="pe-2">C.</span><span class="answer">{{$item->c}}</span>
+                                                    <span class="pe-2">C.</span><span class="answer">{{ base64_decode($item->c)}}</span>
                                                 </button>
                                             </li>
                                             <li class="" onClick=clickDapAn(this)>
                                                 <button type="button" class="btn btn-outline-dark text-start">
-                                                    <span class="pe-2">D.</span><span class="answer">{{$item->d}}</span>
+                                                    <span class="pe-2">D.</span><span class="answer">{{ base64_decode($item->d)}}</span>
                                                 </button>
                                             </li>
                                         @endif

@@ -79,7 +79,7 @@ class ContestController extends Controller
      */
     public function edit($id)
     {
-        $contest = Contest::find($id);
+        $contest = Contest::findOrFail($id);
 
         return view('contests.edit', compact('contest'));
     }
