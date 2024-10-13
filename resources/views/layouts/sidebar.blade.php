@@ -168,11 +168,6 @@
               <i class="bi bi-circle"></i><span>Danh sách cuộc thi</span>
             </a>
           </li>
-          <li>
-            <a href="{{ route('contest.create') }}" class="{{ request()->is('admin/contest/create') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Tạo cuộc thi</span>
-            </a>
-          </li>
         </ul>
       </li>
 

@@ -44,7 +44,6 @@ class LawController extends Controller
         }
         
         $data = LawQuestions::where('contest_id', $id)->get()->shuffle();
-        // LawQuestions
         $now = Carbon::now();
         $resultLaw = LawResult::where('contest_id', $id)->where('user_id', Auth::user()->id)->first();
         
@@ -62,7 +61,9 @@ class LawController extends Controller
         $days = $startDate->diffInDays($endDate);
         $hours = $startDate->copy()->addDays($days)->diffInHours($endDate);
         $minutes = $startDate->copy()->addDays($days)->addHours($hours)->diffInMinutes($endDate);
-        $minutes = count($data) - $minutes;
+
+        $timeTest = Contest::findOrFail($id);
+        $minutes = $timeTest->time_test - $minutes;
 
         return view('law.test', compact('contest', 'data', 'minutes'));
     }

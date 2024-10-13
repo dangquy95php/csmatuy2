@@ -22,6 +22,5 @@ class LawResult extends Model
         'forecast',
         'user_id',
         'contest_id',
-        'time_to_do_the_test',
     ];
 }
