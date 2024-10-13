@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLawResultTable extends Migration
+class CreateExemptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateLawResultTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('law_results');
-        Schema::create('law_results', function (Blueprint $table) {
+        Schema::dropIfExists('exemptions');
+        Schema::create('exemptions', function (Blueprint $table) {
             $table->id();
-            $table->timestamp("time_start")->nullable();
-            $table->timestamp("time_end")->nullable();
-            $table->integer("contest_id");
+            $table->text('description')->nullable();
             $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer("contest_id");
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateLawResultTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('law_results');
+        Schema::dropIfExists('exemptions');
     }
 }

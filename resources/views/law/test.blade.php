@@ -35,7 +35,7 @@
                     </div>
                     <div class="row mt-4">
                         <div class="col-lg-8">
-                            <h5>Câu hỏi số <b class="text-danger" id="question_number">1</b> trên 20</h5>
+                            <h5>Câu hỏi số <b class="text-danger" id="question_number">1</b> trên 21</h5>
 
                             <form class="tab-content" method="POST" id="myTabContent">
                                 @php
@@ -102,11 +102,13 @@
                                 @endphp
                                 @endforeach
 
+                                <div class="tab-pane fade mt-5" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
+                                    <p class="mb-1" style="text-align: justify;">Câu 21: <span class="title">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
+                                    <div class="is-active">
+                                        <input id="forecast_input" type="number" min="1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
+                                    </div>
+                                </div>
                                 @csrf
-                                <!-- <div class="mt-3" id="binhcon-tab" role="tabpanel" aria-labelledby="binhcon-tab">
-                                    <p style="text-align: justify;">Câu 21: <span class="title">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
-                                    <input type="text" class="form-control mt-2" name="binhchon" placeholder="Nhập số dự đoán">
-                                </div> -->
                             </form>
                         </div>
                         <div class="col-lg-4">
@@ -123,9 +125,9 @@
                                 @endphp
                                 @endforeach
 
-                                <!-- <li class="mb-2 " onClick=clickQuestion(this) id="binhcon-tab" data-bs-toggle="tab" data-bs-target="#binhcon" type="button" role="tab" aria-controls="home{{$questionId}}" aria-selected="true" >
+                                <li class="mb-2" onClick=clickQuestion(this) id="forecast-tab" data-bs-toggle="tab" data-bs-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="true" >
                                     <button type="button" class="btn btn-outline-dark me-1">21</button>
-                                </li> -->
+                                </li>
                             </ul>
                             <div class="d-flex justify-content-end">
                                 <button type="button" onClick="clickPrev()" class="btn btn-dark me-1">Trước</button>
@@ -225,17 +227,21 @@
                     let question = $(this).find('.title').text();
                     let answer = '';
                     if ($(this).find('.is-active').find('.answer').length > 0) {
-                        answer = $(this).find('.is-active').find('.answer').text();
+                        if ($(this).find('.is-active').find('.answer').val() == undefined) {
+                            answer = $(this).find('.is-active').find('.answer').text();
+                        } else {
+                            answer = $(this).find('.is-active').find('.answer').val();
+                        }
                     }
                     
                     $("#myTabContent").append(`<input type="hidden" name="data[]" value="${question}@--@${answer}"/>`);
                     document.getElementById("myTabContent").submit();
                 });
+
                 return false;
             }
-
+            
             let flag = false;
-
             $("#message").text('');
             $("#myTab li").each(function(k) {
                 if (!$(this).hasClass('is-active1')) {
@@ -249,8 +255,12 @@
                 if (confirm('Bạn có chắc chắn muốn nộp bài không?')) {
                     $("#myTabContent .tab-pane").each(function(k) {
                         let question = $(this).find('.title').text();
-                        let answer = $(this).find('.is-active').find('.answer').text();
                         
+                        if ($(this).find('.is-active').find('.answer').val()) {
+                            var answer = $(this).find('.is-active').find('.answer').val();
+                        } else {
+                            var answer = $(this).find('.is-active').find('.answer').text();
+                        }
                         $("#myTabContent").append(`<input type="hidden" name="data[]" value="${question}@--@${answer}"/>`);
                         document.getElementById("myTabContent").submit();
                     });
@@ -307,10 +317,18 @@
                     $(this).removeClass('is-active');
                 }
             });
-            let id = $(that).text()
+            let id = $(that).text().trim();
             $("#question_number").text(id);
             $(that).addClass('is-active');
         }
+
+        $('#forecast_input').change(function() {
+            if ($(this).val()) {
+                $("#forecast-tab").addClass('is-active1');
+            } else {
+                $("#forecast-tab").removeClass('is-active1');
+            }
+        });
 
         $(document).ready(function() {
             $("#sidebar").css('display', 'none');

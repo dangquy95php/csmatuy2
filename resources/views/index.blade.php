@@ -87,7 +87,7 @@
               </div>
             </div><!-- End Revenue Card -->
 
-            @if($idContest && !$checkHasAnswer)
+            @if($usersExitsInLawResult)
             <div class="col-xxl-4 col-xl-12">
 
               <div class="card info-card customers-card">
@@ -114,11 +114,14 @@
                       <i class="bi bi-people"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>124</h6>
-                      <a href="{{ route('contest.law', $idContest) }}" class="btn btn-primary btn-sm">Thi pháp luật</a>
+                      <h6>{{ $usersExitsInLawResult }}</h6>
+                      @if(\App\Models\LawResult::where('contest_id', $contest->id)->where('user_id', Auth::user()->id)->exists())
+                        <a href="#" class="btn btn-danger btn-sm">Bạn đã thi</a>
+                      @else
+                        <a href="{{ route('contest.law', $contest->id) }}" class="btn btn-primary btn-sm">Thi pháp luật</a>
+                      @endif
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>

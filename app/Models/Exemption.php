@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
-class LawResult extends Model
+class Exemption extends Model
 {
     use HasFactory;
 
-    protected $table = 'law_results';
+    protected $table = 'exemptions';
 
     /**
      * Fields that are mass assignable
@@ -17,9 +18,13 @@ class LawResult extends Model
      * @var array
      */
     protected $fillable = [
-        'time_start',
-        'time_end',
         'user_id',
+        'description',
         'contest_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
