@@ -123,6 +123,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/create', 'ContestController@store');
         Route::get('/{id}/edit', 'ContestController@edit')->name('contest.edit');
         Route::post('/{id}/edit', 'ContestController@update')->name('contest.update');
+        Route::get('/{id}/tested', 'ContestController@tested')->name('contest.tested');
+
 
         Route::get('/{id}/law', 'LawController@law')->name('contest.law');
         Route::post('/{id}/law', 'LawController@lawPost');

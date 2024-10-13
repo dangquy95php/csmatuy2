@@ -27,7 +27,7 @@
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
-                        <a href="{{ route('contest.create') }}" type="button" class="btn btn-primary btn-sm">Thêm</a>
+                        <a href="{{ route('contest.create') }}" type="button" class="btn btn-primary">Thêm</a>
                     </th>
                   </tr>
                 </thead>
@@ -45,6 +45,7 @@
                         <td>{{ $contest->created_at}}</td>
                         <td>
                             <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning">Sửa</a>
+                            <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark">Xem</a>
                         </td>
                     </tr>
                     @endforeach

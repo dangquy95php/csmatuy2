@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contest;
 use App\Models\User;
+use App\Models\LawResult;
 use Carbon\Carbon;
 use Auth;
 use Brian2694\Toastr\Facades\Toastr;
@@ -114,5 +115,15 @@ class ContestController extends Controller
             Toastr::warning('Dữ liệu không có thay đổi');
         }
         return redirect()->back();
+    }
+
+    public function tested(Request $request, $id)
+    {
+        $contest = Contest::findOrFail($id);
+        $contests = LawResult::where('contest_id', $id)->pluck('user_id')->toArray();
+        $usersExitsInLawResult = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->whereIn('id', $contests)->get();
+        $usersYetTest = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->whereNotIn('id', $contests)->get();
+
+        return view('contests.tested', compact('contest', 'usersExitsInLawResult', 'usersYetTest'));
     }
 }

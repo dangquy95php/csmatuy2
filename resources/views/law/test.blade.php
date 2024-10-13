@@ -128,8 +128,8 @@
                                 </li> -->
                             </ul>
                             <div class="d-flex justify-content-end">
-                                <button type="button" onClick="clickPrev()" class="btn btn-success me-1">Trước</button>
-                                <button type="button" onClick="clickNext()" class="btn btn-success">Sau</button>
+                                <button type="button" onClick="clickPrev()" class="btn btn-dark me-1">Trước</button>
+                                <button type="button" onClick="clickNext()" class="btn btn-dark">Sau</button>
                             </div>
                         </div>
                     </div>
