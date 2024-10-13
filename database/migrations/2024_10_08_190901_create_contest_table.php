@@ -19,6 +19,7 @@ class CreateContestTable extends Migration
             $table->string('name', 200)->unique();
             $table->text('description')->nullable();
             $table->boolean('status')->default(0);
+            $table->integer('time_test')->nullable();
             $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

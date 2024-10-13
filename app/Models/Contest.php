@@ -11,7 +11,6 @@ class Contest extends Model
     use HasFactory;
 
     protected $table = 'contests';
-
     
     const DISABLE = 0;
     const ENABLE = 1;
@@ -30,7 +29,8 @@ class Contest extends Model
         'name',
         'description',
         'user_id',
-        'status'
+        'status',
+        'time_test'
     ];
 
     public function user()

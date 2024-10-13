@@ -18,6 +18,9 @@ class CreateLawResultTable extends Migration
             $table->id();
             $table->timestamp("time_start")->nullable();
             $table->timestamp("time_end")->nullable();
+            $table->integer("time_to_do_the_test")->nullable();
+            $table->integer("contest_id");
+            $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('forecast')->default(1);
             $table->timestamps();
         });

@@ -42,8 +42,7 @@
                         <td>{!! $contest->status == 1 ? '<span class="badge rounded-pill bg-success">Đang mở</span>' : '<span class="badge rounded-pill bg-danger">Đã đóng</span>'!!}</td>
                         <td>{{ $contest->created_at}}</td>
                         <td>
-                            <a href="" class="btn btn-warning btn-sm">Sửa</a>
-                            <a href="" onclick="return confirm('Bạn có muốn xóa  không?')" class="btn btn-danger btn-sm">Xóa</a>
+                            <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning">Sửa</a>
                         </td>
                     </tr>
                     @endforeach

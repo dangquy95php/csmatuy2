@@ -20,5 +20,8 @@ class LawResult extends Model
         'time_start',
         'time_end',
         'forecast',
+        'user_id',
+        'contest_id',
+        'time_to_do_the_test',
     ];
 }

@@ -36,16 +36,42 @@
                     <div class="row mt-4">
                         <div class="col-lg-8">
                             <h5>Câu hỏi số <b class="text-danger" id="question_number">1</b> trên 20</h5>
+
                             <form class="tab-content" method="POST" id="myTabContent">
                                 @php
                                 $questionId = 1;
+                                $shuffleData = [];
                                 @endphp
                                 @foreach($data as $k => $item)
                                 <div class="tab-pane fade" id="home{{$questionId}}" role="tabpanel" aria-labelledby="home{{$questionId}}-tab">
                                     <p style="text-align: justify;">Câu {{++$k}}: <span class="title">{{$item->question_name}}</span></p>
-
+                                    @php
+                                    if ($item->random == 1) {
+                                        array_push($shuffleData, $item->a);
+                                        array_push($shuffleData, $item->b);
+                                        array_push($shuffleData, $item->c);
+                                        array_push($shuffleData, $item->d);
+                                    }
+                                    @endphp
                                     <div class="mt-3">
                                         <ul class="list-unstyled is-anwser">
+                                        @if($shuffleData)
+                                            @foreach(collect($shuffleData)->shuffle() as $key => $el)
+                                                <li class="mb-2" onClick=clickDapAn(this)>
+                                                    <button type="button" class="btn btn-outline-dark text-start">
+                                                        @if($key == 0)
+                                                            <span class="pe-2">A.</span><span class="answer">{{$el}}</span>
+                                                        @elseif($key == 1)
+                                                            <span class="pe-2">B.</span><span class="answer">{{$el}}</span>
+                                                        @elseif($key == 2)
+                                                            <span class="pe-2">C.</span><span class="answer">{{$el}}</span>
+                                                        @elseif($key == 3)
+                                                            <span class="pe-2">D.</span><span class="answer">{{$el}}</span>
+                                                        @endif
+                                                    </button>
+                                                </li>
+                                            @endforeach
+                                        @else
                                             <li class="mb-2" onClick=clickDapAn(this)>
                                                 <button type="button" class="btn btn-outline-dark text-start">
                                                     <span class="pe-2">A.</span><span class="answer">{{$item->a}}</span>
@@ -66,15 +92,21 @@
                                                     <span class="pe-2">D.</span><span class="answer">{{$item->d}}</span>
                                                 </button>
                                             </li>
+                                        @endif
                                         </ul>
                                     </div>
                                 </div>
                                 @php
                                 $questionId++;
+                                $shuffleData = [];
                                 @endphp
                                 @endforeach
 
                                 @csrf
+                                <!-- <div class="mt-3" id="binhcon-tab" role="tabpanel" aria-labelledby="binhcon-tab">
+                                    <p style="text-align: justify;">Câu 21: <span class="title">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
+                                    <input type="text" class="form-control mt-2" name="binhchon" placeholder="Nhập số dự đoán">
+                                </div> -->
                             </form>
                         </div>
                         <div class="col-lg-4">
@@ -90,6 +122,10 @@
                                 $questionId ++;
                                 @endphp
                                 @endforeach
+
+                                <!-- <li class="mb-2 " onClick=clickQuestion(this) id="binhcon-tab" data-bs-toggle="tab" data-bs-target="#binhcon" type="button" role="tab" aria-controls="home{{$questionId}}" aria-selected="true" >
+                                    <button type="button" class="btn btn-outline-dark me-1">21</button>
+                                </li> -->
                             </ul>
                             <div class="d-flex justify-content-end">
                                 <button type="button" onClick="clickPrev()" class="btn btn-success me-1">Trước</button>
@@ -279,7 +315,7 @@
         $(document).ready(function() {
             $("#sidebar").css('display', 'none');
             $("#main").css('margin-left', 0);
-            var fiveMinutes = 60 * <?php echo count($data); ?>,
+            var fiveMinutes = 60 * <?php echo $minutes; ?>,
             display = document.querySelector('#timer');
             startTimer(fiveMinutes, display);
 

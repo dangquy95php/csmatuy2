@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_account_enabled')->default(true); // or false up to you
             $table->string('team_id')->nullable();
             $table->string('image')->nullable();
+            $table->integer('level')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

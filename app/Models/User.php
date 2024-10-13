@@ -36,6 +36,14 @@ class User extends Authenticatable
         self::DISABLE => 'Ngừng hoạt động',
     ];
 
+    const TYPE_ACCOUNT_VC_NLD = 1;
+    const TYPE_ACCOUNT_OTHER = 0;
+
+    const TYPE_ACCOUNT = [
+        self::TYPE_ACCOUNT_VC_NLD => 'Tài khoản VC-NLĐ',
+        self::TYPE_ACCOUNT_OTHER => 'Tài khoản riêng',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,6 +59,7 @@ class User extends Authenticatable
         'is_account_enabled',
         'team_id',
         'image',
+        'level',
     ];
 
     /**

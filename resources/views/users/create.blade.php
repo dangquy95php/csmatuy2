@@ -83,6 +83,20 @@
                 </div>
                 <div class="col-12">
                     <div class="row mb-3">
+                        <label for="inputText" class="col-sm-3 col-form-label">Loại tài khoản:</label>
+                        <div class="col-sm-9">
+                            <select class="form-select" name="level" aria-label="Default select example">
+                                <option value="">Vui lòng chọn loại tài khoản</option>
+                                @foreach (App\Models\User::TYPE_ACCOUNT as $key => $account)
+                                    <option value="{{ $key }}" >{{ $account }}</option>
+                                @endforeach
+                            </select>
+                            @include('_partials.alert', ['field' => 'level'])
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row mb-3">
                         <label for="inputText" class="col-sm-3 col-form-label">Khu/Phòng:</label>
                         <div class="col-sm-9">
                             <select class="form-select" name="team_id" aria-label="Default select example">

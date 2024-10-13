@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Contest;
+use App\Models\User;
 use App\Models\Answer;
+use App\Models\LawResult;
 use App\Models\LawQuestions;
+use Carbon\Carbon;
 
-class ContestLawController extends Controller
+class LawController extends Controller
 {
     /**
      * create a new instance of the class
@@ -32,15 +35,36 @@ class ContestLawController extends Controller
     public function law($id, Request $request)
     {
         $contest = Contest::where('status', Contest::ENABLE)->findOrFail($id);
-        if ($contest) {
+        if ($contest && Auth::user()->level == User::TYPE_ACCOUNT_VC_NLD && Auth::user()->status == User::ENABLE || Auth::user()->username == 'admin') {
             if (Answer::where('contest_id', $contest->id)->where('user_id', Auth::user()->id)->exists()) {
                 abort(404);
             }
+        } else {
+            abort(404);
         }
-        $data = LawQuestions::where('contest_id', $id)->get();
+        
+        $data = LawQuestions::where('contest_id', $id)->get()->shuffle();
+        // LawQuestions
+        $now = Carbon::now();
+        $resultLaw = LawResult::where('contest_id', $id)->where('user_id', Auth::user()->id)->first();
+        
+        if (empty($resultLaw)) {
+            $resultLaw = LawResult::create([
+                'contest_id' => $id,
+                'time_start' => $now,
+                'user_id'    => Auth::user()->id,
+                'time_to_do_the_test' => count($data),
+            ]);
+        }
+        $startDate = Carbon::createFromFormat('d-m-Y H:i:s', Carbon::parse($now)->format('d-m-Y H:i:s'));
+        $endDate = Carbon::createFromFormat('d-m-Y H:i:s', Carbon::parse($resultLaw->time_start)->format('d-m-Y H:i:s'));
+        
+        $days = $startDate->diffInDays($endDate);
+        $hours = $startDate->copy()->addDays($days)->diffInHours($endDate);
+        $minutes = $startDate->copy()->addDays($days)->addHours($hours)->diffInMinutes($endDate);
+        $minutes = count($data) - $minutes;
 
-
-        return view('law.test', compact('contest', 'data'));
+        return view('law.test', compact('contest', 'data', 'minutes'));
     }
 
     /**
@@ -66,11 +90,12 @@ class ContestLawController extends Controller
                 }
                 
                 $model->contest_id = $contestId;
-                $model->forecast = 100;
                 $model->user_id = Auth::user()->id;
                 $model->save();
                 $id++;
             }
+            $now = Carbon::now();
+            LawResult::where('contest_id', $contestId)->where('user_id', Auth::user()->id)->update(['time_end' => $now]);
         } catch (\Exception $ex) {
             Toastr::error('Có lỗi '. $ex->getMessage());
             return redirect()->back();
@@ -81,51 +106,7 @@ class ContestLawController extends Controller
         return redirect()->route('dashboard');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $data = Contest::with('user')->orderBy('created_at','DESC')->get();
-
-        return view('law.index', compact('data'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('law.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreDrugAddictRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'name' => 'required|unique:teams,name',
-        ]);
-    
-        Contest::create([
-            'name' => trim($request->input('name')),
-            'description' => trim($request->input('description')),
-            'user_id' => Auth::user()->id,
-        ]);
-       
-        Toastr::success('Tạo cuộc thi thành công!');
-
-        return redirect()->route('contest.index');
-    }
-
+   
     /**
      * Display the specified resource.
      *

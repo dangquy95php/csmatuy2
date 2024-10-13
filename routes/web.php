@@ -118,16 +118,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     });
 
     Route::group(['prefix' => 'contest'], function () {
-        Route::get('/{id}/law', 'ContestLawController@law')->name('contest.law');
-        Route::post('/{id}/law', 'ContestLawController@lawPost');
-        Route::get('/index', 'ContestLawController@index')->name('contest.index');
-        Route::get('/create', 'ContestLawController@create')->name('contest.create');
-        Route::post('/create', 'ContestLawController@store');
+        Route::get('/index', 'ContestController@index')->name('contest.index');
+        Route::get('/create', 'ContestController@create')->name('contest.create');
+        Route::post('/create', 'ContestController@store');
+        Route::get('/{id}/edit', 'ContestController@edit')->name('contest.edit');
+        Route::post('/{id}/edit', 'ContestController@update')->name('contest.update');
 
-        Route::get('/{id}/law/question', 'ContestLawController@createQuestion')->name('contest.law.create');
-        Route::post('/{id}/law/question', 'ContestLawController@createQuestionStore');
+        Route::get('/{id}/law', 'LawController@law')->name('contest.law');
+        Route::post('/{id}/law', 'LawController@lawPost');
+      
 
-        Route::post('/{id}/law/question/update', 'ContestLawController@updateQuestion')->name('contest.law.update');
+        Route::get('/{id}/law/question', 'LawController@createQuestion')->name('contest.law.create');
+        Route::post('/{id}/law/question', 'LawController@createQuestionStore');
+
+        Route::post('/{id}/law/question/update', 'LawController@updateQuestion')->name('contest.law.update');
         
     });
 });
