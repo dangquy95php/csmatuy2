@@ -46,10 +46,14 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'permit-list']);
 
 
-        Permission::create(['name' => 'contestlaw-index']);
-        Permission::create(['name' => 'contestlaw-create']);
-        Permission::create(['name' => 'contestlaw-edit']);
-        Permission::create(['name' => 'contestlaw-delete']);
+        Permission::create(['name' => 'law-index']);
+        Permission::create(['name' => 'law-create']);
+        Permission::create(['name' => 'law-edit']);
+        Permission::create(['name' => 'law-delete']);
 
+        Permission::create(['name' => 'contest-index']);
+        Permission::create(['name' => 'contest-create']);
+        Permission::create(['name' => 'contest-edit']);
+        Permission::create(['name' => 'contest-delete']);
     }
 }

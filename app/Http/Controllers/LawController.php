@@ -21,10 +21,10 @@ class LawController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:contestlaw-index|contestlaw-create|contestlaw-edit|contestlaw-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:contestlaw-create', ['only' => ['create','store']]);
-        $this->middleware('permission:contestlaw-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:contestlaw-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:law-index|law-create|law-edit|law-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:law-create', ['only' => ['create','store']]);
+        $this->middleware('permission:law-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:law-delete', ['only' => ['destroy']]);
     }
 
     /**

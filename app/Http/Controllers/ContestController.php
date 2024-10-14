@@ -19,7 +19,10 @@ class ContestController extends Controller
      */
     function __construct()
     {
-       
+        $this->middleware('permission:contest-index|contest-create|contest-edit|contest-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:contest-create', ['only' => ['create','store']]);
+        $this->middleware('permission:contest-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:contest-delete', ['only' => ['destroy']]);
     }
 
     /**
