@@ -122,6 +122,11 @@ Breadcrumbs::for('contest.create', function ($trail) {
     $trail->push('Tạo cuộc thi', route('contest.create'));
 });
 
+Breadcrumbs::for('contest.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách cuộc thi', route('contest.index'));
+});
+
 Breadcrumbs::for('contest.edit', function ($trail, $contest) {
     $trail->parent('dashboard');
     $trail->push('Chỉnh sửa cuộc thi '. $contest->name, route('contest.edit', $contest->id));

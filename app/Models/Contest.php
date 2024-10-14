@@ -39,7 +39,8 @@ class Contest extends Model
         'description',
         'user_id',
         'status',
-        'time_test'
+        'time_test',
+        'link'
     ];
 
     public function user()

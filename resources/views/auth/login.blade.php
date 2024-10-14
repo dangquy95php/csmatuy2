@@ -90,9 +90,9 @@
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Đăng Nhập</button>
                     </div>
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                       <p class="small mb-0">Tôi chưa có tài khoản? <a href="/admin/register">Tạo tài khoản</a></p>
-                    </div>
+                    </div> -->
                   </form>
 
                 </div>

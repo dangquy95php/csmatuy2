@@ -138,13 +138,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     });
 });
 
-Route::get('/', 'User\HomeController@index');
+// Route::get('/', 'User\HomeController@index');
 
 // Route::group(['prefix' => 'admin'], function () {
-    
 //     Route::get('/register', 'UserController@register')->name('user_register');
 //     Route::post('/register', 'UserController@postRegister')->name('post_user_register');
-
 //     Route::get('/create', 'UserController@create')->name('user_create');
 // });
 

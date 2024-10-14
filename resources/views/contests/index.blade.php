@@ -1,11 +1,11 @@
-@section('title','Danh sách người dùng')
+@section('title','Danh sách cuộc thi')
 @extends('layouts.template')
 
 @section('breadcrumb')
 
-   <h1>DANH SÁCH NGƯỜI DÙNG</h1>
+   <h1>DANH SÁCH CUỘC THI</h1>
 
-   {{ Breadcrumbs::render('user.list') }}
+   {{ Breadcrumbs::render('contest.index') }}
 
 @endsection
 
@@ -23,6 +23,7 @@
                     <th scope="col">Tên cuộc thi</th>
                     <th scope="col">Mô tả</th>
                     <th scope="col">Người tạo</th>
+                    <th scope="col">Đường dẫn</th>
                     <th scope="col">Thời gian làm bài</th>
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
@@ -40,11 +41,14 @@
                         </td>
                         <td>{{ $contest->description}}</td>
                         <td>{{ $contest->user->last_name }} {{ $contest->user->first_name }}</td>
+                        <td>
+                           <span class="text-danger">{{ $contest->link }}</span>
+                        </td>
                         <td>{{ $contest->time_test }} phút</td>
                         <td>{!! $contest->status == 1 ? '<span class="badge rounded-pill bg-success">Đang mở</span>' : '<span class="badge rounded-pill bg-danger">Đã đóng</span>'!!}</td>
                         <td>{{ $contest->created_at}}</td>
                         <td>
-                            <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning">Sửa</a>
+                            <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning mb-1">Sửa</a>
                             <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark">Xem</a>
                         </td>
                     </tr>

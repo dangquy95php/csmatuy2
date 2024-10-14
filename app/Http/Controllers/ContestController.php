@@ -42,7 +42,7 @@ class ContestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('contests.create');
     }
@@ -61,14 +61,16 @@ class ContestController extends Controller
             'status' => 'required',
         ]);
     
-        Contest::create([
+        $data = Contest::create([
             'name' => trim($request->input('name')),
             'description' => trim($request->input('description')),
             'user_id' => Auth::user()->id,
             'time_test' => trim($request->input('time_test')),
             'status' => $request->input('status'),
-            
         ]);
+
+        $data->link = $request->root() .'/admin/contest/'. $data->id .'/law';
+        $data->save();
        
         Toastr::success('Tạo cuộc thi thành công!');
 
