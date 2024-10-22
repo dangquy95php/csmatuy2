@@ -16,7 +16,7 @@
         <div class="col-lg-6">
             <form class="form-floating mb-3" method="POST" action="{{ $data->isNotEmpty() ? route('contest.law.update', request()->route('id')) : ''}}">
                 <button type="button" class="btn btn-primary mb-2" id="add-question" onClick="addQuestion()">Thêm</button>
-                <a role="button" href="{{route('contest.law', request()->route('id'))}}" target="_blank" class="ms-2"><i style="font-size: 2rem;" class="bi bi-eye d-inline-block"></i></a>
+                <a role="button" href="{{route('contest.law.confirm', request()->route('id'))}}" target="_blank" class="ms-2"><i style="font-size: 2rem;" class="bi bi-eye d-inline-block"></i></a>
                 <div id="content">
                 @foreach($data as $key => $item)
                 <div class="accordion mt-2" id="question{{$item->question_id}}">

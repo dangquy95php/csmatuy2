@@ -48,6 +48,8 @@ class LawController extends Controller
         $resultLaw = LawResult::where('contest_id', $id)->where('user_id', Auth::user()->id)->first();
         
         if (empty($resultLaw)) {
+
+
             $resultLaw = LawResult::create([
                 'contest_id' => $id,
                 'time_start' => $now,
@@ -69,6 +71,37 @@ class LawController extends Controller
         $seconds = $timeTest->time_test * 60 - $seconds;
 
         return view('law.test', compact('contest', 'data', 'seconds'));
+    }
+
+    public function confirm($id, Request $request)
+    {
+        $contest = Contest::where('status', Contest::ENABLE)->findOrFail($id);
+        if ($contest && Auth::user()->level == User::TYPE_ACCOUNT_VC_NLD && Auth::user()->status == User::ENABLE || Auth::user()->username == 'admin') {
+            if (Answer::where('contest_id', $contest->id)->where('user_id', Auth::user()->id)->exists()) {
+                abort(404);
+            }
+        } else {
+            abort(404);
+        }
+
+        $dataItem = LawResult::where('contest_id', $id)->where('user_id', Auth::user()->id)->first();
+        if (!empty($dataItem)) {
+            return redirect()->route('contest.law', [ 'id' => $id ]);
+        }
+
+        $data = LawQuestions::where('contest_id', $id)->get()->shuffle();
+
+        return view('law.confirm', compact('contest', 'data'));
+    }
+
+    public function confirmPost($id, Request $request)
+    {
+        $data = LawResult::where('contest_id', $id)->where('user_id', Auth::user()->id)->first();
+        if (empty($data)) {
+            return redirect()->route('contest.law', [ 'id' => $id ]);
+        }
+
+        return redirect()->back();
     }
 
     /**

@@ -117,6 +117,12 @@ Breadcrumbs::for('contest.law', function ($trail, $contest) {
     $trail->parent('dashboard');
     $trail->push($contest->name, route('contest.law', $contest->id));
 });
+
+Breadcrumbs::for('contest.confirm', function ($trail, $contest) {
+    $trail->parent('dashboard');
+    $trail->push('Xác nhận thông tin trước khi vào làm bài', route('contest.law', $contest->id));
+});
+
 Breadcrumbs::for('contest.create', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Tạo cuộc thi', route('contest.create'));
