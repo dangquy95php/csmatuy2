@@ -48,8 +48,9 @@
                         <td>{!! $contest->status == 1 ? '<span class="badge rounded-pill bg-success">Đang mở</span>' : '<span class="badge rounded-pill bg-danger">Đã đóng</span>'!!}</td>
                         <td>{{ $contest->created_at}}</td>
                         <td>
-                            <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning mb-1">Sửa</a>
+                            <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning">Sửa</a>
                             <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark">Xem</a>
+                            <a href="{{ route('contest.export', $contest->id) }}" type="button" class="btn btn-success mt-1">Xuất Excel</a>
                         </td>
                     </tr>
                     @endforeach

@@ -124,11 +124,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::get('/{id}/edit', 'ContestController@edit')->name('contest.edit');
         Route::post('/{id}/edit', 'ContestController@update')->name('contest.update');
         Route::get('/{id}/tested', 'ContestController@tested')->name('contest.tested');
-
+        Route::get('/{id}/export', 'ContestController@export')->name('contest.export');
+        
 
         Route::get('/{id}/law', 'LawController@law')->name('contest.law');
         Route::post('/{id}/law', 'LawController@lawPost');
-      
+              
 
         Route::get('/{id}/law/question', 'LawController@createQuestion')->name('contest.law.create');
         Route::post('/{id}/law/question', 'LawController@createQuestionStore');
@@ -138,7 +139,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     });
 });
 
-// Route::get('/', 'User\HomeController@index');
+Route::get('/', 'User\HomeController@index');
 
 // Route::group(['prefix' => 'admin'], function () {
 //     Route::get('/register', 'UserController@register')->name('user_register');

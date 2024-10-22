@@ -9,6 +9,9 @@ use App\Models\LawResult;
 use Carbon\Carbon;
 use Auth;
 use Brian2694\Toastr\Facades\Toastr;
+use App\Exports\ContestExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ContestController extends Controller
 {
@@ -88,6 +91,21 @@ class ContestController extends Controller
         $contest = Contest::findOrFail($id);
 
         return view('contests.edit', compact('contest'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function export($id)
+    {
+        $time = date('Y-m-d H:i:s');
+        $time = str_replace(':', '_', $time);
+        $time = str_replace(' ', '_', $time);
+
+        return Excel::download(new ContestExport($id), $time . 'danh-sach-thi-phap-luat.xlsx');
     }
     
     /**

@@ -227,7 +227,8 @@
                     let question = $(this).find('.title').text();
                     let answer = '';
                     if ($(this).find('.is-active').find('.answer').length > 0) {
-                        if ($(this).find('.is-active').find('.answer').val() == undefined) {
+                        if ($(this).find('.is-active').find('.answer').val() == undefined ||
+                            $(this).find('.is-active').find('.answer').val() =='') {
                             answer = $(this).find('.is-active').find('.answer').text();
                         } else {
                             answer = $(this).find('.is-active').find('.answer').val();
@@ -284,10 +285,11 @@
             }
         }
         function clickNext() {
+            let MAX_QUESTION = 21;
             let active = $(".is-question").find('.is-active');
             if (active.length > 0) {
                 let id = $(active[0]).text().trim();
-                if (id < 20) {
+                if (id < MAX_QUESTION) {
                     $('.is-question li').each(function() {
                         if ($(this).hasClass('is-active')) {
                             $(this).removeClass('is-active');
@@ -333,7 +335,7 @@
         $(document).ready(function() {
             $("#sidebar").css('display', 'none');
             $("#main").css('margin-left', 0);
-            var fiveMinutes = 60 * <?php echo $minutes; ?>,
+            var fiveMinutes = <?php echo $seconds; ?>,
             display = document.querySelector('#timer');
             startTimer(fiveMinutes, display);
 
