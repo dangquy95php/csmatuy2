@@ -44,7 +44,7 @@
                                 @endphp
                                 @foreach($data as $k => $item)
                                 <div class="tab-pane fade" id="home{{$questionId}}" role="tabpanel" aria-labelledby="home{{$questionId}}-tab">
-                                    <p style="text-align: justify;">Câu {{++$k}}: <span class="title">{{ $item->question_name) }}</span></p>
+                                    <p style="text-align: justify;">Câu {{++$k}}: <span class="title">{{ $item->question_name }}</span></p>
                                     @php
                                     if ($item->random == 1) {
                                         array_push($shuffleData, $item->a);
@@ -140,7 +140,6 @@
         </div>
     </div>
 </section>
-
 
 @endsection
 

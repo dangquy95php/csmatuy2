@@ -18,7 +18,7 @@ class Answer extends Model
      * @var array
      */
     protected $fillable = [
-        'naquestion_idme',
+        'question_id',
         'question_name',
         'contest_id',
         'answer',
@@ -30,13 +30,63 @@ class Answer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getAnswerAttribute($value)
-    {
-        return base64_decode($value);
-    }
+    // public function getAnswerAttribute($value)
+    // {
+    //     return base64_decode($value);
+    // }
 
-    public function setAnswerAttribute($value)
-    {
-        $this->attributes['answer'] = base64_encode($value);
-    }
+    // public function setAnswerAttribute($value)
+    // {
+    //     $this->attributes['answer'] = base64_encode($value);
+    // }
+
+    // public function getQuestionNameAttribute($value)
+    // {
+    //     return base64_decode($value);
+    // }
+
+    // public function setQuestionNameAttribute($value)
+    // {
+    //     $this->attributes['question_name'] = base64_encode($value);
+    // }
+
+    // public function getAAttribute($value)
+    // {
+    //     return base64_decode($value);
+    // }
+
+    // public function setAAttribute($value)
+    // {
+    //     $this->attributes['a'] = base64_encode($value);
+    // }
+
+    // public function getBAttribute($value)
+    // {
+    //     return base64_decode($value);
+    // }
+
+    // public function setBAttribute($value)
+    // {
+    //     $this->attributes['b'] = base64_encode($value);
+    // }
+
+    // public function getCAttribute($value)
+    // {
+    //     return base64_decode($value);
+    // }
+
+    // public function setCAttribute($value)
+    // {
+    //     $this->attributes['c'] = base64_encode($value);
+    // }
+
+    // public function getDAttribute($value)
+    // {
+    //     return base64_decode($value);
+    // }
+
+    // public function setDAttribute($value)
+    // {
+    //     $this->attributes['d'] = base64_encode($value);
+    // }
 }

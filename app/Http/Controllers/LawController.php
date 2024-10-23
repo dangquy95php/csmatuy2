@@ -43,13 +43,11 @@ class LawController extends Controller
             abort(404);
         }
         
-        $data = LawQuestions::where('contest_id', $id)->get()->shuffle();
+        $data = LawQuestions::where('contest_id', $id)->orderBy('question_id', 'ASC')->get();
         $now = Carbon::now();
         $resultLaw = LawResult::where('contest_id', $id)->where('user_id', Auth::user()->id)->first();
         
         if (empty($resultLaw)) {
-
-
             $resultLaw = LawResult::create([
                 'contest_id' => $id,
                 'time_start' => $now,
@@ -121,7 +119,7 @@ class LawController extends Controller
                 
                 $model = new Answer;
                 $model->question_id = $id;
-                $model->question_name = base64_encode($question);
+                $model->question_name = $question;
                 if ($answer) {
                     $model->answer = $answer;
                 }

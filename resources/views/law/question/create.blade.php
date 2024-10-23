@@ -14,7 +14,7 @@
 <section class="section">
    <div class="row">
         <div class="col-lg-6">
-            <form class="form-floating mb-3" method="POST" action="{{ $data->isNotEmpty() ? route('contest.law.update', request()->route('id')) : ''}}">
+            <form id="form" class="form-floating mb-3" method="POST" action="{{ $data->isNotEmpty() ? route('contest.law.update', request()->route('id')) : ''}}">
                 <button type="button" class="btn btn-primary mb-2" id="add-question" onClick="addQuestion()">Thêm</button>
                 <a role="button" href="{{route('contest.law.confirm', request()->route('id'))}}" target="_blank" class="ms-2"><i style="font-size: 2rem;" class="bi bi-eye d-inline-block"></i></a>
                 <div id="content">
@@ -89,7 +89,7 @@
                 </div>
                 @endforeach
                 </div>
-                <button type="submit" class="btn btn-success mt-2" >Xong</button>
+                <button type="button" class="btn btn-success mt-2 is-submit" >Xong</button>
                 @csrf
             </form>
         </div>
@@ -192,14 +192,14 @@
     }
 
     $(document).ready(function() {
-        $("#content").sortable({
-            stop: function(event, ui) {
-                $(".accordion").each(function(k, v) {
-                    $(this).find('.title').text(k + 1);
-                })  
-            }
-        });
-        $("form").submit(function(e){
+        // $("#content").sortable({
+        //     stop: function(event, ui) {
+        //         $(".accordion").each(function(k, v) {
+        //             $(this).find('.title').text(k + 1);
+        //         })  
+        //     }
+        // });
+        $(".is-submit").click(function(e){
             let data = [];
             $('.accordion').each(function(k, v) {
                 let question_name = $(this).find('.question_name').val().trim();
@@ -246,6 +246,8 @@
                 $("#content").append(`<input type="hidden" name="data[${key}][point]" value="${value.point}"/>`);
                 $("#content").append(`<input type="hidden" name="data[${key}][answer]" value="${value.answer}"/>`);
             }
+
+            document.getElementById('form').submit();
         });
     });
 </script>
