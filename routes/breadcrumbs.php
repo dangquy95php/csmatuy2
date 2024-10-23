@@ -118,6 +118,11 @@ Breadcrumbs::for('contest.law', function ($trail, $contest) {
     $trail->push($contest->name, route('contest.law', $contest->id));
 });
 
+Breadcrumbs::for('contest.law.index', function ($trail, $contest) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách câu hỏi pháp luật '.$contest->name, route('contest.law.question', $contest->id));
+});
+
 Breadcrumbs::for('contest.confirm', function ($trail, $contest) {
     $trail->parent('dashboard');
     $trail->push('Xác nhận thông tin trước khi vào làm bài', route('contest.law', $contest->id));

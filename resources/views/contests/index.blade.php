@@ -49,8 +49,9 @@
                         <td>{{ $contest->created_at}}</td>
                         <td>
                             <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning">Sửa</a>
-                            <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark">Xem</a>
+                            <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark mt-1">Kết quả</a>
                             <a href="{{ route('contest.export', $contest->id) }}" type="button" class="btn btn-success mt-1">Xuất Excel</a>
+                            <a href="{{ route('contest.law.question', $contest->id) }}" type="button" class="btn btn-primary mt-1">Câu hỏi</a>
                         </td>
                     </tr>
                     @endforeach

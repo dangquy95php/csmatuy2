@@ -260,4 +260,12 @@ class LawController extends Controller
         Toastr::success('Cập nhật câu hỏi thành công!');
         return redirect()->back();
     }
+
+    public function question($id, Request $request)
+    {
+        $listQuestion = LawQuestions::where('contest_id', $id)->get();
+        $contest = Contest::where('status', Contest::ENABLE)->findOrFail($id);
+
+        return view('law.question.index', compact('contest', 'listQuestion'));
+    }
 }
