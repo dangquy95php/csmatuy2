@@ -29,4 +29,14 @@ class Answer extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getAnswerAttribute($value)
+    {
+        return base64_decode($value);
+    }
+
+    public function setAnswerAttribute($value)
+    {
+        $this->attributes['answer'] = base64_encode($value);
+    }
 }

@@ -28,7 +28,7 @@
                     <th scope="col">Trạng thái</th>
                     <th scope="col">Ngày tạo</th>
                     <th scope="col">
-                        <a href="{{ route('contest.create') }}" type="button" class="btn btn-primary">Thêm</a>
+                        <a href="{{ route('contest.create') }}" type="button" class="btn btn-primary btn-sm">Thêm</a>
                     </th>
                   </tr>
                 </thead>
@@ -48,10 +48,10 @@
                         <td>{!! $contest->status == 1 ? '<span class="badge rounded-pill bg-success">Đang mở</span>' : '<span class="badge rounded-pill bg-danger">Đã đóng</span>'!!}</td>
                         <td>{{ $contest->created_at}}</td>
                         <td>
-                            <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning">Sửa</a>
-                            <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark mt-1">Kết quả</a>
-                            <a href="{{ route('contest.export', $contest->id) }}" type="button" class="btn btn-success mt-1">Xuất Excel</a>
-                            <a href="{{ route('contest.law.question', $contest->id) }}" type="button" class="btn btn-primary mt-1">Câu hỏi</a>
+                            <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning btn-sm">Sửa</a>
+                            <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark btn-sm mt-1">Kết quả</a>
+                            
+                            <a href="{{ route('contest.law.question', $contest->id) }}" type="button" class="btn btn-danger btn-sm mt-1">Xem câu hỏi</a>
                         </td>
                     </tr>
                     @endforeach

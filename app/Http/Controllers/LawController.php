@@ -123,7 +123,7 @@ class LawController extends Controller
                 $model->question_id = $id;
                 $model->question_name = base64_encode($question);
                 if ($answer) {
-                    $model->answer = base64_encode($answer);
+                    $model->answer = $answer;
                 }
                 
                 $model->contest_id = $contestId;
@@ -206,13 +206,13 @@ class LawController extends Controller
             foreach($data as $item) {
                 $model = new LawQuestions;
     
-                $model->question_name = base64_encode($item['question_name']);
+                $model->question_name = $item['question_name'];
                 $model->question_id = $item['question_id'];
                 $model->contest_id = $contestId;
-                $model->a = base64_encode($item['a']);
-                $model->b = base64_encode($item['b']);
-                $model->c = base64_encode($item['c']);
-                $model->d = base64_encode($item['d']);
+                $model->a = $item['a'];
+                $model->b = $item['b'];
+                $model->c = $item['c'];
+                $model->d = $item['d'];
                 $model->random = $item['random'];
                 $model->point = $item['point'];
                 $model->answer = $item['answer'];
@@ -239,13 +239,13 @@ class LawController extends Controller
             foreach($data as $item) {
                 $model = new LawQuestions;
     
-                $model->question_name = base64_encode($item['question_name']);
+                $model->question_name = $item['question_name'];
                 $model->question_id = $item['question_id'];
                 $model->contest_id = $id;
-                $model->a = base64_encode($item['a']);
-                $model->b = base64_encode($item['b']);
-                $model->c = base64_encode($item['c']);
-                $model->d = base64_encode($item['d']);
+                $model->a = $item['a'];
+                $model->b = $item['b'];
+                $model->c = $item['c'];
+                $model->d = $item['d'];
                 $model->random = $item['random'];
                 $model->point = $item['point'];
                 $model->answer = $item['answer'];

@@ -27,11 +27,17 @@ class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     */
     public function collection()
     {
-        $contests = Answer::with(['user'])->where('answers.contest_id', $this->id)
-                            ->join('law_questions', 'law_questions.question_id', '=', 'answers.id')
-                            ->select('answers.*', 'answers.answer as answer_name', 'law_questions.*')
-                            ->get();
-dd($contests);
+        $contests = User::where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)
+                        ->with(['answers' => function($query) {
+                            $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')->where('answers.contest_id', $this->id)
+                                ->select('answers.*', 'law_questions.a', 'law_questions.b', 'law_questions.c', 'law_questions.d', 'law_questions.point', 'law_questions.answer as answer1');
+                        }])
+
+        //  Answer::with(['user'])->where('answers.contest_id', $this->id)
+        //                     ->join('law_questions', 'law_questions.question_id', '=', 'answers.question_id')
+                            
+                            ->get()->toArray();
+dd($contests[11]);
         foreach($contests as $key => $item) {
             if ($item['answer'] == base64_decode($item[$key])) {
 

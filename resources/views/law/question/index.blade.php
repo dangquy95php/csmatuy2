@@ -32,11 +32,11 @@
                     @foreach($listQuestion as $key => $item)
                     <tr>
                         <th scope="row">{{ ++ $key }}</th>
-                        <td><b>{{ base64_decode($item->question_name) }}</b></td>
-                        <td class="{{ $item->answer == 'A' ? 'text-danger' : '' }}">{{ base64_decode($item->a) }}</td>
-                        <td class="{{ $item->answer == 'B' ? 'text-danger' : '' }}">{{ base64_decode($item->b) }}</td>
-                        <td class="{{ $item->answer == 'C' ? 'text-danger' : '' }}">{{ base64_decode($item->c) }}</td>
-                        <td class="{{ $item->answer == 'D' ? 'text-danger' : '' }}">{{ base64_decode($item->d) }}</td>
+                        <td><b>{{ $item->question_name }}</b></td>
+                        <td class="{{ $item->answer == 'A' ? 'text-danger' : '' }}">{{ $item->a }}</td>
+                        <td class="{{ $item->answer == 'B' ? 'text-danger' : '' }}">{{ $item->b }}</td>
+                        <td class="{{ $item->answer == 'C' ? 'text-danger' : '' }}">{{ $item->c }}</td>
+                        <td class="{{ $item->answer == 'D' ? 'text-danger' : '' }}">{{ $item->d }}</td>
                         <td>{{ $item->random == 1 ? 'Lộn xộn' : 'Tuần tự' }}</td>
                         <td>{{ $item->point }}</td>
                         <td>{{ $item->answer }}</td>

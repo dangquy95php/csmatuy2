@@ -30,14 +30,14 @@
                         <div id="collapseOne{{$item->question_id}}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#question{{$item->question_id}}">
                             <div class="accordion-body">
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control question_name" placeholder="Nhập câu hỏi" style="height: 100px;">{{ base64_decode($item->question_name) }}</textarea>
+                                    <textarea class="form-control question_name" placeholder="Nhập câu hỏi" style="height: 100px;">{{ $item->question_name }}</textarea>
                                 </div>
                                 <hr class="m-0 mb-2">
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="radio" id="gridRadios{{$item->question_id}}1" name="answer{{$item->question_id}}" value="A"{{ ($item->answer=="A")? "checked" : "" }}>
                                     <label class="form-check-label w-100" for="gridRadios{{$item->question_id}}1">
                                         <div class="input-group">
-                                            <span class="input-group-text">A</span><textarea class="form-control answer_a" style="height:30px;">{{ base64_decode($item->a) }}</textarea>
+                                            <span class="input-group-text">A</span><textarea class="form-control answer_a" style="height:30px;">{{ $item->a }}</textarea>
                                         </div>
                                     </label>
                                 </div>
@@ -45,7 +45,7 @@
                                     <input class="form-check-input" type="radio" id="gridRadios{{$item->question_id}}2" name="answer{{$item->question_id}}" value="B" {{ ($item->answer=="B")? "checked" : "" }}>
                                     <label class="form-check-label w-100" for="gridRadios{{$item->question_id}}2">
                                         <div class="input-group">
-                                            <span class="input-group-text">B</span><textarea class="form-control answer_b" style="height:30px;">{{ base64_decode($item->b) }}</textarea>
+                                            <span class="input-group-text">B</span><textarea class="form-control answer_b" style="height:30px;">{{ $item->b }}</textarea>
                                         </div>
                                     </label>
                                 </div>
@@ -53,7 +53,7 @@
                                     <input class="form-check-input" type="radio" id="gridRadios{{$item->question_id}}3" name="answer{{$item->question_id}}" value="C" {{ ($item->answer=="C")? "checked" : "" }}>
                                     <label class="form-check-label w-100" for="gridRadios{{$item->question_id}}3">
                                         <div class="input-group">
-                                            <span class="input-group-text">C</span><textarea class="form-control answer_c" style="height:30px;">{{ base64_decode($item->c) }}</textarea>
+                                            <span class="input-group-text">C</span><textarea class="form-control answer_c" style="height:30px;">{{ $item->c }}</textarea>
                                         </div>
                                     </label>
                                 </div>
@@ -61,7 +61,7 @@
                                     <input class="form-check-input" type="radio" id="gridRadios{{$item->question_id}}4" name="answer{{$item->question_id}}" value="D" {{ ($item->answer=="D")? "checked" : "" }}>
                                     <label class="form-check-label w-100" for="gridRadios{{$item->question_id}}4">
                                         <div class="input-group">
-                                            <span class="input-group-text">D</span><textarea class="form-control answer_d" style="height:30px;">{{ base64_decode($item->d) }}</textarea>
+                                            <span class="input-group-text">D</span><textarea class="form-control answer_d" style="height:30px;">{{ $item->d }}</textarea>
                                         </div>
                                     </label>
                                 </div>

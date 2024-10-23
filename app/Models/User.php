@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Hash;
 use Auth;
-use App\Models\Message;
+use App\Models\Answer;
 use App\Models\Team;
 use App\Models\Permit;
 use App\Models\UserInfor;
@@ -97,9 +97,9 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function messages()
+    public function answers()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Answer::class);
     }
     
     public function team()
