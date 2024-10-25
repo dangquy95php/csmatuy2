@@ -76,7 +76,7 @@ class ContestController extends Controller
             'free_contest' => json_encode($request->input('free_contest')),
         ]);
        
-        $data->link = $request->root() .'/admin/contest/'. $data->id .'/law';
+        $data->link = $request->root() .'/contest/'. $data->id .'/law';
         $data->save();
     
         Toastr::success('Tạo cuộc thi thành công!');

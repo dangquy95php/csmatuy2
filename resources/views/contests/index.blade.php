@@ -42,7 +42,7 @@
                         <td>{{ $contest->description}}</td>
                         <td>{{ $contest->user->last_name }} {{ $contest->user->first_name }}</td>
                         <td>
-                           <span class="text-danger">{{ $contest->link }}</span>
+                           <a target="_blank" href="{{ $contest->link }}" class="text-danger">{{ $contest->link }}</a>
                         </td>
                         <td>{{ $contest->time_test }} phút</td>
                         <td>{!! $contest->status == 1 ? '<span class="badge rounded-pill bg-success">Đang mở</span>' : '<span class="badge rounded-pill bg-danger">Đã đóng</span>'!!}</td>
