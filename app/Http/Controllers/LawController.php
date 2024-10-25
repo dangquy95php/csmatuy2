@@ -44,7 +44,7 @@ class LawController extends Controller
             abort(404);
         }
         
-        $data = LawQuestions::where('contest_id', $id)->orderBy('question_id', 'ASC')->get();
+        $data = LawQuestions::where('contest_id', $id)->orderBy('question_id', 'ASC')->get()->shuffle();
         $now = Carbon::now();
         $resultLaw = LawResult::where('contest_id', $id)->where('user_id', Auth::user()->id)->first();
         
