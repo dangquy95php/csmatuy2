@@ -66,19 +66,19 @@ class ContestController extends Controller
             'status' => 'required',
             'free_contest' => 'required',
         ]);
-    
+        
         $data = Contest::create([
             'name' => trim($request->input('name')),
             'description' => trim($request->input('description')),
             'user_id' => Auth::user()->id,
             'time_test' => trim($request->input('time_test')),
             'status' => $request->input('status'),
-            'free_contest' => $request->input('free_contest'),
+            'free_contest' => json_encode($request->input('free_contest')),
         ]);
-
+       
         $data->link = $request->root() .'/admin/contest/'. $data->id .'/law';
         $data->save();
-       
+    
         Toastr::success('Tạo cuộc thi thành công!');
 
         return redirect()->route('contest.index');

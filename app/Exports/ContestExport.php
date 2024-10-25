@@ -6,16 +6,17 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\Models\User;
 use App\Models\Contest;
 use App\Models\Answer;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents, WithStrictNullComparison, WithStartRow
+class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents, WithStrictNullComparison, WithColumnFormatting
 {
     const EXCEL_TYPE_FILE = '.xlsx';
 
@@ -30,11 +31,12 @@ class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     */
     public function collection()
     {
-        $contests = User::where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->with('team')
+        $listUserId = Contest::findOrFail($this->id);
+        $contests = User::whereNotIn('id', json_decode($listUserId->free_contest))->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->with('team')
                         ->with(['answers' => function($query) {
                         $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')->where('answers.contest_id', $this->id)
                     ->select('answers.*', 'law_questions.point');
-                }])->get()->toArray();
+                }])->get();
 
         $result = [];
         foreach($contests as $k => $items) {

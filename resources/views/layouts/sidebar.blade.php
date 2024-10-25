@@ -160,7 +160,7 @@
 
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/contest/*') || request()->is('admin/contest/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav4" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-ui-checks-grid"></i></i><span>Quản lý Cuộc thi</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-ui-checks-grid"></i><span>Quản lý Cuộc thi</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav4" class="nav-content collapse {{ request()->is('admin/contest/*') || request()->is('admin/contest/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
@@ -172,7 +172,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/system-error/*') || request()->is('admin/system-error/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav5" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-ui-checks-grid"></i></i><span>Quản lý lỗi hệ thống</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-receipt-cutoff"></i><span>Quản lý lỗi hệ thống</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav5" class="nav-content collapse {{ request()->is('admin/system-error/*') || request()->is('admin/system-error/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>

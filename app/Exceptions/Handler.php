@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
-    
+
     /**
      * Register the exception handling callbacks for the application.
      *
@@ -37,7 +37,6 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            dd(\config('app.system_error'));
             if (\config('app.system_error')) {
                 $model = new SystemError();
                 $model->message = $e->getMessage();

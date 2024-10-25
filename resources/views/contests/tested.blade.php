@@ -79,7 +79,24 @@
                             </table>
                         </div>
                         <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
-                        to do
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Họ tên</th>
+                                    <th scope="col">Bộ phận</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($userFreeContest as $k => $item)
+                                    <tr>
+                                        <th scope="row">{{ ++$k }}</th>
+                                        <td>{{ $item->last_name }} {{ $item->first_name }}</td>
+                                        <td>{{ $item->team->name }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <a href="{{ route('contest.export', $contest->id) }}" type="button" class="btn btn-success btn-sm mt-1">Xuất Excel</a>
