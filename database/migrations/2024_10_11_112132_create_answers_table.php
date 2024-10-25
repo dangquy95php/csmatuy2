@@ -21,6 +21,7 @@ class CreateAnswersTable extends Migration
             $table->integer('contest_id');
             $table->text('answer')->nullable();
             $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('result')->nullable();
             $table->timestamps();
         });
     }

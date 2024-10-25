@@ -44,7 +44,7 @@
                                 @endphp
                                 @foreach($data as $k => $item)
                                 <div class="tab-pane fade" id="home{{$questionId}}" role="tabpanel" aria-labelledby="home{{$questionId}}-tab">
-                                    <p style="text-align: justify;">Câu {{++$k}}: <span class="title">{{ $item->question_name }}</span></p>
+                                    <p style="text-align: justify;">Câu {{++$k}}: <span class="title" id="{{ $item->question_id }}">{{ $item->question_name }}</span></p>
                                     @php
                                     if ($item->random == 1) {
                                         array_push($shuffleData, $item->a);
@@ -103,7 +103,7 @@
                                 @endforeach
 
                                 <div class="tab-pane fade mt-5" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
-                                    <p class="mb-1" style="text-align: justify;">Câu 21: <span class="title">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
+                                    <p class="mb-1" style="text-align: justify;">Câu 21: <span class="title" id="21">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
                                     <div class="is-active">
                                         <input id="forecast_input" type="number" min="1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
                                     </div>
@@ -224,6 +224,8 @@
             if(timeOut) {
                 $("#myTabContent .tab-pane").each(function(k) {
                     let question = $(this).find('.title').text();
+                    let id_question = $(this).find('.title').attr('id');
+
                     let answer = '';
                     if ($(this).find('.is-active').find('.answer').length > 0) {
                         if ($(this).find('.is-active').find('.answer').val() == undefined ||
@@ -255,13 +257,14 @@
                 if (confirm('Bạn có chắc chắn muốn nộp bài không?')) {
                     $("#myTabContent .tab-pane").each(function(k) {
                         let question = $(this).find('.title').text();
-                        
+                        let id_question = $(this).find('.title').attr('id');
+
                         if ($(this).find('.is-active').find('.answer').val()) {
                             var answer = $(this).find('.is-active').find('.answer').val();
                         } else {
                             var answer = $(this).find('.is-active').find('.answer').text();
                         }
-                        $("#myTabContent").append(`<input type="hidden" name="data[]" value="${question}@--@${answer}"/>`);
+                        $("#myTabContent").append(`<input type="hidden" name="data[]" value="${question}@--@${answer}@--@${id_question}"/>`);
                         document.getElementById("myTabContent").submit();
                     });
                 }

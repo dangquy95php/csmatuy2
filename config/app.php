@@ -235,4 +235,5 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
     ],
+    'system_error' => env('SYSTEM_ERROR')
 ];

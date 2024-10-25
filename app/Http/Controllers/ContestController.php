@@ -47,7 +47,9 @@ class ContestController extends Controller
      */
     public function create(Request $request)
     {
-        return view('contests.create');
+        $datas = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->get();
+
+        return view('contests.create', compact('datas'));
     }
 
     /**
@@ -62,6 +64,7 @@ class ContestController extends Controller
             'name' => 'required|unique:contests,name',
             'time_test' => 'required',
             'status' => 'required',
+            'free_contest' => 'required',
         ]);
     
         $data = Contest::create([
@@ -70,6 +73,7 @@ class ContestController extends Controller
             'user_id' => Auth::user()->id,
             'time_test' => trim($request->input('time_test')),
             'status' => $request->input('status'),
+            'free_contest' => $request->input('free_contest'),
         ]);
 
         $data->link = $request->root() .'/admin/contest/'. $data->id .'/law';
@@ -89,8 +93,9 @@ class ContestController extends Controller
     public function edit($id)
     {
         $contest = Contest::findOrFail($id);
+        $datas = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->get();
 
-        return view('contests.edit', compact('contest'));
+        return view('contests.edit', compact('contest', 'datas'));
     }
 
     /**
@@ -121,6 +126,7 @@ class ContestController extends Controller
             'name' => 'required',
             'time_test' => 'required',
             'status' => 'required',
+            'free_contest' => 'required',
         ]);
 
         $contest = Contest::find($id);
@@ -129,7 +135,13 @@ class ContestController extends Controller
         $contest->time_test = trim($request->input('time_test'));
         $contest->status = $request->input('status');
         $contest->user_id = Auth::user()->id;
+       
+        $checkDiff = array_diff(json_decode($contest->free_contest), $request->input('free_contest'));
+        $checkDiff1 = array_diff($request->input('free_contest'), json_decode($contest->free_contest));
 
+        if (count($checkDiff) > 0 || count($checkDiff1) > 0) {
+            $contest->free_contest = $request->input('free_contest');
+        }
         $contest->save();
 
         if ($contest->wasChanged()) {
@@ -144,9 +156,16 @@ class ContestController extends Controller
     {
         $contest = Contest::findOrFail($id);
         $contests = LawResult::where('contest_id', $id)->pluck('user_id')->toArray();
-        $usersExitsInLawResult = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->whereIn('id', $contests)->get();
-        $usersYetTest = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->whereNotIn('id', $contests)->get();
+        $usersExitsInLawResult = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)
+        ->whereIn('id', $contests)->with('team')->with(['answers' => function($query) use($id) {
+                $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')->where('answers.contest_id', $id)
+            ->select('answers.*', 'law_questions.point');
+        }])->get();
 
-        return view('contests.tested', compact('contest', 'usersExitsInLawResult', 'usersYetTest'));
+        $usersYetTest = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->whereNotIn('id', $contests)->get();
+        $listUserId = $contest->free_contest;
+        $userFreeContest = User::whereIn('id', json_decode($listUserId))->get();
+
+        return view('contests.tested', compact('contest', 'usersExitsInLawResult', 'usersYetTest', 'userFreeContest'));
     }
 }

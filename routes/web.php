@@ -132,15 +132,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::get('/{id}/law/confirm', 'LawController@confirm')->name('contest.law.confirm');
         Route::post('/{id}/law/confirm', 'LawController@confirmPost');
         Route::get('/{id}/law/question/index', 'LawController@question')->name('contest.law.question');
+        // Route::get('/{id}/law/free', 'LawController@lawx')->name('contest.law.free');
         
-              
-
         Route::get('/{id}/law/question', 'LawController@createQuestion')->name('contest.law.create');
         Route::post('/{id}/law/question', 'LawController@createQuestionStore');
 
         Route::post('/{id}/law/question/update', 'LawController@updateQuestion')->name('contest.law.update');
         
     });
+
+    Route::group(['prefix' => 'system-error'], function () {
+        Route::get('/index', 'SystemErrorController@index')->name('system-error.index');
+    });
+    
 });
 
 Route::get('/', 'User\HomeController@index');

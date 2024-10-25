@@ -134,12 +134,12 @@
 
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/log/*') || request()->is('admin/log/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav2" data-bs-toggle="collapse" href="#">
-          <i class="bx bxl-blogger"></i><span>Quản lý log</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bx bxl-blogger"></i><span>Quản lý dữ liệu thay đổi</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav2" class="nav-content collapse {{ request()->is('admin/log/*') || request()->is('admin/log/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('log.index') }}" class="{{ request()->is('admin/log/index') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Danh sách log</span>
+              <i class="bi bi-circle"></i><span>Danh sách dữ liệu</span>
             </a>
           </li>
         </ul>
@@ -168,7 +168,18 @@
               <i class="bi bi-circle"></i><span>Danh sách cuộc thi</span>
             </a>
           </li>
-          
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/system-error/*') || request()->is('admin/system-error/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav5" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-ui-checks-grid"></i></i><span>Quản lý lỗi hệ thống</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav5" class="nav-content collapse {{ request()->is('admin/system-error/*') || request()->is('admin/system-error/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('system-error.index') }}" class="{{ request()->is('admin/system-error/index') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách lỗi</span>
+            </a>
+          </li>
         </ul>
       </li>
 

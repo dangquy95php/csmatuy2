@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Support\Facades\Log;
+use App\Models\SystemError;
 
 class Handler extends ExceptionHandler
 {
@@ -26,7 +28,7 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
-
+    
     /**
      * Register the exception handling callbacks for the application.
      *
@@ -35,7 +37,16 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+            dd(\config('app.system_error'));
+            if (\config('app.system_error')) {
+                $model = new SystemError();
+                $model->message = $e->getMessage();
+                $model->file = $e->getFile();
+                $model->line = $e->getLine();
+                $model->code = $e->getCode();
+    
+                $model->save();
+            }
         });
     }
 }

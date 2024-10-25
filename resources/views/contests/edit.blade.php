@@ -39,6 +39,22 @@
                         @include('_partials.alert', ['field' => 'status'])
                     </div>
                     <div class="col-12">
+                        <label for="inputNanme5" class="form-label">Danh sách miễn thi</label>
+                        <select id="multiple" class="form-select free_contest" name="free_contest[]" aria-label="Default select example" multiple>
+                            @if (is_array(old('free_contest')))
+                                @foreach($datas as $item)
+                                    <option value="{{ $item->id }}" @if(in_array($item->id, old('free_contest'))) selected="selected" @endif>{{ $item->last_name .' '. $item->first_name }}</option>
+                                @endforeach    
+                            @else
+                                @foreach($datas as $item)
+                                    <option value="{{ $item->id }}" @if(in_array($item->id, json_decode($contest->free_contest))) selected="selected" @endif>{{ $item->last_name .' '. $item->first_name }}</option>
+                                @endforeach
+                            @endif
+                           
+                        </select>
+                        @include('_partials.alert', ['field' => 'free_contest'])
+                    </div>
+                    <div class="col-12">
                         <label for="inputNanme4" class="form-label">Mô tả:</label>
                         <textarea class="form-control" name="description" placeholder="Vui lòng nhập ghi chú" id="floatingTextarea" style="height: 100px;">{{old('description', $contest->description)}}</textarea>
                     </div>
@@ -53,3 +69,23 @@
    </div>
 </section>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $("#multiple").select2({
+            tags: true,
+            multiple: true,
+            tokenSeparators: [','],
+            "language": {
+                "noResults": function() {
+                    return "Kết quả không tìm thấy";
+                }
+            },escapeMarkup: function (markup) {
+                    return markup;
+            },
+        });
+    });
+
+</script>
+@endpush

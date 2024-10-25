@@ -11,6 +11,7 @@ use App\Models\Answer;
 use App\Models\LawResult;
 use App\Models\LawQuestions;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class LawController extends Controller
 {
@@ -87,7 +88,7 @@ class LawController extends Controller
             return redirect()->route('contest.law', [ 'id' => $id ]);
         }
 
-        $data = LawQuestions::where('contest_id', $id)->get()->shuffle();
+        $data = LawQuestions::where('contest_id', $id)->get();
 
         return view('law.confirm', compact('contest', 'data'));
     }
@@ -111,14 +112,15 @@ class LawController extends Controller
     {
         try {
             $data = $request->input('data');
-            $id = 1;
+            $questions = LawQuestions::where('contest_id', $contestId)->get();
             foreach($data as $key => $item) {
                 $explode = explode("@--@", $item);
                 $question = @$explode[0];
                 $answer = @$explode[1];
+                $idQuestion = @$explode[2];
                 
                 $model = new Answer;
-                $model->question_id = $id;
+                $model->question_id = $idQuestion;
                 $model->question_name = $question;
                 if ($answer) {
                     $model->answer = $answer;
@@ -126,8 +128,22 @@ class LawController extends Controller
                 
                 $model->contest_id = $contestId;
                 $model->user_id = Auth::user()->id;
+
+                foreach($questions as $value) {
+                    if ($value->question_id == $idQuestion) {
+                        $lower = strtolower($value->answer);
+                        if ($answer == $value[$lower]) {
+                            $model->result = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (Str::contains(strtolower($item), 'theo bạn nghĩ có bao nhiều người trả lời')) {
+                    $model->result = Answer::PREDICT;
+                }
+
                 $model->save();
-                $id++;
             }
             $now = Carbon::now();
             LawResult::where('contest_id', $contestId)->where('user_id', Auth::user()->id)->update(['time_end' => $now]);
@@ -135,7 +151,7 @@ class LawController extends Controller
             Toastr::error('Có lỗi '. $ex->getMessage());
             return redirect()->back();
         }
-        
+
         Toastr::success('Bạn đã nộp bài thi! Vui lòng đợi kết quả công bố sau.');
 
         return redirect()->route('dashboard');

@@ -22,8 +22,13 @@ class Answer extends Model
         'question_name',
         'contest_id',
         'answer',
-        'user_id'
+        'user_id',
+        'result',
     ];
+
+    const IN_CORRECT     = 0;
+    const CORRECT        = 1;
+    const PREDICT        = 2;
 
     public function user()
     {

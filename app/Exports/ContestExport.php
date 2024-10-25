@@ -8,11 +8,14 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\Models\User;
 use App\Models\Contest;
 use App\Models\Answer;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents
+class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents, WithStrictNullComparison, WithStartRow
 {
     const EXCEL_TYPE_FILE = '.xlsx';
 
@@ -27,41 +30,64 @@ class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     */
     public function collection()
     {
-        $contests = User::where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)
+        $contests = User::where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->with('team')
                         ->with(['answers' => function($query) {
-                            $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')->where('answers.contest_id', $this->id)
-                                ->select('answers.*', 'law_questions.a', 'law_questions.b', 'law_questions.c', 'law_questions.d', 'law_questions.point', 'law_questions.answer as answer1');
-                        }])
+                        $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')->where('answers.contest_id', $this->id)
+                    ->select('answers.*', 'law_questions.point');
+                }])->get()->toArray();
 
-        //  Answer::with(['user'])->where('answers.contest_id', $this->id)
-        //                     ->join('law_questions', 'law_questions.question_id', '=', 'answers.question_id')
-                            
-                            ->get()->toArray();
-dd($contests[11]);
-        foreach($contests as $key => $item) {
-            if ($item['answer'] == base64_decode($item[$key])) {
+        $result = [];
+        foreach($contests as $k => $items) {
+            $object = new \stdClass;
 
+            $object->stt = ++$k;
+            $object->name = $items['last_name'] .' '. $items['first_name'];
+            $object->department = $items['team']['note'];
+            $count = 0;
+            if (count($items['answers']) > 0) {
+                foreach($items['answers'] as $item) {
+                    if ($item['result'] == Answer::CORRECT) {
+                        $count++;
+                    }
+                }
             }
+
+            $object->result = (string)$count .'/'. count($items['answers']);
+
+            array_push($result, $object);
         }
 
-        $datas = User::with(['team', 'user_infor'])->where('status', User::ENABLE)->whereNotNull('team_id')->get();
-        $result = [];
-       
-        // return collect($result);
+        return collect($result);
     }
 
     public function headings() :array {
-    	return ["STT", "Tên nhân viên", "Email", "Bộ phận", "Ngày sinh", "Giới Tính"];
+    	return ["STT", "Tên nhân viên", "Bộ phận", "Điểm"];
+    }
+    
+    public function columnFormats(): array
+    {
+        return [
+            'D' => NumberFormat::FORMAT_TEXT,
+        ];
     }
 
     public function registerEvents(): array
     {
         return [
             AfterSheet::class    => function(AfterSheet $event) {
-                $cellRange = 'A1:J1'; // All headers
+                // $event->sheet->setCellValue('A1', 'Time String')
+                // ->setCellValue('A2', '31-Dec-2008 17:30:20')
+                // ->setCellValue('A3', '14-Feb-2008 4:20 AM')
+                // ->setCellValue('A4', '14-Feb-2008 4:45:59 PM');
+
+                $cellRange = 'A1:T500'; // All headers
+                // $event->sheet->getDelegate()->getParent()->getDefaultStyle()->getFont()->setName('Times New Roman');
+                // $sheet->setFontFamily('Comic Sans MS');
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(13);
-                $event->sheet->getDelegate()->getStyle($cellRange)->getFill()
-                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+                $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setName('Times New Roman');
+                $event->sheet->getDelegate()->getStyle($cellRange)->getFill();
+                $event->sheet->getStyle('D')->getAlignment()->setHorizontal('center');
+                $event->sheet->getStyle('D')->getAlignment()->setHorizontal('center');
             },
         ];
     }

@@ -34,17 +34,25 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Họ tên</th>
-                                        <th scope="col">Email</th>
                                         <th scope="col">Bộ phận</th>
+                                        <th scope="col">Số điểm</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($usersExitsInLawResult as $k => $item)
+                                    @foreach($usersExitsInLawResult as $k => $items)
                                     <tr>
                                         <th scope="row">{{++$k}}</th>
-                                        <td>{{$item->last_name}} {{$item->first_name}}</td>
-                                        <td>{{$item->email}}</td>
-                                        <td>{{ $item->team->name }}</td>
+                                        <td>{{$items->last_name}} {{$items->first_name}}</td>
+                                        <td>{{ $items->team->name }}</td>
+                                        @php
+                                        $count = 0;
+                                        foreach($items->answers as $item) {
+                                            if ($item->result == \App\Models\Answer::CORRECT) {
+                                                $count++;
+                                            }
+                                        }
+                                        @endphp
+                                        <td>{{ $count .'/'. count($items->answers) }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -56,7 +64,6 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Họ tên</th>
-                                    <th scope="col">Email</th>
                                     <th scope="col">Bộ phận</th>
                                 </tr>
                                 </thead>
@@ -65,7 +72,6 @@
                                     <tr>
                                         <th scope="row">{{++$k}}</th>
                                         <td>{{$item->last_name}} {{$item->first_name}}</td>
-                                        <td>{{$item->email}}</td>
                                         <td>{{ $item->team->name }}</td>
                                     </tr>
                                     @endforeach

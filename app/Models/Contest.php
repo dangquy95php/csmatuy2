@@ -16,6 +16,7 @@ class Contest extends Model
 {
     use HasFactory;
     use LogsActivity;
+    use \Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
     protected $table = 'contests';
     
@@ -40,8 +41,18 @@ class Contest extends Model
         'user_id',
         'status',
         'time_test',
-        'link'
+        'link',
+        'free_contest'
     ];
+
+    protected $casts = [
+        'options' => 'json',
+    ];
+
+    public function user_json()
+    {
+        return $this->belongsTo(User::class, 'options->free_contest');
+    }
 
     public function user()
     {

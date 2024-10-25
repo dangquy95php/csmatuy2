@@ -153,6 +153,13 @@ Breadcrumbs::for('email.index', function ($trail) {
     $trail->push('Danh sách Email', route('email.index'));
 });
 
+Breadcrumbs::for('system-error.index', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Danh sách hệ thống lỗi', route('system-error.index'));
+});
+
+
+
 // Breadcrumbs::for('user.edit', function ($trail) {
 //     $trail->parent('dashboard');
 //     $trail->push('Cập nhật nhân viên', route('user.edit'));
