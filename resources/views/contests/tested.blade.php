@@ -13,7 +13,7 @@
 
 <section class="section">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
@@ -29,13 +29,16 @@
                     </ul>
                     <div class="tab-content pt-2" id="borderedTabJustifiedContent">
                         <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
-                            <table class="table">
+                            <table class="table table-responsive">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Họ tên</th>
                                         <th scope="col">Bộ phận</th>
                                         <th scope="col">Số điểm</th>
+                                        @foreach($usersExitsInLawResult[0]->answers as $k => $item)
+                                            <th scope="col" style="width:300px;">{{ $item->question_name }}</th>
+                                        @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,6 +56,12 @@
                                         }
                                         @endphp
                                         <td>{{ $count .'/'. count($items->answers) }}</td>
+
+                                        @foreach($items->answers as $k => $item)
+                                            <td>
+                                               {{ $item->answer }}
+                                            </td>
+                                        @endforeach
                                     </tr>
                                     @endforeach
                                 </tbody>

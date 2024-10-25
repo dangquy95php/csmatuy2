@@ -163,8 +163,8 @@ class ContestController extends Controller
             ->select('answers.*', 'law_questions.point');
         }])->get();
 
-        $usersYetTest = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->whereNotIn('id', $contests)->get();
         $listUserId = $contest->free_contest;
+        $usersYetTest = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->whereNotIn('id', json_decode($listUserId))->whereNotIn('id', $contests)->get();
         $userFreeContest = User::whereIn('id', json_decode($listUserId))->get();
 
         return view('contests.tested', compact('contest', 'usersExitsInLawResult', 'usersYetTest', 'userFreeContest'));
