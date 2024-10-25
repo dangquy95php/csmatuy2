@@ -9,6 +9,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Contracts\Activity;
 use Auth;
+use Browser;
+use Request;
 
 class Team extends Model
 {
@@ -58,5 +60,20 @@ class Team extends Model
 
             return 'Khu/Phòng event';
         })->logOnly(['name', 'note', 'type'])->logOnlyDirty()->dontSubmitEmptyLogs();
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $object = new \stdClass();
+        $object->ip = Request::ip();
+        $object->browser = Browser::browserName();
+        $object->platform = Browser::platformName();
+        $object->device = Browser::deviceType();
+
+        if ($eventName == 'updated') {
+            $activity->event = 'Chỉnh sửa';
+        }
+        
+        $activity->browsers = json_encode($object);
     }
 }

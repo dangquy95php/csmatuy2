@@ -156,8 +156,9 @@ class ContestController extends Controller
     {
         $contest = Contest::findOrFail($id);
         $contests = LawResult::where('contest_id', $id)->pluck('user_id')->toArray();
-        $usersExitsInLawResult = User::with('team')->whereNotIn('id', json_decode($contest->free_contest))->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)
-        ->whereIn('id', $contests)->with('team')->with(['answers' => function($query) use($id) {
+        $usersExitsInLawResult = User::with('team')->whereNotIn('id', json_decode($contest->free_contest))
+            ->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)
+            ->whereIn('id', $contests)->with('team')->with(['answers' => function($query) use($id) {
                 $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')->where('answers.contest_id', $id)
             ->select('answers.*', 'law_questions.point');
         }])->get();

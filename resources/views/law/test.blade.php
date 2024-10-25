@@ -236,7 +236,7 @@
                         }
                     }
                     
-                    $("#myTabContent").append(`<input type="hidden" name="data[]" value="${question}@--@${answer}"/>`);
+                    $("#myTabContent").append(`<input type="hidden" name="data[]" value="${question}@--@${answer}@--@${id_question}"/>`);
                     document.getElementById("myTabContent").submit();
                 });
 

@@ -22,10 +22,10 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        $contest = Contest::where('status', Contest::ENABLE)->orderBy('created_at', 'DESC')->select('id')->first();
+        $contest = Contest::where('status', Contest::ENABLE)->orderBy('created_at', 'DESC')->select('id', 'free_contest')->first();
         $usersExitsInLawResult = '';
         if ($contest) {
-            $usersExitsInLawResult = LawResult::where('contest_id', $contest->id)->count();
+            $usersExitsInLawResult = LawResult::where('contest_id', $contest->id)->whereNotIn('user_id', json_decode($contest->free_contest))->count();
         }
 
         return view('index', compact('usersExitsInLawResult', 'contest'));
