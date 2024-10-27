@@ -83,7 +83,6 @@ class LawController extends Controller
     public function createQuestionPost($id, Request $request)
     {
         $data = $request->input('data');
-        Contest::findOrFail($id);
         $contestId = $id;
         try {
             foreach($data as $item) {
@@ -123,25 +122,27 @@ class LawController extends Controller
     public function updateQuestion($id, Request $request)
     {
         $data = $request->input('data');
-        $delete = $request->input('delete');
-        
+        $delete = $request->input('delete') ?: [];
         try {
             foreach($delete as $item) {
                 LawQuestions::where('question_id', $item)->where('contest_id', $id)->delete();
             }
             foreach($data as $item) {
-                LawQuestions::where('question_id','=', $item['question_id'])->where('contest_id', $id)->updateOrCreate([
-                    'question_name' => $item['question_name'],
-                    'question_id' => $item['question_id'],
-                    'contest_id' => $id,
-                    'a' => $item['a'],
-                    'b' => $item['b'],
-                    'c' => $item['c'],
-                    'd' => $item['d'],
-                    'random' => $item['random'],
-                    'point' => $item['point'],
-                    'answer' => $item['answer'],
-                ]);
+                $model = LawQuestions::firstOrNew([
+                        'question_id' => $item['question_id'],
+                        'contest_id' => $id,
+                    ]);
+
+                $model->question_name = $item['question_name'];
+                $model->a = $item['a'];
+                $model->b = $item['b'];
+                $model->c = $item['c'];
+                $model->d = $item['d'];
+                $model->random = $item['random'];
+                $model->point = $item['point'];
+                $model->answer = $item['answer'];
+
+                $model->save();
             }
         } catch (\Exception $ex) {
             Toastr::error('Có lỗi '. $ex->getMessage());

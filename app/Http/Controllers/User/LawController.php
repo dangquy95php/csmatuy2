@@ -71,7 +71,7 @@ class LawController extends Controller
         if ($timeTest->time_test * 60 < $seconds) abort(404);
         $seconds = $timeTest->time_test * 60 - $seconds;
 
-        return view('user.test', compact('contest', 'data', 'seconds'));
+        return view('user.law.test', compact('contest', 'data', 'seconds'));
     }
 
     public function confirm($id, Request $request)
@@ -152,7 +152,7 @@ class LawController extends Controller
 
         Toastr::success('Bạn đã nộp bài thi! Vui lòng đợi kết quả công bố sau.');
 
-        return redirect()->route('law.result');
+        return redirect()->route('law.result', $contestId);
     }
 
    
@@ -218,6 +218,16 @@ class LawController extends Controller
 
     public function lawResult($id, Request $request)
     {
-        return view('user.result');
+        $img = \Image::make(storage_path('app/public/law/image_cup.png'));
+        $img->text(Auth::user()->full_name, 180, 80, function($font) {
+            $font->file(public_path('fonts/tahoma.ttf'));
+            $font->size(10);
+            $font->color('#ff0000');
+            $font->align('center');
+            $font->valign('top');
+        });
+        $img->save(storage_path('app/public/law/'.Auth::user()->full_name.'.png'));
+        
+        return view('user.law.result');
     }
 }

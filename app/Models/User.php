@@ -111,4 +111,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserInfor::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->last_name.' '.$this->first_name;
+    }
 }
