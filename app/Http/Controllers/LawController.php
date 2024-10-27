@@ -80,12 +80,11 @@ class LawController extends Controller
         return view('law.question.create', compact('data'));
     }
 
-    public function createQuestionStore($id, Request $request)
+    public function createQuestionPost($id, Request $request)
     {
         $data = $request->input('data');
         Contest::findOrFail($id);
         $contestId = $id;
-
         try {
             foreach($data as $item) {
                 $model = new LawQuestions;
@@ -113,28 +112,36 @@ class LawController extends Controller
         return redirect()->route('contest.index');
     }
 
+    public function editQuestion($id, Request $request)
+    {
+        $data = LawQuestions::where('contest_id', $id)->get();
+        $contest = Contest::findOrFail($id);
+        $isEyes = LawResult::where('user_id', Auth::user()->id)->where('contest_id', $id)->exists();
+
+        return view('law.question.edit', compact('data', 'contest', 'isEyes'));
+    }
     public function updateQuestion($id, Request $request)
     {
         $data = $request->input('data');
-        Contest::findOrFail($id);
+        $delete = $request->input('delete');
+        
         try {
-            LawQuestions::where('contest_id','=', $id)->delete();
-
+            foreach($delete as $item) {
+                LawQuestions::where('question_id', $item)->where('contest_id', $id)->delete();
+            }
             foreach($data as $item) {
-                $model = new LawQuestions;
-    
-                $model->question_name = $item['question_name'];
-                $model->question_id = $item['question_id'];
-                $model->contest_id = $id;
-                $model->a = $item['a'];
-                $model->b = $item['b'];
-                $model->c = $item['c'];
-                $model->d = $item['d'];
-                $model->random = $item['random'];
-                $model->point = $item['point'];
-                $model->answer = $item['answer'];
-    
-                $model->save();
+                LawQuestions::where('question_id','=', $item['question_id'])->where('contest_id', $id)->updateOrCreate([
+                    'question_name' => $item['question_name'],
+                    'question_id' => $item['question_id'],
+                    'contest_id' => $id,
+                    'a' => $item['a'],
+                    'b' => $item['b'],
+                    'c' => $item['c'],
+                    'd' => $item['d'],
+                    'random' => $item['random'],
+                    'point' => $item['point'],
+                    'answer' => $item['answer'],
+                ]);
             }
         } catch (\Exception $ex) {
             Toastr::error('Có lỗi '. $ex->getMessage());

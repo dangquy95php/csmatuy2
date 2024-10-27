@@ -1,11 +1,11 @@
-@section('title','Tạo cuộc thi')
+@section('title','Chỉnh sửa cuộc thi')
 @extends('layouts.template')
 
 @section('breadcrumb')
 
-   <h1>TẠO CUỘC THI</h1>
+   <h1>CHỈNH SỬA CUỘC THI</h1>
 
-   {{ Breadcrumbs::render('contest.create') }}
+   {{ Breadcrumbs::render('law.question.edit', $contest) }}
 
 @endsection
 
@@ -15,8 +15,10 @@
    <div class="row">
         <div class="col-lg-6">
             <form id="form" class="form-floating mb-3" method="POST">
-                <button type="button" class="btn btn-primary mb-2" id="add-question" onClick="addQuestion()">Thêm</button>
-                <a role="button" href="{{route('contest.law.confirm', request()->route('id'))}}" target="_blank" class="ms-2"><i style="font-size: 2rem;" class="bi bi-eye d-inline-block"></i></a>
+                <button type="button" class="btn btn-primary mb-2" id="add-question" onClick="addQuestion()">Thêm câu hỏi</button>
+                @if (!$isEyes)
+                    <a role="button" href="{{route('contest.law.confirm', request()->route('id'))}}" target="_blank" class="ms-2"><i style="font-size: 2rem;" class="bi bi-eye d-inline-block"></i></a>
+                @endif
                 <div id="content">
                 @foreach($data as $key => $item)
                 <div class="accordion mt-2" id="question{{$item->question_id}}">
@@ -185,10 +187,10 @@
     }
 
     function remove(that) {
+        let idQuestion = $(that).closest('.accordion').find('.title').text().trim();
+        $("#content").append(`<input type="hidden" name="delete[]" value="${idQuestion}"/>`);
+
         $(that).closest('.accordion').remove();
-        $(".accordion").each(function(k, v) {
-            $(this).find('.title').text(k + 1);
-        })
     }
 
     $(document).ready(function() {

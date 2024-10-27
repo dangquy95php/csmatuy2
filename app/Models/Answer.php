@@ -28,7 +28,6 @@ class Answer extends Model
 
     const IN_CORRECT     = 0;
     const CORRECT        = 1;
-    const PREDICT        = 2;
 
     public function user()
     {

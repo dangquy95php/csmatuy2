@@ -125,13 +125,18 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/{id}/edit', 'ContestController@update')->name('contest.update');
         Route::get('/{id}/tested', 'ContestController@tested')->name('contest.tested');
         Route::get('/{id}/export', 'ContestController@export')->name('contest.export');
-        
-
+        Route::get('/{id}/law/question/index', 'LawController@question')->name('contest.law.question');
        
        
         // Route::get('/{id}/law/free', 'LawController@lawx')->name('contest.law.free');
         
-        Route::get('/{id}/law/question', 'LawController@createQuestion')->name('contest.law.create');
+        Route::get('/{id}/law/question/create', 'LawController@createQuestion')->name('law.question.create');
+        Route::post('/{id}/law/question/create', 'LawController@createQuestionPost');
+
+        Route::get('/{id}/law/question/edit', 'LawController@editQuestion')->name('law.question.edit');
+        Route::post('/{id}/law/question/edit', 'LawController@updateQuestion')->name('law.question.update');
+
+        
         Route::post('/{id}/law/question', 'LawController@createQuestionStore');
 
         Route::post('/{id}/law/question/update', 'LawController@updateQuestion')->name('contest.law.update');
@@ -141,19 +146,21 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     Route::group(['prefix' => 'system-error'], function () {
         Route::get('/index', 'SystemErrorController@index')->name('system-error.index');
     });
-    
+});
+
+Route::group(['middleware' => ['auth', 'is_account_enabled']], function () {
+
+    Route::group(['prefix' => 'contest'], function () {
+        Route::get('/{id}/law/confirm', 'User\LawController@confirm')->name('contest.law.confirm');
+        Route::post('/{id}/law/confirm', 'User\LawController@confirmPost');
+        Route::get('/{id}/law', 'User\LawController@law')->name('contest.law');
+        Route::post('/{id}/law', 'User\LawController@lawPost');
+        Route::get('/{id}/law/result', 'User\LawController@lawResult')->name('law.result');
+
+    });
 });
 
 Route::get('/', 'User\HomeController@index');
-
-Route::group(['prefix' => 'contest'], function () {
-    Route::get('/{id}/law/confirm', 'LawController@confirm')->name('contest.law.confirm');
-    Route::post('/{id}/law/confirm', 'LawController@confirmPost');
-    Route::get('/{id}/law', 'User\LawController@law')->name('contest.law');
-    Route::post('/{id}/law', 'User\LawController@lawPost');
-
-    Route::get('/{id}/law/question/index', 'LawController@question')->name('contest.law.question');
-});
 
 // Route::group(['prefix' => 'admin'], function () {
 //     Route::get('/register', 'UserController@register')->name('user_register');

@@ -15,7 +15,7 @@ class CreateLawQuestionsTable extends Migration
     {
         Schema::create('law_questions', function (Blueprint $table) {
             $table->id();
-            $table->integer('question_id');
+            $table->string('question_id', 255)->nullable();
             $table->text('question_name');
             $table->integer('contest_id');
             $table->text('a');

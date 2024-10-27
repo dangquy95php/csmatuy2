@@ -37,7 +37,6 @@
                     <tr>
                         <th scope="row">{{ $key + 1}}</th>
                         <td>
-                            <a href="{{ route('contest.law.create', $contest->id) }}">{{ $contest->name}}</a>
                         </td>
                         <td>{{ $contest->description}}</td>
                         <td>{{ $contest->user->last_name }} {{ $contest->user->first_name }}</td>
@@ -48,10 +47,14 @@
                         <td>{!! $contest->status == 1 ? '<span class="badge rounded-pill bg-success">Đang mở</span>' : '<span class="badge rounded-pill bg-danger">Đã đóng</span>'!!}</td>
                         <td>{{ $contest->created_at}}</td>
                         <td>
-                            <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning btn-sm">Sửa</a>
-                            <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark btn-sm mt-1">Kết quả</a>
-                            
-                            <a href="{{ route('contest.law.question', $contest->id) }}" type="button" class="btn btn-danger btn-sm mt-1">Xem câu hỏi</a>
+                           @if (App\Models\LawQuestions::where('contest_id', $contest->id)->count() > 0)
+                              <a href="{{route('law.question.edit', $contest->id)}}" class="btn btn-success btn-sm">Chỉnh sửa câu hỏi</a>
+                           @else
+                              <a href="{{route('law.question.create', $contest->id)}}" class="btn btn-success btn-sm">Tạo câu hỏi</a>
+                           @endif
+                           <a href="{{route('contest.edit', $contest->id)}}" class="btn btn-warning btn-sm mt-1">Sửa cuộc thi</a>
+                           <a href="{{ route('contest.tested', $contest->id) }}" type="button" class="btn btn-dark btn-sm mt-1">Kết quả</a>
+                           <a href="{{ route('contest.law.question', $contest->id) }}" type="button" class="btn btn-danger btn-sm mt-1">Đáp án câu hỏi</a>
                         </td>
                     </tr>
                     @endforeach

@@ -38,7 +38,8 @@ class LawController extends Controller
     {
         $contest = Contest::where('status', Contest::ENABLE)->findOrFail($id);
         if ($contest && Auth::user()->level == User::TYPE_ACCOUNT_VC_NLD && Auth::user()->status == User::ENABLE || Auth::user()->username == 'admin') {
-            if (Answer::where('contest_id', $contest->id)->where('user_id', Auth::user()->id)->exists()) {
+            if (Answer::where('contest_id', $contest->id)->where('user_id', Auth::user()->id)->exists()
+            || LawResult::where('contest_id', $contest->id)->where('user_id', Auth::user()->id)->whereNotNull('time_end')->exists()) {
                 abort(404);
             }
         } else {
@@ -140,10 +141,6 @@ class LawController extends Controller
                     }
                 }
 
-                if (Str::contains(strtolower($item), 'theo bạn nghĩ có bao nhiều người trả lời')) {
-                    $model->result = Answer::PREDICT;
-                }
-
                 $model->save();
             }
             $now = Carbon::now();
@@ -155,7 +152,7 @@ class LawController extends Controller
 
         Toastr::success('Bạn đã nộp bài thi! Vui lòng đợi kết quả công bố sau.');
 
-        return redirect()->route('dashboard');
+        return redirect()->route('law.result');
     }
 
    
@@ -217,5 +214,10 @@ class LawController extends Controller
         $contest = Contest::where('status', Contest::ENABLE)->findOrFail($id);
 
         return view('law.question.index', compact('contest', 'listQuestion'));
+    }
+
+    public function lawResult($id, Request $request)
+    {
+        return view('user.result');
     }
 }

@@ -102,12 +102,6 @@
                                 @endphp
                                 @endforeach
 
-                                <div class="tab-pane fade mt-5" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
-                                    <p class="mb-1" style="text-align: justify;">Câu 21: <span class="title" id="21">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
-                                    <div class="is-active">
-                                        <input id="forecast_input" type="number" min="1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
-                                    </div>
-                                </div>
                                 @csrf
                             </form>
                         </div>
@@ -124,10 +118,6 @@
                                 $questionId ++;
                                 @endphp
                                 @endforeach
-
-                                <li class="mb-2" onClick=clickQuestion(this) id="forecast-tab" data-bs-toggle="tab" data-bs-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="true" >
-                                    <button type="button" class="btn btn-outline-dark me-1">21</button>
-                                </li>
                             </ul>
                             <div class="d-flex justify-content-end">
                                 <button type="button" onClick="clickPrev()" class="btn btn-dark me-1">Trước</button>
@@ -327,7 +317,11 @@
         }
 
         $('#forecast_input').change(function() {
+            console.log($(this).val());
+            
             if ($(this).val()) {
+                console.log(1);
+                
                 $("#forecast-tab").addClass('is-active1');
             } else {
                 $("#forecast-tab").removeClass('is-active1');
@@ -342,6 +336,29 @@
             startTimer(fiveMinutes, display);
 
             $("#myTab > li:first button").trigger('click');
+
+            $("#myTabContent").append(`
+                <div class="tab-pane fade mt-5" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
+                    <p class="mb-1" style="text-align: justify;">Câu dự đoán: <span class="title" id="predict">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
+                    <div class="is-active">
+                        <input id="forecast_input" type="number" min="1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
+                    </div>
+                </div>
+            `)
+
+            $("#myTab").append(`
+                <li class="mb-2" onClick=clickQuestion(this) id="forecast-tab" data-bs-toggle="tab" data-bs-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="true" >
+                    <button type="button" class="btn btn-outline-dark me-1">Dự đoán</button>
+                </li>
+            `);
+
+            $('#forecast_input').change(function() {
+                if ($(this).val()) {
+                    $("#forecast-tab").addClass('is-active1');
+                } else {
+                    $("#forecast-tab").removeClass('is-active1');
+                }
+            });
         });
     </script>
 @endpush
