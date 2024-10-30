@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contest;
 use App\Models\User;
+use App\Models\Answer;
 use App\Models\LawResult;
 use Carbon\Carbon;
 use Auth;
@@ -156,17 +157,32 @@ class ContestController extends Controller
     {
         $contest = Contest::findOrFail($id);
         $contests = LawResult::where('contest_id', $id)->pluck('user_id')->toArray();
+        // \DB::connection()->enableQueryLog();
         $usersExitsInLawResult = User::with('team')->whereNotIn('id', json_decode($contest->free_contest))
             ->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)
             ->whereIn('id', $contests)->with('team')->with(['answers' => function($query) use($id) {
-                $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')->where('answers.contest_id', $id)
+                $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')
+                ->where('answers.contest_id', $id)
+                ->where('law_questions.contest_id', $id)
             ->select('answers.*', 'law_questions.point');
         }])->get();
 
         $listUserId = $contest->free_contest;
-        $usersYetTest = User::with('team')->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->whereNotIn('id', json_decode($listUserId))->whereNotIn('id', $contests)->get();
+        $predict = User::join('answers', 'users.id', '=', 'answers.user_id')->where('users.status', User::ENABLE)
+                        ->where('users.level', User::TYPE_ACCOUNT_VC_NLD)
+                        ->whereNotIn('users.id', json_decode($listUserId))
+                        ->where('answers.contest_id', $id)
+                        ->where('answers.question_id', 'predict')->select('answers.*')->get();
+
+        // $queries = \DB::getQueryLog();
+        // dd($usersExitsInLawResult->toArray());
+        // dd($predict);
+
+        $usersYetTest = User::with('team')->where('status', User::ENABLE)
+                            ->where('level', User::TYPE_ACCOUNT_VC_NLD)
+                            ->whereNotIn('id', json_decode($listUserId))->whereNotIn('id', $contests)->get();
         $userFreeContest = User::whereIn('id', json_decode($listUserId))->get();
 
-        return view('contests.tested', compact('contest', 'usersExitsInLawResult', 'usersYetTest', 'userFreeContest'));
+        return view('contests.tested', compact('contest', 'usersExitsInLawResult', 'usersYetTest', 'userFreeContest', 'predict'));
     }
 }

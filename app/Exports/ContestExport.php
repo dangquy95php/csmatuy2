@@ -34,11 +34,14 @@ class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
         $listUserId = Contest::findOrFail($this->id);
         $contests = User::whereNotIn('id', json_decode($listUserId->free_contest))->where('status', User::ENABLE)->where('level', User::TYPE_ACCOUNT_VC_NLD)->with('team')
                         ->with(['answers' => function($query) {
-                        $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')->where('answers.contest_id', $this->id)
+                        $query->join('law_questions', 'answers.question_id', '=', 'law_questions.question_id')
+                        ->where('answers.contest_id', $this->id)
+                        ->where('law_questions.contest_id', $this->id)
                     ->select('answers.*', 'law_questions.point');
                 }])->get();
 
         $result = [];
+
         foreach($contests as $k => $items) {
             $object = new \stdClass;
 
@@ -63,7 +66,7 @@ class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     }
 
     public function headings() :array {
-    	return ["STT", "Tên nhân viên", "Bộ phận", "Điểm"];
+    	return ["STT", "Tên nhân viên", "Bộ phận", "Điểm", 'Số dự đoán'];
     }
     
     public function columnFormats(): array

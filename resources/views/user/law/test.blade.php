@@ -35,7 +35,7 @@
                     </div>
                     <div class="row mt-4">
                         <div class="col-lg-8">
-                            <h5>Câu hỏi số <b class="text-danger" id="question_number">1</b> trên 21</h5>
+                            <h5>Câu hỏi số <b class="text-danger" id="question_number">1</b> trên {{count($data) + 1}}</h5>
 
                             <form class="tab-content" method="POST" id="myTabContent">
                                 @php
@@ -317,11 +317,7 @@
         }
 
         $('#forecast_input').change(function() {
-            console.log($(this).val());
-            
             if ($(this).val()) {
-                console.log(1);
-                
                 $("#forecast-tab").addClass('is-active1');
             } else {
                 $("#forecast-tab").removeClass('is-active1');
@@ -341,7 +337,7 @@
                 <div class="tab-pane fade mt-5" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
                     <p class="mb-1" style="text-align: justify;">Câu dự đoán: <span class="title" id="predict">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
                     <div class="is-active">
-                        <input id="forecast_input" type="number" min="1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
+                        <input id="forecast_input" type="number" min="1" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
                     </div>
                 </div>
             `)

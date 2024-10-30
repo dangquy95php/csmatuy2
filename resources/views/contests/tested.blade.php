@@ -36,6 +36,7 @@
                                         <th scope="col">Họ tên</th>
                                         <th scope="col">Bộ phận</th>
                                         <th scope="col">Số điểm</th>
+                                        <th scope="col">Dự đoán</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,6 +54,14 @@
                                         }
                                         @endphp
                                         <td>{{ $count .'/'. count($items->answers) }}</td>
+                                        <td>
+                                            @foreach($predict as $item)
+                                                @if ($item->user_id == $items->id)
+                                                    {{ $item->answer }}
+                                                    @break;
+                                                @endif
+                                            @endforeach
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
