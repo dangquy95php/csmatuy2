@@ -66,7 +66,7 @@ class ContestExport implements FromCollection, WithHeadings, ShouldAutoSize, Wit
     }
 
     public function headings() :array {
-    	return ["STT", "Tên nhân viên", "Bộ phận", "Điểm", 'Số dự đoán'];
+    	return ["STT", "Tên nhân viên", "Bộ phận", "Điểm"];
     }
     
     public function columnFormats(): array

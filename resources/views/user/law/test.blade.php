@@ -340,7 +340,7 @@
                         <input id="forecast_input" type="number" min="1" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
                     </div>
                 </div>
-            `)
+            `);
 
             $("#myTab").append(`
                 <li class="mb-2" onClick=clickQuestion(this) id="forecast-tab" data-bs-toggle="tab" data-bs-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="true" >
