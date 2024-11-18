@@ -112,14 +112,3 @@ class UserInfor extends Model
             
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            

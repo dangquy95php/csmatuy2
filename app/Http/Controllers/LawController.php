@@ -119,6 +119,7 @@ class LawController extends Controller
 
         return view('law.question.edit', compact('data', 'contest', 'isEyes'));
     }
+    
     public function updateQuestion($id, Request $request)
     {
         $data = $request->input('data');

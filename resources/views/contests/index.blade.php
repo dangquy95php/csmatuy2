@@ -36,8 +36,7 @@
                     @foreach ($data as $key => $contest)
                     <tr>
                         <th scope="row">{{ $key + 1}}</th>
-                        <td>
-                        </td>
+                        <td>{{ $contest->name}}</td>
                         <td>{{ $contest->description}}</td>
                         <td>{{ $contest->user->last_name }} {{ $contest->user->first_name }}</td>
                         <td>

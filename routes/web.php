@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     Route::post('/{id}/edit', 'UserController@update')->name('user.update');
     Route::get('/{id}/destroy', 'UserController@destroy')->name('user.destroy');
     Route::get('/export', 'UserController@export')->name('user.export');
+    
 
     Route::group(['prefix' => 'roles'], function () {
         Route::get('/list', 'RoleController@index')->name('roles.list');
@@ -125,6 +126,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/{id}/edit', 'ContestController@update')->name('contest.update');
         Route::get('/{id}/tested', 'ContestController@tested')->name('contest.tested');
         Route::get('/{id}/export', 'ContestController@export')->name('contest.export');
+        
         Route::get('/{id}/law/question/index', 'LawController@question')->name('contest.law.question');
        
        

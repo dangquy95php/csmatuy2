@@ -31,8 +31,8 @@ class AdminSeeder extends Seeder
 
         $role = Role::create(['name' => 'staff']);
      
-        $permissions = Permission::pluck('id','id')->all();
-   
+        $permissions = Permission::whereNotIn('name', ['contest-edit', 'contest-delete', 'contest-create', 'contest-index'])->pluck('id','id')->all();
+
         $role->syncPermissions($permissions);
         $user->assignRole([$role->id]);
 

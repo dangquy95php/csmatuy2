@@ -155,52 +155,6 @@ class LawController extends Controller
         return redirect()->route('law.result', $contestId);
     }
 
-   
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\DrugAddict  $drugAddict
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DrugAddict $drugAddict)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DrugAddict  $drugAddict
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DrugAddict $drugAddict)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateDrugAddictRequest  $request
-     * @param  \App\Models\DrugAddict  $drugAddict
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateDrugAddictRequest $request, DrugAddict $drugAddict)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DrugAddict  $drugAddict
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DrugAddict $drugAddict)
-    {
-        //
-    }
-
     public function createQuestion($id, Request $request)
     {
         $data = LawQuestions::where('contest_id', $id)->get();

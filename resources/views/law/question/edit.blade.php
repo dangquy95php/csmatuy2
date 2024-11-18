@@ -91,7 +91,7 @@
                 </div>
                 @endforeach
                 </div>
-                <button type="button" class="btn btn-success mt-2 is-submit" >Xong</button>
+                <button type="submit" class="btn btn-success mt-2" >Xong</button>
                 @csrf
             </form>
         </div>
@@ -194,8 +194,9 @@
     }
 
     $(document).ready(function() {
-        $(".is-submit").click(function(e){
+        $("#form").on( "submit", function( event ) {
             let data = [];
+            let allowSubmit = false;
             $('.accordion').each(function(k, v) {
                 let question_name = $(this).find('.question_name').val().trim();
                 let question_id = $(this).find('.title').text().trim();
@@ -210,7 +211,8 @@
 
                 if (question_name == '' || a == '' || b == '' || c == '' || d == '' || answer == undefined) {
                     $(this).find('.message').text(`Có lỗi vui lòng kiểm tra câu hỏi và đáp án và chọn câu trả lời!`);
-                    e.preventDefault();
+                    allowSubmit = true;
+                    event.preventDefault();
                 } else {
                     $(this).find('.message').text('');
                     random = random == undefined ? 0 : 1;
@@ -229,20 +231,21 @@
                     data.push(obj);
                 }
             });
-            
-            for (const [key, value] of Object.entries(data)) {
-                $("#content").append(`<input type="hidden" name="data[${key}][question_name]" value="${value.question_name}"/>`);
-                $("#content").append(`<input type="hidden" name="data[${key}][question_id]" value="${value.question_id}"/>`);
-                $("#content").append(`<input type="hidden" name="data[${key}][a]" value="${value.a}"/>`);
-                $("#content").append(`<input type="hidden" name="data[${key}][b]" value="${value.b}"/>`);
-                $("#content").append(`<input type="hidden" name="data[${key}][c]" value="${value.c}"/>`);
-                $("#content").append(`<input type="hidden" name="data[${key}][d]" value="${value.d}"/>`);
-                $("#content").append(`<input type="hidden" name="data[${key}][random]" value="${value.random}"/>`);
-                $("#content").append(`<input type="hidden" name="data[${key}][point]" value="${value.point}"/>`);
-                $("#content").append(`<input type="hidden" name="data[${key}][answer]" value="${value.answer}"/>`);
-            }
+            if (!allowSubmit) {
+                for (const [key, value] of Object.entries(data)) {
+                    $("#content").append(`<input type="hidden" name="data[${key}][question_name]" value="${value.question_name}"/>`);
+                    $("#content").append(`<input type="hidden" name="data[${key}][question_id]" value="${value.question_id}"/>`);
+                    $("#content").append(`<input type="hidden" name="data[${key}][a]" value="${value.a}"/>`);
+                    $("#content").append(`<input type="hidden" name="data[${key}][b]" value="${value.b}"/>`);
+                    $("#content").append(`<input type="hidden" name="data[${key}][c]" value="${value.c}"/>`);
+                    $("#content").append(`<input type="hidden" name="data[${key}][d]" value="${value.d}"/>`);
+                    $("#content").append(`<input type="hidden" name="data[${key}][random]" value="${value.random}"/>`);
+                    $("#content").append(`<input type="hidden" name="data[${key}][point]" value="${value.point}"/>`);
+                    $("#content").append(`<input type="hidden" name="data[${key}][answer]" value="${value.answer}"/>`);
+                }
 
-            document.getElementById('form').submit();
+                document.getElementById('form').submit();
+            }
         });
     });
 </script>

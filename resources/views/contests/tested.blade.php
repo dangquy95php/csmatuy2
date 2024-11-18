@@ -57,7 +57,7 @@
                                         <td>
                                             @foreach($predict as $item)
                                                 @if ($item->user_id == $items->id)
-                                                    {{ $item->answer }}
+                                                    {{ base64_decode($item->answer) }}
                                                     @break;
                                                 @endif
                                             @endforeach

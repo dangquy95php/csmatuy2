@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Exports\ContestExport;
+use App\Exports\AnswerContestExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -113,7 +114,7 @@ class ContestController extends Controller
 
         return Excel::download(new ContestExport($id), $time . 'danh-sach-thi-phap-luat.xlsx');
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
@@ -176,7 +177,6 @@ class ContestController extends Controller
 
         // $queries = \DB::getQueryLog();
         // dd($usersExitsInLawResult->toArray());
-        // dd($predict);
 
         $usersYetTest = User::with('team')->where('status', User::ENABLE)
                             ->where('level', User::TYPE_ACCOUNT_VC_NLD)
