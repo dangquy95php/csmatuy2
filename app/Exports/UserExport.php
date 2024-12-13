@@ -37,7 +37,7 @@ class UserExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
     }
 
     public function headings() :array {
-    	return ["STT", "Tên nhân viên", "Email", "Bộ phận", "Ngày sinh", "Giới Tính"];
+    	return ["STT", "Tên nhân viên", "Email", "Bộ phận", "Giới Tính"];
     }
 
     public function registerEvents(): array
