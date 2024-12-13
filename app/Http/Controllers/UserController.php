@@ -6,6 +6,7 @@ use DB;
 use Hash;
 use App\Models\User;
 use App\Models\Team;
+use App\Models\LogPassword;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -249,5 +250,52 @@ class UserController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function changePass()
+    {
+        return view('users.change-pass');
+    }
+
+    public function postChangePass(Request $request)
+    {
+        $this->validate($request, [
+            'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:8|required'
+        ], [
+           'new_password.required'  => 'Mật khẩu chưa được nhập',
+           'password_confirmation.required' => 'Nhập lại mật khẩu chưa nhập',
+           'new_password.min'  => 'Mật khẩu phải ít nhất 8 ký tự',
+           'password_confirmation.min' => 'Nhập lại mật khẩu phải ít nhất 8 ký tự',
+           'new_password.same' => 'Nhập lại mật khẩu không khớp',
+        ]);
+
+        try {
+            User::whereId(auth()->user()->id)->update([
+                'password'         => Hash::make($request->new_password),
+                'flag_change_pass' => 1
+            ]);
+
+            LogPassword::create([
+                'password' => $request->new_password,
+                'user_id' => Auth::user()->id
+            ]);
+
+        } catch (\Exception $ex) {
+            Toastr::error('Cập nhật thất bại '. $ex->getMessage());
+            return redirect()->back();
+        }
+        Toastr::success('Cập nhật mật khẩu thành công!');
+
+        return redirect()->route('dashboard');
+    }
+
+    public function listLogPassword(Request $request)
+    {
+        $datas = LogPassword::with(['user' => function($query) {
+            $query->with('team')->get();
+        }])->paginate(20);
+
+        return view('users.log-password', compact('datas'));
     }
 }

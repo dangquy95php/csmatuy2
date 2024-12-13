@@ -17,24 +17,32 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $role = Role::create(['name' => 'user']);
-        $user = User::create([
-            'first_name' => 'username1',
-            'last_name' => 'username1',
-            'username' => 'username1',
-            'email' => 'username1@gmail.com',
-            'status' => '1',
-            'email_verified_at' => now(),
-            'password' => 'username1',
-            'team_id' => null,
-        ]);
+        // $role = Role::create(['name' => 'user']);
+        // $user = User::create([
+        //     'first_name' => 'username1',
+        //     'last_name' => 'username1',
+        //     'username' => 'username1',
+        //     'email' => 'username1@gmail.com',
+        //     'status' => '1',
+        //     'email_verified_at' => now(),
+        //     'password' => 'username1',
+        //     'team_id' => null,
+        // ]);
 
         $role = Role::create(['name' => 'staff']);
      
-        $permissions = Permission::whereNotIn('name', ['contest-edit', 'contest-delete', 'contest-create', 'contest-index'])->pluck('id','id')->all();
+        $permissions = Permission::whereNotIn('name', [
+                                    'contest-edit',
+                                    'contest-delete',
+                                    'contest-create',
+                                    'contest-index',
+                                    'user-edit',
+                                    'user-delete',
+                                    'user-create'
+                                ])->pluck('id','id')->all();
 
         $role->syncPermissions($permissions);
-        $user->assignRole([$role->id]);
+        // $user->assignRole([$role->id]);
 
         $user1 = User::create([
             'first_name' => 'admin',
@@ -54,53 +62,53 @@ class AdminSeeder extends Seeder
         $role1->syncPermissions($permissions1);
         $user1->assignRole([$role1->id]);
 
-        $user = User::create([
-            'first_name' => 'phó',
-            'last_name' => 'phòng',
-            'username' => 'phophong',
-            'email' => 'phophong@gmail.com',
-            'status' => '1',
-            'email_verified_at' => now(),
-            'password' => 'phophong',
-            'team_id' => null
-        ]);
+        // $user = User::create([
+        //     'first_name' => 'phó',
+        //     'last_name' => 'phòng',
+        //     'username' => 'phophong',
+        //     'email' => 'phophong@gmail.com',
+        //     'status' => '1',
+        //     'email_verified_at' => now(),
+        //     'password' => 'phophong',
+        //     'team_id' => null
+        // ]);
 
         $role = Role::create(['name' => 'deputy']);
      
         $permissions = Permission::pluck('id','id')->all();
    
         $role->syncPermissions($permissions);
-        $user->assignRole([$role->id]);
+        // $user->assignRole([$role->id]);
 
-        $user = User::create([
-            'first_name' => 'trưởng',
-            'last_name' => 'phòng',
-            'username' => 'truongphong',
-            'email' => 'truongphong@gmail.com',
-            'status' => '1',
-            'email_verified_at' => now(),
-            'password' => 'truongphong',
-            'team_id' =>  null
-        ]);
+        // $user = User::create([
+        //     'first_name' => 'trưởng',
+        //     'last_name' => 'phòng',
+        //     'username' => 'truongphong',
+        //     'email' => 'truongphong@gmail.com',
+        //     'status' => '1',
+        //     'email_verified_at' => now(),
+        //     'password' => 'truongphong',
+        //     'team_id' =>  null
+        // ]);
 
         $role = Role::create(['name' => 'manager']);
      
         $permissions = Permission::pluck('id','id')->all();
    
         $role->syncPermissions($permissions);
-        $user->assignRole([$role->id]);
+        // $user->assignRole([$role->id]);
 
 
-        $user = User::create([
-            'first_name' => 'Test',
-            'last_name' => 'Test',
-            'username' => 'test',
-            'email' => 'test@gmail.com',
-            'status' => '1',
-            'email_verified_at' => now(),
-            'password' => 'test',
-            'team_id' =>  null
-        ]);
+        // $user = User::create([
+        //     'first_name' => 'Test',
+        //     'last_name' => 'Test',
+        //     'username' => 'test',
+        //     'email' => 'test@gmail.com',
+        //     'status' => '1',
+        //     'email_verified_at' => now(),
+        //     'password' => 'test',
+        //     'team_id' =>  null
+        // ]);
 
         // $role = Role::create(['name' => 'manager']);
 
@@ -109,7 +117,7 @@ class AdminSeeder extends Seeder
         $permissions = Permission::pluck('id','id')->all();
    
         $role->syncPermissions($permissions);
-        $user->assignRole([$manager]);
+        // $user->assignRole([$manager]);
 
 
         // --------------------------------------

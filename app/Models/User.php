@@ -60,6 +60,7 @@ class User extends Authenticatable
         'team_id',
         'image',
         'level',
+        'flag_change_pass'
     ];
 
     /**

@@ -18,76 +18,7 @@
                 <button type="button" class="btn btn-primary mb-2" id="add-question" onClick="addQuestion()">Thêm</button>
                 <a role="button" href="{{route('contest.law.confirm', request()->route('id'))}}" target="_blank" class="ms-2"><i style="font-size: 2rem;" class="bi bi-eye d-inline-block"></i></a>
                 <div id="content">
-                @foreach($data as $key => $item)
-                <div class="accordion mt-2" id="question{{$item->question_id}}">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne{{$item->question_id}}" aria-expanded="true" aria-controls="collapseOne">
-                            <span class="remove" onClick="remove(this)"><i class="bi bi-x-lg"></i></span>
-                                <strong class="w-100 text-center">CÂU HỎI <span class="title">{{$item->question_id}}</span>:</strong>
-                            </div>
-                        </h2>
-                        <div id="collapseOne{{$item->question_id}}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#question{{$item->question_id}}">
-                            <div class="accordion-body">
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control question_name" placeholder="Nhập câu hỏi" style="height: 100px;">{{ $item->question_name }}</textarea>
-                                </div>
-                                <hr class="m-0 mb-2">
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" id="gridRadios{{$item->question_id}}1" name="answer{{$item->question_id}}" value="A"{{ ($item->answer=="A")? "checked" : "" }}>
-                                    <label class="form-check-label w-100" for="gridRadios{{$item->question_id}}1">
-                                        <div class="input-group">
-                                            <span class="input-group-text">A</span><textarea class="form-control answer_a" style="height:30px;">{{ $item->a }}</textarea>
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" id="gridRadios{{$item->question_id}}2" name="answer{{$item->question_id}}" value="B" {{ ($item->answer=="B")? "checked" : "" }}>
-                                    <label class="form-check-label w-100" for="gridRadios{{$item->question_id}}2">
-                                        <div class="input-group">
-                                            <span class="input-group-text">B</span><textarea class="form-control answer_b" style="height:30px;">{{ $item->b }}</textarea>
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" id="gridRadios{{$item->question_id}}3" name="answer{{$item->question_id}}" value="C" {{ ($item->answer=="C")? "checked" : "" }}>
-                                    <label class="form-check-label w-100" for="gridRadios{{$item->question_id}}3">
-                                        <div class="input-group">
-                                            <span class="input-group-text">C</span><textarea class="form-control answer_c" style="height:30px;">{{ $item->c }}</textarea>
-                                        </div>
-                                    </label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" id="gridRadios{{$item->question_id}}4" name="answer{{$item->question_id}}" value="D" {{ ($item->answer=="D")? "checked" : "" }}>
-                                    <label class="form-check-label w-100" for="gridRadios{{$item->question_id}}4">
-                                        <div class="input-group">
-                                            <span class="input-group-text">D</span><textarea class="form-control answer_d" style="height:30px;">{{ $item->d }}</textarea>
-                                        </div>
-                                    </label>
-                                </div>
-                                <hr class="m-0">
-                                <div class="row mb-3 mt-2">
-                                    <div class="col-sm-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input random" value="{{ $item->random }}" @if($item->random == 1) checked @endif type="checkbox" id="gridCheck{{$item->question_id}}1">
-                                            <label class="form-check-label" for="gridCheck{{$item->question_id}}1">
-                                                Ngẫu nhiên
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-check d-flex">
-                                            <label class="col-sm-4 col-form-label">Số điểm</label>
-                                            <input type="number" min="1" max="20" value="{{ $item->point }}" class="form-control point">
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="text-danger message mb-0"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
+                
                 </div>
                 <button type="button" class="btn btn-success mt-2 is-submit" >Xong</button>
                 @csrf

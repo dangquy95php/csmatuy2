@@ -10,7 +10,6 @@
 @endsection
 
 @section('content')
-
 <section class="section dashboard">
       <div class="row">
 
@@ -114,10 +113,10 @@
                     </div>
                     <div class="ps-3">
                       <h6>{{ $usersExitsInLawResult }}</h6>
-                      @if(\App\Models\LawResult::where('contest_id', $contest->id)->where('user_id', Auth::user()->id)->exists())
+                      @if(\App\Models\LawResult::where('contest_id', @$contest->id)->where('user_id', Auth::user()->id)->exists())
                         <a href="#" class="btn btn-danger btn-sm">Bạn đã thi</a>
                       @else
-                        <a href="{{ route('contest.law', $contest->id) }}" class="btn btn-primary btn-sm">Thi pháp luật</a>
+                        <a href="{{ route('contest.law', @$contest->id) }}" class="btn btn-primary btn-sm">Thi pháp luật</a>
                       @endif
                     </div>
                   </div>
@@ -646,6 +645,43 @@
         </div><!-- End Right side columns -->
        
       </div>
-    </section>
 
+      @if (Auth::user()->flag_change_pass == 0)
+      <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true" style="display: none;">
+        <form action="{{route('user.change-pass')}}" method="post">
+          @csrf
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thay đổi mật khẩu:</h5>
+              </div>
+              <div class="modal-body">
+                <div class="col-12 mt-1">
+                    <label for="inputPassword4" class="form-label">Nhập mật khẩu mới:</label>
+                    <input type="password" placeholder="Nhập mật khẩu mới" name="new_password" class="form-control" id="inputPassword4">
+                    @include('_partials.alert', ['field' => 'password'])
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="inputPassword10" class="form-label">Nhập lại mật khẩu:</label>
+                    <input type="password" placeholder="Nhập lại mật khẩu" name="password_confirmation" class="form-control" id="inputPassword10">
+                    @include('_partials.alert', ['field' => 'password_confirmation'])
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Xong</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      @endif
+</section>
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+    $(window).on('load', function() {
+      $('#basicModal').modal('show');
+    });
+</script>
+@endpush

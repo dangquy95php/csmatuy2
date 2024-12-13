@@ -78,6 +78,12 @@
                 <span>Trang cá nhân của tôi</span>
               </a>
             </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('user.change-pass') }}">
+                <i class="ri-lock-2-line"></i>
+                <span>Thay đổi mật khẩu</span>
+              </a>
+            </li>
             <!-- <li>
               <hr class="dropdown-divider">
             </li>

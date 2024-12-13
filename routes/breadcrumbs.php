@@ -28,6 +28,11 @@ Breadcrumbs::for('user.edit', function ($trail, $user) {
     $trail->push('Chỉnh sửa nhân viên '. $user->username, route('user.edit', $user->id));
 });
 
+Breadcrumbs::for('user.change-pass', function ($trail) {
+    $trail->push('Trang chủ', route('dashboard'));
+    $trail->push('Thay đổi mật khẩu', route('user.change-pass'));
+});
+
 Breadcrumbs::for('roles.list', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Danh sách Roles', route('roles.list'));

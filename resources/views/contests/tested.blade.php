@@ -37,6 +37,7 @@
                                         <th scope="col">Bộ phận</th>
                                         <th scope="col">Số điểm</th>
                                         <th scope="col">Dự đoán</th>
+                                        <th scope="col">Thời gian nộp bài</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,7 +58,15 @@
                                         <td>
                                             @foreach($predict as $item)
                                                 @if ($item->user_id == $items->id)
-                                                    {{ base64_decode($item->answer) }}
+                                                    {{ $item->answer }}
+                                                    @break;
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($lawResults as $item)
+                                                @if($item->user_id == $items->id)
+                                                    {{ $item->time }}
                                                     @break;
                                                 @endif
                                             @endforeach
@@ -109,6 +118,56 @@
                         </div>
                     </div>
                     <a href="{{ route('contest.export', $contest->id) }}" type="button" class="btn btn-success btn-sm mt-1">Xuất Excel</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th style="min-width: 100px" scope="col">Họ tên</th>
+                                <th style="min-width: 100px" scope="col">Bộ phận</th>
+                                @foreach($usersExitsInLawResult as $k => $items)
+                                    @foreach($items->answers as $kk => $item)
+                                        <th scope="col" style="min-width: 400px">
+                                            Câu: {{ $item->question_id }}: {{$item->question_name}}
+                                        </td>
+                                    @endforeach
+                                    @break;
+                                @endforeach
+                                <th style="min-width: 100px" scope="col">Dự đoán</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($usersExitsInLawResult as $k => $items)
+                            <tr>
+                                <th scope="row">{{++$k}}</th>
+                                <td>{{$items->last_name}} {{$items->first_name}}</td>
+                                <td>{{ $items->team->name }}</td>
+
+                                @foreach($items->answers as $kk => $item)
+                                @php
+                                $char = strtolower($item->answer);
+                                @endphp
+                                    <td class="{{ $item->$char ==  $item->answer1 ? 'text-danger' : '' }}">
+                                       {{ $item->answer1 }}
+                                    </td>
+                                @endforeach
+                                <td>
+                                    @foreach($predict as $item)
+                                        @if ($item->user_id == $items->id)
+                                            {{ $item->answer }}
+                                            @break;
+                                        @endif
+                                    @endforeach
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

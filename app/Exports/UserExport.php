@@ -28,7 +28,6 @@ class UserExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
             $object->name = $item->last_name .' '. $item->first_name;
             $object->email = $item->email;
             $object->department = $item->team->note;
-            $object->birth_day = $item->user_infor->ngay_sinh;
             $object->gender = $item->user_infor->gioi_tinh == 1 ? 'Nữ' : 'Nam';
 
             array_push($result, $object);

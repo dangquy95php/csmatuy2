@@ -23,7 +23,6 @@ class CreateLawQuestionsTable extends Migration
             $table->text('c');
             $table->text('d');
             $table->boolean('random')->default(0);
-            $table->boolean('status')->default(1);
             $table->integer('point')->default(1);           
             $table->char('answer', 2);
             $table->timestamps();

@@ -31,7 +31,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
     
     Route::get('/profile', 'UserController@profile')->name('user.profile');
     Route::post('/profile', 'UserController@postProfile');
+    Route::get('/change-pass', 'UserController@changePass')->name('user.change-pass');
+    Route::post('/change-pass', 'UserController@postChangePass');
+    
     Route::get('/list', 'UserController@list')->name('user.list');
+    Route::get('/list/log-password', 'UserController@listLogPassword')->name('user.list.log-password');
+    
     Route::get('/show', 'UserController@show')->name('user.show');
     Route::get('/create', 'UserController@create')->name('user.create');
     Route::post('/create', 'UserController@store')->name('user.store');
@@ -155,7 +160,7 @@ Route::group(['middleware' => ['auth', 'is_account_enabled']], function () {
     Route::group(['prefix' => 'contest'], function () {
         Route::get('/{id}/law/confirm', 'User\LawController@confirm')->name('contest.law.confirm');
         Route::post('/{id}/law/confirm', 'User\LawController@confirmPost');
-        Route::get('/{id}/law', 'User\LawController@law')->name('contest.law');
+        Route::get('/{id?}/law', 'User\LawController@law')->name('contest.law');
         Route::post('/{id}/law', 'User\LawController@lawPost');
         Route::get('/{id}/law/result', 'User\LawController@lawResult')->name('law.result');
 

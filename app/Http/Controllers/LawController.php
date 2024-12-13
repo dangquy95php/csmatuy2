@@ -75,9 +75,7 @@ class LawController extends Controller
 
     public function createQuestion($id, Request $request)
     {
-        $data = LawQuestions::where('contest_id', $id)->get();
-
-        return view('law.question.create', compact('data'));
+        return view('law.question.create');
     }
 
     public function createQuestionPost($id, Request $request)

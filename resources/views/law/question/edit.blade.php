@@ -15,7 +15,7 @@
    <div class="row">
         <div class="col-lg-6">
             <form id="form" class="form-floating mb-3" method="POST">
-                <button type="button" class="btn btn-primary mb-2" id="add-question" onClick="addQuestion()">Thêm câu hỏi</button>
+                <button type="button" class="btn btn-primary mb-2" id="add-question" onClick="addQuestion()">Thêm</button>
                 @if (!$isEyes)
                     <a role="button" href="{{route('contest.law.confirm', request()->route('id'))}}" target="_blank" class="ms-2"><i style="font-size: 2rem;" class="bi bi-eye d-inline-block"></i></a>
                 @endif

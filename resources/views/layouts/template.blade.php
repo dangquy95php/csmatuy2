@@ -31,7 +31,7 @@
     @stack('styles')
 </head>
 
-<body>
+<body class="{{request()->is('admin/gate/input') ? 'is-set-header' : ''}}">
 
     @include('layouts.header')
 

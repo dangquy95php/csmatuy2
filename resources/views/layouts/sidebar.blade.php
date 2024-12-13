@@ -29,7 +29,6 @@
           </li>
         </ul>
       </li><!-- End Forms Nav -->
-    @endrole
       
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/team/*') || request()->is('admin/team/*') ? '' : 'collapsed' }}" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
@@ -53,6 +52,7 @@
           </li> -->
         </ul>
       </li><!-- End Charts Nav -->
+    @endrole
 
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/list') ? '' : 'collapsed' }} " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -63,6 +63,9 @@
             <a href="{{ route('user.list') }}" class="{{ request()->is('admin/list') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Danh sách</span>
             </a>
+            <a href="{{ route('user.list.log-password') }}" class="{{ request()->is('admin/list/log-password') ? 'active' : '' }}">
+              <i class="bi bi-circle"></i><span>Danh sách mật khẩu</span>
+            </a>
           </li>
           <!-- <li>
             <a href="components-accordion.html">
@@ -71,7 +74,8 @@
           </li> -->
         </ul>
       </li><!-- End Components Nav -->
-
+      
+      @role('admin')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/gate/*') || request()->is('admin/gate/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="ri-ancient-gate-line"></i><span>Quản lý ra vào cổng</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -94,7 +98,6 @@
           </li>
         </ul>
       </li><!-- End Tables Nav -->
-      @role('admin')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/excel/*') || request()->is('admin/excel/*') ? '' : 'collapsed' }}" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
           <i class="ri-file-excel-2-line"></i><span>Excel</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -117,7 +120,6 @@
           </li> -->
         </ul>
       </li><!-- End Icons Nav -->
-      @endrole
 
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/permit/*') || request()->is('admin/permit/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav1" data-bs-toggle="collapse" href="#">
@@ -131,7 +133,9 @@
           </li>
         </ul>
       </li><!-- End Tables Nav -->
-
+      @endrole
+      
+      @role(['manager', 'admin'])
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/log/*') || request()->is('admin/log/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav2" data-bs-toggle="collapse" href="#">
           <i class="bx bxl-blogger"></i><span>Quản lý dữ liệu thay đổi</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -144,7 +148,9 @@
           </li>
         </ul>
       </li>
+      @endrole
 
+      @role('admin')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/email/*') || request()->is('admin/email/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav3" data-bs-toggle="collapse" href="#">
         <i class="bi bi-envelope"></i><span>Quản lý Email</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -182,7 +188,7 @@
           </li>
         </ul>
       </li>
-
+      @endrole
       <!-- <li class="nav-heading">Quản lý lịch nghỉ phép</li>
 
       <li class="nav-item">

@@ -36,11 +36,13 @@
     <div class="container">
 
       <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
-        <h1>SOS</h1>
         <h2>Bạn đã nộp bài thi! Xin vui lòng đợi công bố kết quả sau.</h2>
         <a class="btn" href="{{route('dashboard')}}">Quay về trang chủ</a>
-        <img src='{{ asset("storage/law/".Auth::user()->full_name.".png") }}' class="img-fluid py-5">
-        <div class="credits">
+        <img src='{{ asset("storage/law/".Auth::user()->full_name.".png") }}' class="img-fluid pt-5 pb-2">
+        <a href='{{ asset("storage/law/".Auth::user()->full_name.".png") }}' class="text-danger text-decoration-underline">
+          <b>Tải ảnh</b>
+        </a>
+        <div class="credits mt-5">
         Thiết kế bởi <a href="#">Cơ sở cai nghiện ma túy số 2</a>
         </div>
       </section>
