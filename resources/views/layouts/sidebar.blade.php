@@ -63,9 +63,11 @@
             <a href="{{ route('user.list') }}" class="{{ request()->is('admin/list') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Danh sách</span>
             </a>
+            @role('admin')
             <a href="{{ route('user.list.log-password') }}" class="{{ request()->is('admin/list/log-password') ? 'active' : '' }}">
               <i class="bi bi-circle"></i><span>Danh sách mật khẩu</span>
             </a>
+            @endrole
           </li>
           <!-- <li>
             <a href="components-accordion.html">

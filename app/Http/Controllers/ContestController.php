@@ -169,7 +169,7 @@ class ContestController extends Controller
             ->orderByRaw('CONVERT(answers.question_id, SIGNED) ASC')
             ->select('answers.*', 'answers.answer as answer1', 'law_questions.question_id as id_question', 'law_questions.question_name as name_question',
             'law_questions.a', 'law_questions.b', 'law_questions.c', 'law_questions.d', 'law_questions.point', 'law_questions.answer');
-        }])->get()->sortBy('answers.created_at');;
+        }])->get()->sortBy('answers.created_at');
         
         // $queries = \DB::getQueryLog();
 
