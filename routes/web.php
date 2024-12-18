@@ -110,10 +110,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'is_account_enabled'
         Route::post('/{id}/edit', 'LogController@update')->name('log.update');
         Route::get('/{id}/destroy', 'LogController@destroy')->name('log.destroy');
     });
-    Route::group(['prefix' => 'email'], function () {
-        Route::get('/index', 'EmailController@index')->name('email.index');
-    });
-
+   
     Route::group(['prefix' => 'department'], function () {
         Route::get('/index', 'DepartmentController@index')->name('department.index');
         Route::get('/create', 'DepartmentController@create')->name('department.create');
@@ -165,6 +162,14 @@ Route::group(['middleware' => ['auth', 'is_account_enabled']], function () {
         Route::get('/{id}/law/result', 'User\LawController@lawResult')->name('law.result');
 
     });
+
+    Route::group(['prefix' => 'email'], function () {
+        Route::get('/index', 'User\EmailController@index')->name('email.index');
+        Route::get('/create', 'User\EmailController@create')->name('email.create');
+        Route::post('/create', 'User\EmailController@postCreate');
+
+        Route::get('/sent', 'User\EmailController@sent')->name('email.sent');
+    });
 });
 
 Route::get('/', 'User\HomeController@index');
@@ -181,3 +186,7 @@ Route::get('/', 'User\HomeController@index');
 //     Route::resource('permissions', PermissionController::class);
 //     Route::resource('posts', PostController::class);
 // });
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

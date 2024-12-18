@@ -113,4 +113,9 @@ class PermitController extends Controller
 
         return redirect()->route('permit.index');
     }
+
+    public function register(Request $request)
+    {
+
+    }
 }

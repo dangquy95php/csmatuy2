@@ -163,11 +163,21 @@ Breadcrumbs::for('email.index', function ($trail) {
     $trail->push('Danh sách Email', route('email.index'));
 });
 
+Breadcrumbs::for('email.create', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Gửi mail', route('email.create'));
+});
+
+Breadcrumbs::for('email.sent', function ($trail) {
+    $trail->parent('dashboard');
+    $trail->push('Gửi mail', route('email.sent'));
+    $trail->push('Dach sách mail đã gửi', route('email.sent'));
+});
+
 Breadcrumbs::for('system-error.index', function ($trail) {
     $trail->parent('dashboard');
     $trail->push('Danh sách hệ thống lỗi', route('system-error.index'));
 });
-
 
 
 // Breadcrumbs::for('user.edit', function ($trail) {
