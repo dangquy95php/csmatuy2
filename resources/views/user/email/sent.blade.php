@@ -23,23 +23,20 @@
                 <div class="menu-bar">
                   <ul class="menu-items">
                     <li class="compose mb-3 text-white"><a href="{{ route('email.create') }}" class="btn btn-primary btn-block text-white"><i class="bi bi-pen-fill"></i><b>Soạn thư</b></a></li>
-                    <li class="{{ request()->is('email/index') ? 'active' : '' }}"><a href="#"><i class="mdi mdi-email-outline"></i> Hộp thư đến</a><span class="badge rounded-pill bg-success">8</span></li>
+                    <li class="{{ request()->is('email/index') ? 'active' : '' }}"><a href="{{route('email.index')}}"><i class="mdi mdi-email-outline"></i> Hộp thư đến</a></li>
                     <li class="{{ request()->is('email/sent') ? 'active' : '' }}"><a href="{{route('email.sent')}}"><i class="mdi mdi-share"></i> Thư đã gửi</a></li>
-                    <li><a href="#"><i class="mdi mdi-file-outline"></i> Draft</a><span class="badge rounded-pill bg-warning">4</span></li>
-                    <li><a href="#"><i class="mdi mdi-upload"></i> Outbox</a><span class="badge rounded-pill bg-danger">3</span></li>
-                    <li><a href="#"><i class="mdi mdi-star-outline"></i> Starred</a></li>
-                    <li><a href="#"><i class="mdi mdi-delete"></i> Trash</a></li>
+                    <li><a href="#"><i class="mdi mdi-star-outline"></i> Lưu trữ</a><span class="badge rounded-pill bg-warning">4</span></li>
+                    <li><a href="#"><i class="mdi mdi-delete"></i> Thùng rác</a><span class="badge rounded-pill bg-danger">3</span></li>
                   </ul>
                 </div>
               </div>
               <div class="mail-list-container col-md-3 pt-4 pb-4 border-end bg-white">
-                @foreach($datas as $k => $items)
+              @foreach($datas as $items)
                 <div class="mail-list justify-content-between new_mail">
-                  <div class="content">
-                    <p class="sender-name text-decoration-underline" role="button" data-bs-toggle="modal" data-bs-target="#basicModal{{ str_replace(' ', '', $k) }}">Xem danh sách người nhận</p>
-                    <p class="message_text" att="{{ str_replace(' ', '', $k) }}">{{ $k }}</p>
-
-                      <div class="modal fade" id="basicModal{{ str_replace(' ', '', $k) }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="content">
+                    <p class="sender-name text-decoration-underline" role="button" data-bs-toggle="modal" data-bs-target="#basicModal{{$items->id}}">Xem danh sách người nhận <i class="ri-user-add-line"></i></p>
+                    <p class="message_text" att="{{$items->id}}" email_id="{{$items->email_id}}">{{$items->title}}</p>
+                      <div class="modal fade" id="basicModal{{$items->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -54,18 +51,26 @@
                                     <th scope="col">Họ tên</th>
                                     <th scope="col">Phòng/Khu</th>
                                     <th scope="col">Trạng thái</th>
-                                    <th scope="col">Ngày nhận</th>
+                                    <th scope="col">Thời gian xem</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  @foreach($items as $kk => $item)
-                                  <tr>
-                                    <th scope="row">{{ ++$kk }}</th>
-                                    <td>{{ $item->user->last_name }} {{ $item->user->first_name }}</td>
-                                    <td>{{ $item->team->note }}</td>
-                                    <td>{!! empty($item->seen) ? '<span class="badge bg-primary">Chưa xem</span>' : '<span class="badge bg-primary">Đã xem</span>' !!}</td>
-                                    <td>{{ $item->created_at }}</td>
-                                  </tr>
+                                  @php
+                                  $id = 1;
+                                  @endphp
+                                  @foreach($items->sub_email_infor as $kk => $item)
+                                    @if($item->user_id !== auth()->user()->id)
+                                    <tr>
+                                      <th scope="row">{{ $id }}</th>
+                                      <td>{{ $item->user->last_name }} {{ $item->user->first_name }}</td>
+                                      <td>{{ $item->team->note }}</td>
+                                      <td>{!! empty($item->seen) ? '<span class="badge bg-primary">Chưa xem</span>' : '<span class="badge bg-danger">Đã xem</span>' !!}</td>
+                                      <td>{{ $item->time_seen }}</td>
+                                    </tr>
+                                    @php
+                                    ++$id;
+                                    @endphp
+                                    @endif
                                   @endforeach
                                 </tbody>
                               </table>
@@ -82,10 +87,10 @@
                   </div>
                 </div>
                 @endforeach
-                           </div>
-              <div class="mail-view d-none d-md-block col-md-9 col-lg-7 bg-white">
+              </div>
+              <div class="mail-view d-md-block col-md-9 col-lg-7 bg-white">
               @foreach($datas as $k => $items)
-                <div class="row d-none" id="{{ str_replace(' ', '', $k) }}">
+                <div class="row d-none" id="{{$items->id}}">
                   <div class="col-md-12 mb-4 mt-4">
                     <div class="btn-toolbar">
                       <div class="btn-group">
@@ -98,16 +103,17 @@
                     <div class="sender-details">
                       <div class="details">
                         <p class="msg-subject">
-                          {!! $items[0]->title !!}
+                          {{ $items->title }}
                         </p>
                       </div>
                     </div>
                     
                     <div class="message-content">
-                      @if (isset($items[0]))
-                        {!! $items[0]->content !!}
+                      @if (isset($items->content))
+                        {!! $items->content !!}
                       @endif
                     </div>
+                    <p class="d-flex justify-content-end">Mail được gửi từ ngày:<b> {{$items->created_at}}</b></p>
                   </div>
                 </div>
                 @endforeach

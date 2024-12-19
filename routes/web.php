@@ -169,6 +169,9 @@ Route::group(['middleware' => ['auth', 'is_account_enabled']], function () {
         Route::post('/create', 'User\EmailController@postCreate');
 
         Route::get('/sent', 'User\EmailController@sent')->name('email.sent');
+        Route::post('/update-seen', 'User\EmailController@updateSeen')->name('email.update_seen');
+        Route::get('/{id}/delete', 'User\EmailController@delete')->name('email.delete');
+        Route::get('/trash', 'User\EmailController@trash')->name('email.trash');
     });
 });
 

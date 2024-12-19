@@ -48,6 +48,7 @@ class AdminSeeder extends Seeder
             'first_name' => 'admin',
             'last_name' => 'admin',
             'username' => 'admin',
+            'level' => 0,
             'email' => 'admin@gmail.com',
             'status' => '1',
             'email_verified_at' => now(),

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Eamil;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\EmailInfor;
 
 class Email extends Model
 {
@@ -20,24 +21,21 @@ class Email extends Model
     protected $fillable = [
         'title',
         'content',
-        'seen',
-        'team_id',
         'auth_id',
-        'user_id'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class);
-    }
 
     public function auth()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function email_infor()
+    {
+        return $this->hasOne(EmailInfor::class);
+    }
+    
+    public function sub_email_infor()
+    {
+        return $this->hasMany(EmailInfor::class, 'email_id', 'id')->with(['user', 'team']);
     }
 }

@@ -18,9 +18,6 @@ class CreateEmailsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->boolean('seen')->nullable();
-            $table->integer('team_id')->references('id')->on('teams')->onDelete('cascade');
-            $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('auth_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
