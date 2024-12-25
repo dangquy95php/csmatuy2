@@ -34,10 +34,10 @@
                         <div class="col-3 mt-3">
                             <input class="form-control my-3" id="attachment" accept=".rar, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" type="file" name="file[]" id="formFile" multiple>
                             <p id="files-area">
-	<span id="filesList">
-		<span id="files-names"></span>
-	</span>
-</p>
+                                <span id="filesList">
+                                    <span id="files-names"></span>
+                                </span>
+                            </p>
                             @include('_partials.alert', ['field' => 'file'])
                         </div>
                         

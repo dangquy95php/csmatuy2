@@ -31,7 +31,9 @@ class EmailController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = EmailInfor::where('user_id', Auth::user()->id)->where('flag', EmailInfor::NEW)->with(['email'])->orderBy('created_at', 'DESC')->skip(0)->take(20)->get();
+        $datas = EmailInfor::where('user_id', Auth::user()->id)->where('flag', EmailInfor::NEW)->with(['email' => function($query) {
+            $query->with('auth');
+        }])->orderBy('created_at', 'DESC')->skip(0)->take(20)->get();
 
         return view('user.email.index', compact('datas'));
     }
@@ -138,7 +140,7 @@ class EmailController extends Controller
      */
     public function sent(Request $request)
     {
-        $datas = Email::where('auth_id', Auth::user()->id)->with(['sub_email_infor'])->get();
+        $datas = Email::where('auth_id', Auth::user()->id)->with(['sub_email_infor', 'auth'])->get();
 
         // $datas = Email::where('auth_id', Auth::user()->id)->orderBy('created_at')->with(['team', 'user', 'auth'])->get();
         // $datas = $datas->groupBy('title');
@@ -179,7 +181,9 @@ class EmailController extends Controller
 
     public function trash(Request $request)
     {
-        $datas = EmailInfor::where('user_id', Auth::user()->id)->where('flag', EmailInfor::TRASH)->with(['email'])->orderBy('created_at', 'DESC')->skip(0)->take(20)->get();
+        $datas = EmailInfor::where('user_id', Auth::user()->id)->where('flag', EmailInfor::TRASH)->with(['email' => function($query) {
+            $query->with('auth');
+        }])->orderBy('created_at', 'DESC')->skip(0)->take(20)->get();
 
         return view('user.email.trash', compact('datas'));
     }

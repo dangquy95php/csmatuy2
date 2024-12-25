@@ -97,6 +97,7 @@
                         <p class="msg-subject">
                           {{ $items->title }}
                         </p>
+                        <p class="sender-email"> {{ $items->auth->last_name }} {{ $items->auth->first_name }} <a href="#">{{ $items->auth->email }}</a> &nbsp;<i class="mdi mdi-account-multiple-plus"></i></p>
                       </div>
                     </div>
                     <div class="message-content">
@@ -423,7 +424,7 @@
 
 /* Message Content */
 .email-wrapper .message-body .sender-details {
-  padding: 20px 15px 0;
+  padding: 10px 15px 0;
   border-bottom: 1px solid #e9e9e9;
   display: -webkit-flex;
   display: flex;

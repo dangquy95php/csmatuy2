@@ -90,10 +90,9 @@
               <div class="mail-view d-md-block col-md-9 col-lg-7 bg-white">
               @foreach($datas as $k => $items)
                 <div class="row d-none" id="{{$items->id}}">
-                  <div class="col-md-12 mb-4 mt-4">
-                    <div class="btn-toolbar">
+                  <div class="col-md-12 mb-2 mt-4">
+                    <div class="btn-toolbar justify-content-end">
                       <div class="btn-group">
-                        <a href="{{route('email.index')}}" class="btn btn-sm btn-outline-secondary"><i class="mdi mdi-reply text-primary mr-1"></i>Phản hồi</a>
                         <a href="{{route('email.delete', $items->id)}}" class="btn btn-sm btn-outline-secondary"><i class="mdi mdi-delete text-primary mr-1"></i>Xóa</a>
                       </div>
                     </div>
@@ -104,9 +103,10 @@
                         <p class="msg-subject">
                           {{ $items->email->title }}
                         </p>
+                        <p class="sender-email"> {{ $items->email->auth->last_name }} {{ $items->email->auth->first_name }} <a href="#">{{ $items->email->auth->email }}</a> &nbsp;<i class="mdi mdi-account-multiple-plus"></i></p>
                       </div>
                     </div>
-                    
+                   
                     <div class="message-content">
                       @if (isset($items->email->content))
                         {!! $items->email->content !!}
@@ -435,7 +435,7 @@
 
 /* Message Content */
 .email-wrapper .message-body .sender-details {
-  padding: 20px 15px 0;
+  padding: 10px 15px 0;
   border-bottom: 1px solid #e9e9e9;
   display: -webkit-flex;
   display: flex;

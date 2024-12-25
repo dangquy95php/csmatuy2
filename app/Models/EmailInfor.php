@@ -46,4 +46,10 @@ class EmailInfor extends Model
     {
         return $this->belongsTo(Email::class, 'email_id', 'id')->with('sub_email_infor');
     }
+
+    public function auth()
+    {
+        return $this->belongsTo(User::class, 'auth_id', 'id');
+    }
+
 }
