@@ -70,7 +70,6 @@ class EmailController extends Controller
                     }
                 },
             ],
-            'content' => 'required|min:5',
             'file' => 'required|max:10000'
             // 'file.*' => 'mimetypes:jpeg,png,doc,docs,pdf,rar',
             // 'file' => 'required||mimes:jpeg,png,doc,docs,pdf,rar',
@@ -80,8 +79,6 @@ class EmailController extends Controller
             'title.required' => 'Tiêu đề mail của bạn chưa được nhập',
             'title.min' => 'Tiêu đề mail của bạn quá ngắn',
             'title.max' => 'Tiêu đề mail của bạn quá dài',
-            'content.required' => 'Nội dung của bạn chưa được nhập',
-            'content.min' => 'Nội dung của bạn nhập quá ngắn. Vui lòng nhập thêm',
             'file.required' => 'File chưa được chọn',
             // 'file.mimes' => 'Định dạng tập tin chưa đúng.',
             'file.max' => 'Dung lượng tập tin quá lớn'

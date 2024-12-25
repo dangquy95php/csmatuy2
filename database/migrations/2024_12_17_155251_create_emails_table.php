@@ -18,7 +18,7 @@ class CreateEmailsTable extends Migration
             $table->id();
             $table->string('title');
             $table->json('file');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->integer('auth_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
