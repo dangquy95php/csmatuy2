@@ -348,7 +348,6 @@
 /* Mail List Container */
 .email-wrapper .mail-list-container {
   border-left: 1px solid #e9e9e9;
-  height: 100%;
   padding-left: 0;
   padding-right: 0;
 }
