@@ -10,6 +10,7 @@ use App\Models\Email;
 use App\Models\EmailInfor;
 use Brian2694\Toastr\Facades\Toastr;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class EmailController extends Controller
 {
@@ -25,7 +26,7 @@ class EmailController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+         *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -69,7 +70,11 @@ class EmailController extends Controller
                     }
                 },
             ],
-            'content' => 'required|min:10',
+            'content' => 'required|min:5',
+            'file' => 'required|max:10000'
+            // 'file.*' => 'mimetypes:jpeg,png,doc,docs,pdf,rar',
+            // 'file' => 'required||mimes:jpeg,png,doc,docs,pdf,rar',
+        // .rar, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*
         ], [
             'auth.required' => 'Vui lòng chọn người nhận',
             'title.required' => 'Tiêu đề mail của bạn chưa được nhập',
@@ -77,14 +82,29 @@ class EmailController extends Controller
             'title.max' => 'Tiêu đề mail của bạn quá dài',
             'content.required' => 'Nội dung của bạn chưa được nhập',
             'content.min' => 'Nội dung của bạn nhập quá ngắn. Vui lòng nhập thêm',
+            'file.required' => 'File chưa được chọn',
+            // 'file.mimes' => 'Định dạng tập tin chưa đúng.',
+            'file.max' => 'Dung lượng tập tin quá lớn'
         ]);
 
         \DB::beginTransaction();
         try {
+            $files = $request->file('file');
+            $dataFile = [];
+
+            foreach($files as $file) {
+                $unix_timestamp = now()->timestamp;
+                $fileName = Auth::user()->id . '_' . $unix_timestamp;
+                
+                Storage::disk('local')->put('public/email/'. $fileName .'_'. $file->getClientOriginalName(), file_get_contents($file));
+                array_push($dataFile, $fileName .'_'. $file->getClientOriginalName());
+            }
+
             $email = Email::create([
                 'title' => $request->input('title'),
                 'content' => $request->input('content'),
-                'auth_id' => Auth::user()->id
+                'auth_id' => Auth::user()->id,
+                'file'  => json_encode($dataFile)
             ]);
 
             $datas = $request->input('auth');
@@ -149,7 +169,7 @@ class EmailController extends Controller
     public function delete(Request $request, $id)
     {
         try {
-            $mail = EmailInfor::find($id);
+            $mail = EmailInfor::where('id', $id)->where('user_id', Auth::user()->id)->first();
             $mail->flag = EmailInfor::TRASH;
             $mail->save();
         } catch (\Exception $ex) {

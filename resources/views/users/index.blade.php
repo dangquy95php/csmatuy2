@@ -51,7 +51,7 @@
                     @foreach ($data as $key => $user)
                     <tr>
                         <th scope="row">{{ $key + 1 }}</th>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->last_name }} {{ $user->first_name }}</td>
                         <td>{{ $user->username }}</td>
                         <td>
                             @foreach($user->user_role as $k => $value)

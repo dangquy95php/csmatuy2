@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Contest;
 use App\Models\Answer;
 use App\Models\LawResult;
+use App\Models\EmailInfor;
 
 class DashboardController extends Controller
 {
@@ -22,13 +23,14 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
+        $countNewMail = EmailInfor::where('user_id', Auth::user()->id)->where('seen', EmailInfor::NOT_SEEN)->count();
         $contest = Contest::where('status', Contest::ENABLE)->orderBy('created_at', 'DESC')->select('id', 'free_contest')->first();
         $usersExitsInLawResult = '';
         if ($contest) {
             $usersExitsInLawResult = LawResult::where('contest_id', $contest->id)->whereNotIn('user_id', json_decode($contest->free_contest))->count();
         }
 
-        return view('index', compact('usersExitsInLawResult', 'contest'));
+        return view('index', compact('usersExitsInLawResult', 'contest', 'countNewMail'));
     }
 
     public function logout(Request $request)

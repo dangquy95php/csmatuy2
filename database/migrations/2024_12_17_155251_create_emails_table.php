@@ -17,6 +17,7 @@ class CreateEmailsTable extends Migration
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->json('file');
             $table->text('content');
             $table->integer('auth_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

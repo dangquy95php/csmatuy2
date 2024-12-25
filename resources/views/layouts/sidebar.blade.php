@@ -152,18 +152,6 @@
       </li>
       @endrole
 
-      <li class="nav-item">
-        <a class="nav-link {{ request()->is('email/*') || request()->is('email/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav3" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-envelope"></i><span>Quản lý Email</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav3" class="nav-content collapse {{ request()->is('email/*') || request()->is('email/*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('email.index') }}" class="{{ request()->is('email/index') ? 'active' : '' }}">
-              <i class="bi bi-circle"></i><span>Danh sách email</span>
-            </a>
-          </li>
-        </ul>
-      </li>
       @role('admin')
       <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/contest/*') || request()->is('admin/contest/*') ? '' : 'collapsed' }}" data-bs-target="#tables-nav4" data-bs-toggle="collapse" href="#">

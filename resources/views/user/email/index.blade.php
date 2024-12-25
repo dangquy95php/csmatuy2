@@ -23,65 +23,65 @@
                 <div class="menu-bar">
                   <ul class="menu-items">
                     <li class="compose mb-3 text-white"><a href="{{ route('email.create') }}" class="btn btn-primary btn-block text-white"><i class="bi bi-pen-fill"></i><b>Soạn thư</b></a></li>
-                    <li class="{{ request()->is('email/index') ? 'active' : '' }}"><a href="{{route('email.index')}}"><i class="mdi mdi-email-outline"></i> Hộp thư đến</a><span class="badge rounded-pill bg-success">{{count($datas)}}</span></li>
+                    <li class="{{ request()->is('email/index') ? 'active' : '' }}"><a href="{{route('email.index')}}"><i class="mdi mdi-email-outline"></i> Hộp thư đến</a></li>
                     <li class="{{ request()->is('email/sent') ? 'active' : '' }}"><a href="{{route('email.sent')}}"><i class="mdi mdi-share"></i> Thư đã gửi</a></li>
-                    <li><a href="#"><i class="mdi mdi-star-outline"></i> Lưu trữ</a><span class="badge rounded-pill bg-warning">4</span></li>
-                    <li class="{{ request()->is('email/trash') ? 'active' : '' }}"><a href="{{route('email.trash')}}"><i class="mdi mdi-delete"></i> Thùng rác</a><span class="badge rounded-pill bg-danger">3</span></li>
+                    <li class="{{ request()->is('email/trash') ? 'active' : '' }}"><a href="{{route('email.trash')}}"><i class="mdi mdi-delete"></i> Thùng rác</a></li>
                   </ul>
                 </div>
               </div>
               <div class="mail-list-container col-md-3 pt-4 pb-4 border-end bg-white">
               @foreach($datas as $items)
                 <div class="mail-list justify-content-between {{ $items->seen == \App\Models\EmailInfor::SEEN ? 'new_mail': ''}}" seen="{{ $items->seen == \App\Models\EmailInfor::SEEN ? '1': ''}}">
-                <div class="content">
-                    <p class="sender-name text-decoration-underline" role="button" data-bs-toggle="modal" data-bs-target="#basicModal{{$items->id}}">Xem danh sách người nhận <i class="ri-user-add-line"></i></p>
-                    <p class="message_text" att="{{$items->id}}" email_id="{{$items->email_id}}">{{$items->email->title}}</p>
-                      <div class="modal fade" id="basicModal{{$items->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">DANH SÁCH NGƯỜI NHẬN</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <table class="table">
-                                <thead>
-                                  <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Họ tên</th>
-                                    <th scope="col">Phòng/Khu</th>
-                                    <th scope="col">Trạng thái</th>
-                                    <th scope="col">Thời gian xem</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  @php
-                                  $id = 1;
-                                  @endphp
-                                  @foreach($items->email->sub_email_infor as $kk => $item)
-                                    @if($item->user_id !== auth()->user()->id)
+                  <div class="content">
+                      <p class="sender-name text-decoration-underline" role="button" data-bs-toggle="modal" data-bs-target="#basicModal{{$items->id}}">Xem danh sách người nhận <i class="ri-user-add-line"></i></p>
+                      <p class="message_text" att="{{$items->id}}" email_id="{{$items->email_id}}">{{$items->email->title}}</p>
+                        <div class="modal fade" id="basicModal{{$items->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">DANH SÁCH NGƯỜI NHẬN</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <table class="table">
+                                  <thead>
                                     <tr>
-                                      <th scope="row">{{ $id }}</th>
-                                      <td>{{ $item->user->last_name }} {{ $item->user->first_name }}</td>
-                                      <td>{{ $item->team->note }}</td>
-                                      <td>{!! empty($item->seen) ? '<span class="badge bg-primary">Chưa xem</span>' : '<span class="badge bg-danger">Đã xem</span>' !!}</td>
-                                      <td>{{ $item->time_seen }}</td>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Họ tên</th>
+                                      <th scope="col">Phòng/Khu</th>
+                                      <th scope="col">Trạng thái</th>
+                                      <th scope="col">Thời gian xem</th>
                                     </tr>
+                                  </thead>
+                                  <tbody>
                                     @php
-                                    ++$id;
+                                    $id = 1;
                                     @endphp
-                                    @endif
-                                  @endforeach
-                                </tbody>
-                              </table>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    @foreach($items->email->sub_email_infor as $kk => $item)
+                                      @if($item->user_id !== auth()->user()->id)
+                                      <tr>
+                                        <th scope="row">{{ $id }}</th>
+                                        <td>{{ $item->user->last_name }} {{ $item->user->first_name }}</td>
+                                        <td>{{ $item->team->note }}</td>
+                                        <td>{!! empty($item->seen) ? '<span class="badge bg-primary">Chưa xem</span>' : '<span class="badge bg-danger">Đã xem</span>' !!}</td>
+                                        <td>{{ $item->time_seen }}</td>
+                                      </tr>
+                                      @php
+                                      ++$id;
+                                      @endphp
+                                      @endif
+                                    @endforeach
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                              </div>
                             </div>
                           </div>
-                      </div>
-                    </div>
+                        </div>
                   </div>
+                  
                   <div class="details">
                     <i class="mdi mdi-star-outline"></i>
                   </div>
@@ -92,10 +92,9 @@
               @foreach($datas as $k => $items)
                 <div class="row d-none" id="{{$items->id}}">
                   <div class="col-md-12 mb-4 mt-4">
-                    <div class="btn-toolbar">
+                    <div class="btn-toolbar justify-content-end">
                       <div class="btn-group">
-                        <a href="{{route('email.index')}}" class="btn btn-sm btn-outline-secondary"><i class="mdi mdi-reply text-primary mr-1"></i>Phản hồi</a>
-                        <a href="{{route('email.delete', $items->id)}}" class="btn btn-sm btn-outline-secondary"><i class="mdi mdi-delete text-primary mr-1"></i>Xóa</a>
+                        <a href="{{route('email.delete', $items->id)}}" onclick="return confirm('Bạn có muốn xóa mail này không?');" class="btn btn-sm btn-outline-secondary"><i class="mdi mdi-delete text-primary mr-1"></i>Xóa</a>
                       </div>
                     </div>
                   </div>
@@ -113,6 +112,22 @@
                         {!! $items->email->content !!}
                       @endif
                     </div>
+                    @foreach(json_decode($items->email->file) as $file)
+                    <div class="attachments-sections">
+                      <ul>
+                          <li>
+                            <div class="thumb"><i class="ri-file-4-line"></i></div>
+                            <div class="details">
+                                <p class="file-name">{{ $file }}</p>
+                                <div class="buttons">
+                                  <!-- <p class="file-size">678Kb</p> -->
+                                  <a href="{{ url('storage/email/'. $file) }}" class="view">Xem</a>
+                                </div>
+                            </div>
+                          </li>
+                      </ul>
+                    </div>
+                    @endforeach
                     <p class="d-flex justify-content-end">Mail được gửi từ ngày:<b> {{$items->email->created_at}}</b></p>
                   </div>
                 </div>

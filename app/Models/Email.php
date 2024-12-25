@@ -22,6 +22,7 @@ class Email extends Model
         'title',
         'content',
         'auth_id',
+        'file'
     ];
 
     public function auth()

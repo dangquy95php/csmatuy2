@@ -25,8 +25,7 @@
                     <li class="compose mb-3 text-white"><a href="{{ route('email.create') }}" class="btn btn-primary btn-block text-white"><i class="bi bi-pen-fill"></i><b>Soạn thư</b></a></li>
                     <li class="{{ request()->is('email/index') ? 'active' : '' }}"><a href="{{route('email.index')}}"><i class="mdi mdi-email-outline"></i> Hộp thư đến</a></li>
                     <li class="{{ request()->is('email/sent') ? 'active' : '' }}"><a href="{{route('email.sent')}}"><i class="mdi mdi-share"></i> Thư đã gửi</a></li>
-                    <li><a href="#"><i class="mdi mdi-star-outline"></i> Lưu trữ</a><span class="badge rounded-pill bg-warning">4</span></li>
-                    <li class="{{ request()->is('email/trash') ? 'active' : '' }}"><a href="{{route('email.trash')}}"><i class="mdi mdi-delete"></i> Thùng rác</a><span class="badge rounded-pill bg-danger">{{count($datas)}}</span></li>
+                    <li class="{{ request()->is('email/trash') ? 'active' : '' }}"><a href="{{route('email.trash')}}"><i class="mdi mdi-delete"></i> Thùng rác</a></li>
                   </ul>
                 </div>
               </div>

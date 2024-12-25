@@ -25,8 +25,7 @@
                     <li class="compose mb-3 text-white"><a href="{{ route('email.create') }}" class="btn btn-primary btn-block text-white"><i class="bi bi-pen-fill"></i><b>Soạn thư</b></a></li>
                     <li class="{{ request()->is('email/index') ? 'active' : '' }}"><a href="{{route('email.index')}}"><i class="mdi mdi-email-outline"></i> Hộp thư đến</a></li>
                     <li class="{{ request()->is('email/sent') ? 'active' : '' }}"><a href="{{route('email.sent')}}"><i class="mdi mdi-share"></i> Thư đã gửi</a></li>
-                    <li><a href="#"><i class="mdi mdi-star-outline"></i> Lưu trữ</a><span class="badge rounded-pill bg-warning">4</span></li>
-                    <li><a href="#"><i class="mdi mdi-delete"></i> Thùng rác</a><span class="badge rounded-pill bg-danger">3</span></li>
+                    <li class="{{ request()->is('email/trash') ? 'active' : '' }}"><a href="{{route('email.trash')}}"><i class="mdi mdi-delete"></i> Thùng rác</a></li>
                   </ul>
                 </div>
               </div>
@@ -91,14 +90,7 @@
               <div class="mail-view d-md-block col-md-9 col-lg-7 bg-white">
               @foreach($datas as $k => $items)
                 <div class="row d-none" id="{{$items->id}}">
-                  <div class="col-md-12 mb-4 mt-4">
-                    <div class="btn-toolbar">
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary"><i class="mdi mdi-reply text-primary mr-1"></i>Phản hồi</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary"><i class="mdi mdi-delete text-primary mr-1"></i>Xóa</button>
-                      </div>
-                    </div>
-                  </div>
+                 
                   <div class="message-body">
                     <div class="sender-details">
                       <div class="details">
@@ -107,12 +99,27 @@
                         </p>
                       </div>
                     </div>
-                    
                     <div class="message-content">
                       @if (isset($items->content))
                         {!! $items->content !!}
                       @endif
                     </div>
+                    @foreach(json_decode($items->file) as $file)
+                    <div class="attachments-sections">
+                      <ul>
+                          <li>
+                            <div class="thumb"><i class="ri-file-4-line"></i></div>
+                            <div class="details">
+                                <p class="file-name">{{ $file }}</p>
+                                <div class="buttons">
+                                  <!-- <p class="file-size">678Kb</p> -->
+                                  <a href="{{ url('storage/email/'. $file) }}" class="view">Xem</a> <a href="#" class="download">Tải</a>
+                                </div>
+                            </div>
+                          </li>
+                      </ul>
+                    </div>
+                    @endforeach
                     <p class="d-flex justify-content-end">Mail được gửi từ ngày:<b> {{$items->created_at}}</b></p>
                   </div>
                 </div>
