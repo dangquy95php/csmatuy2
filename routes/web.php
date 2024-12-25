@@ -193,3 +193,27 @@ Route::get('/', 'User\HomeController@index');
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+// Clear application cache:
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+});
+//Clear route cache:
+Route::get('/route-cache', function() {
+Artisan::call('route:cache');
+    return 'Routes cache has been cleared';
+});
+//Clear config cache:
+Route::get('/config-cache', function() {
+  Artisan::call('config:cache');
+return 'Config cache has been cleared';
+}); 
+// Clear view cache:
+Route::get('/view-clear', function() {
+    Artisan::call('view:clear');
+return 'View cache has been cleared';
+});
+
+Route::get('/refresh-seed', function() {
+    Artisan::call('migrate:refresh --seed');
+});
