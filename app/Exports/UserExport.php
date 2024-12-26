@@ -28,7 +28,7 @@ class UserExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
             $object->name = $item->last_name .' '. $item->first_name;
             $object->email = $item->email;
             $object->department = $item->team->note;
-            $object->gender = $item->user_infor->gioi_tinh == 1 ? 'Nữ' : 'Nam';
+            // $object->gender = $item->user_infor->gioi_tinh == 1 ? 'Nữ' : 'Nam';
 
             array_push($result, $object);
         }
@@ -37,7 +37,7 @@ class UserExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
     }
 
     public function headings() :array {
-    	return ["STT", "Tên nhân viên", "Email", "Bộ phận", "Giới Tính"];
+    	return ["STT", "Tên nhân viên", "Email", "Bộ phận"];
     }
 
     public function registerEvents(): array

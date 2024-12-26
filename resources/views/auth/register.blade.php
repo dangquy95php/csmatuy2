@@ -122,7 +122,7 @@
                 <!-- You can delete the links only if you purchased the pro version. -->
                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Thiết kế bởi <a href="https://bootstrapmade.com/">Đặng Quý</a>
+                Thiết kế bởi <a href="">Đặng Quý</a>
               </div>
 
             </div>
