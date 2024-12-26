@@ -51,7 +51,7 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="{{asset('admin_library/assets/img/logo.png')}}" alt="">
-                  <span class="d-none d-lg-block">Cơ Sở Ma Túy Số 2</span>
+                  <span class="d-none d-lg-block">Cơ Sở CN Ma Túy Số 2</span>
                 </a>
               </div><!-- End Logo -->
 

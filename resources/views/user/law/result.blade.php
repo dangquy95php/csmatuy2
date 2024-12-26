@@ -43,7 +43,7 @@
           <b>Tải ảnh</b>
         </a>
         <div class="credits mt-5">
-        Thiết kế bởi <a href="#">Cơ sở cai nghiện ma túy số 2</a>
+        Thiết kế bởi <a href="#">Cơ sở cn ma túy số 2</a>
         </div>
       </section>
 
