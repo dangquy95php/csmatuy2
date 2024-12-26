@@ -88,7 +88,7 @@
                             <select class="form-select" name="level" aria-label="Default select example">
                                 <option value="">Vui lòng chọn loại tài khoản</option>
                                 @foreach (App\Models\User::TYPE_ACCOUNT as $key => $account)
-                                    <option value="{{ $key }}" >{{ $account }}</option>
+                                    <option @if($key==old('level') && old('level') != "") selected @endif value="{{ $key }}" >{{ $account }}</option>
                                 @endforeach
                             </select>
                             @include('_partials.alert', ['field' => 'level'])

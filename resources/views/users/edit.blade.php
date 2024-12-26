@@ -57,6 +57,16 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-12">
+                    <label for="inputPassword10" class="form-label">Loại tài khoản:</label>
+                    <select class="form-select" name="level" aria-label="Default select example">
+                        <option value="">Vui lòng chọn loại tài khoản</option>
+                        @foreach (App\Models\User::TYPE_ACCOUNT as $key => $account)
+                            <option @if($key==old('level') && old('level') != "") selected @endif value="{{ $key }}" >{{ $account }}</option>
+                        @endforeach
+                    </select>
+                    @include('_partials.alert', ['field' => 'level'])
+                </div>
                 <div class="col-10">
                     <label class="form-label">Role:</label>
                     <select class="form-select" name="roles[]" multiple="" aria-label="multiple select example">
@@ -79,6 +89,7 @@
                         @endforeach
                     </select>
                 </div>
+                
                 <div class="col-2">
                     <img class="img-fluid w-100" src="{{ !file_exists('storage/profile/'.$user->image) || empty($user->image) ? asset('storage/profile/default.jpg') : asset('storage/profile/'.$user->image) }}" alt="">
                 </div>
