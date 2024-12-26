@@ -745,5 +745,9 @@
     $(window).on('load', function() {
       $('#basicModal').modal('show');
     });
+
+    window.setTimeout( function() {
+      window.location.reload();
+    }, 600000);
 </script>
 @endpush
