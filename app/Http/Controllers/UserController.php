@@ -260,8 +260,17 @@ class UserController extends Controller
     public function postChangePass(Request $request)
     {
         $this->validate($request, [
-            'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
-            'password_confirmation' => 'min:8|required'
+            'new_password' => [
+                'required',
+                'min:8',
+                'required_with:password_confirmation',
+                'same:password_confirmation', function ($attribute, $value, $fail) {
+                    if (Hash::check($value, Auth::user()->password)) {
+                        $fail('Mật khẩu mới không được giống mật khẩu cũ');
+                    }
+                },
+            ],
+            'password_confirmation' => 'min:8|required',
         ], [
            'new_password.required'  => 'Mật khẩu chưa được nhập',
            'password_confirmation.required' => 'Nhập lại mật khẩu chưa nhập',

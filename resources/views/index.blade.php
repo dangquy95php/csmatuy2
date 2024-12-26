@@ -721,7 +721,7 @@
                 <div class="col-12 mt-1">
                     <label for="inputPassword4" class="form-label">Nhập mật khẩu mới:</label>
                     <input type="password" placeholder="Nhập mật khẩu mới" name="new_password" class="form-control" id="inputPassword4">
-                    @include('_partials.alert', ['field' => 'password'])
+                    @include('_partials.alert', ['field' => 'new_password'])
                 </div>
                 <div class="col-12 mt-3">
                     <label for="inputPassword10" class="form-label">Nhập lại mật khẩu:</label>
