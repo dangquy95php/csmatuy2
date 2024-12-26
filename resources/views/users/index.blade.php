@@ -34,7 +34,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Tên</th>
                     <th scope="col">Username</th>
-                    <th scope="col" id="title-roles">Roles</th>
+                    <th scope="col" id="title-roles">Role</th>
                     <th scope="col" id="title-team">Khu/Phòng</th>
                     <th scope="col">Email</th>
                     <th scope="col">Hình ảnh</th>

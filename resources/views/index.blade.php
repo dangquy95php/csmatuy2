@@ -51,7 +51,7 @@
 
               </div>
             </div><!-- End Sales Card -->
-
+            @role('admin')
             <!-- Revenue Card -->
             <div class="col-xxl-3 col-md-6">
               <div class="card info-card revenue-card">
@@ -68,7 +68,6 @@
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
                 </div> -->
-
                 <div class="card-body">
                   <h5 class="card-title">Tổng số ROLES</h5>
 
@@ -85,6 +84,7 @@
                 </div>
               </div>
             </div><!-- End Revenue Card -->
+            @endrole
 
             <div class="col-xxl-3 col-xl-12">
 

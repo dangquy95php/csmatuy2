@@ -68,13 +68,13 @@
                         <div class="row mb-3">
                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Họ:</label>
                             <div class="col-md-4 col-lg-5">
-                                <input name="first_name" type="text" class="form-control" id="fullName" value="{{Auth::user()->first_name}}">
+                                <input name="first_name" type="text" class="form-control" id="fullName" value="{{ Auth::user()->last_name }}">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Tên:</label>
                             <div class="col-md-4 col-lg-5">
-                                <input name="last_name" type="text" class="form-control" value="{{Auth::user()->last_name}}">
+                                <input name="last_name" type="text" class="form-control" value="{{Auth::user()->first_name}}">
                             </div>
                         </div>
                         <div class="row mb-3">

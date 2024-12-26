@@ -36,134 +36,132 @@
     <main>
         <section class="section">
             <div class="row align-items-center h-100 justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body p-5">
-                                <b class="text-danger" id="message"></b>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <b class="text-danger" id="message"></b>
 
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="d-flex align-middle">
-                                            <i class="bi bi-alarm fs-1 d-flex align-items-center"></i>
-                                            <div class="d-flex flex-column ps-2">
-                                                <span class="">Thời gian còn lại</span>
-                                                <span class="text-danger"><b id="timer"></b></span>
-                                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="d-flex align-middle">
+                                        <i class="bi bi-alarm fs-1 d-flex align-items-center"></i>
+                                        <div class="d-flex flex-column ps-2">
+                                            <span class="">Thời gian còn lại</span>
+                                            <span class="text-danger"><b id="timer"></b></span>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6 text-end">
-                                        <button type="button" class="btn btn-success" onClick="submit()">Nộp bài</button>
                                     </div>
                                 </div>
-                                <div class="row mt-4">
-                                    <div class="col-lg-8">
-                                        <h5>Câu hỏi số <b class="text-danger" id="question_number">1</b> trên 21</h5>
+                                <div class="col-lg-6 text-end">
+                                    <button type="button" class="btn btn-success" onClick="submit()">Nộp bài</button>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-lg-8">
+                                    <h5>Câu hỏi số <b class="text-danger" id="question_number">1</b> trên 21</h5>
 
-                                        <form class="tab-content" method="POST" id="myTabContent">
+                                    <form class="tab-content" method="POST" id="myTabContent">
+                                        @php
+                                        $questionId = 1;
+                                        $shuffleData = [];
+                                        @endphp
+                                        @foreach($data as $k => $item)
+                                        <div class="tab-pane fade" id="home{{$questionId}}" role="tabpanel" aria-labelledby="home{{$questionId}}-tab">
+                                            <p style="text-align: justify;">Câu {{++$k}}: <span class="title" id="{{ $item->question_id }}">{{ $item->question_name }}</span></p>
                                             @php
-                                            $questionId = 1;
-                                            $shuffleData = [];
+                                            if ($item->random == 1) {
+                                                array_push($shuffleData, $item->a);
+                                                array_push($shuffleData, $item->b);
+                                                array_push($shuffleData, $item->c);
+                                                array_push($shuffleData, $item->d);
+                                            }
                                             @endphp
-                                            @foreach($data as $k => $item)
-                                            <div class="tab-pane fade" id="home{{$questionId}}" role="tabpanel" aria-labelledby="home{{$questionId}}-tab">
-                                                <p style="text-align: justify;">Câu {{++$k}}: <span class="title" id="{{ $item->question_id }}">{{ $item->question_name }}</span></p>
-                                                @php
-                                                if ($item->random == 1) {
-                                                    array_push($shuffleData, $item->a);
-                                                    array_push($shuffleData, $item->b);
-                                                    array_push($shuffleData, $item->c);
-                                                    array_push($shuffleData, $item->d);
-                                                }
-                                                @endphp
-                                                <div class="mt-3">
-                                                    <ul class="list-unstyled is-anwser">
-                                                    @if($shuffleData)
-                                                        @foreach(collect($shuffleData)->shuffle() as $key => $el)
-                                                            <li class="mb-2" onClick=clickDapAn(this)>
-                                                                <button type="button" class="btn btn-outline-dark text-start">
-                                                                    @if($key == 0)
-                                                                        <span class="pe-2">A.</span><span class="answer">{{ $el }}</span>
-                                                                    @elseif($key == 1)
-                                                                        <span class="pe-2">B.</span><span class="answer">{{ $el }}</span>
-                                                                    @elseif($key == 2)
-                                                                        <span class="pe-2">C.</span><span class="answer">{{ $el }}</span>
-                                                                    @elseif($key == 3)
-                                                                        <span class="pe-2">D.</span><span class="answer">{{ $el }}</span>
-                                                                    @endif
-                                                                </button>
-                                                            </li>
-                                                        @endforeach
-                                                    @else
+                                            <div class="mt-3">
+                                                <ul class="list-unstyled is-anwser">
+                                                @if($shuffleData)
+                                                    @foreach(collect($shuffleData)->shuffle() as $key => $el)
                                                         <li class="mb-2" onClick=clickDapAn(this)>
                                                             <button type="button" class="btn btn-outline-dark text-start">
-                                                                <span class="pe-2">A.</span><span class="answer">{{ $item->a }}</span>
+                                                                @if($key == 0)
+                                                                    <span class="pe-2">A.</span><span class="answer">{{ $el }}</span>
+                                                                @elseif($key == 1)
+                                                                    <span class="pe-2">B.</span><span class="answer">{{ $el }}</span>
+                                                                @elseif($key == 2)
+                                                                    <span class="pe-2">C.</span><span class="answer">{{ $el }}</span>
+                                                                @elseif($key == 3)
+                                                                    <span class="pe-2">D.</span><span class="answer">{{ $el }}</span>
+                                                                @endif
                                                             </button>
                                                         </li>
-                                                        <li class="mb-2" onClick=clickDapAn(this)>
-                                                            <button type="button" class="btn btn-outline-dark text-start">
-                                                                <span class="pe-2">B.</span><span class="answer">{{ $item->b }}</span>
-                                                            </button>
-                                                        </li>
-                                                        <li class="mb-2" onClick=clickDapAn(this)>
-                                                            <button type="button" class="btn btn-outline-dark text-start">
-                                                                <span class="pe-2">C.</span><span class="answer">{{ $item->c }}</span>
-                                                            </button>
-                                                        </li>
-                                                        <li class="" onClick=clickDapAn(this)>
-                                                            <button type="button" class="btn btn-outline-dark text-start">
-                                                                <span class="pe-2">D.</span><span class="answer">{{ $item->d }}</span>
-                                                            </button>
-                                                        </li>
-                                                    @endif
-                                                    </ul>
-                                                </div>
+                                                    @endforeach
+                                                @else
+                                                    <li class="mb-2" onClick=clickDapAn(this)>
+                                                        <button type="button" class="btn btn-outline-dark text-start">
+                                                            <span class="pe-2">A.</span><span class="answer">{{ $item->a }}</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="mb-2" onClick=clickDapAn(this)>
+                                                        <button type="button" class="btn btn-outline-dark text-start">
+                                                            <span class="pe-2">B.</span><span class="answer">{{ $item->b }}</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="mb-2" onClick=clickDapAn(this)>
+                                                        <button type="button" class="btn btn-outline-dark text-start">
+                                                            <span class="pe-2">C.</span><span class="answer">{{ $item->c }}</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="" onClick=clickDapAn(this)>
+                                                        <button type="button" class="btn btn-outline-dark text-start">
+                                                            <span class="pe-2">D.</span><span class="answer">{{ $item->d }}</span>
+                                                        </button>
+                                                    </li>
+                                                @endif
+                                                </ul>
                                             </div>
-                                            @php
-                                            $questionId++;
-                                            $shuffleData = [];
-                                            @endphp
-                                            @endforeach
-
-                                            <div class="tab-pane fade mt-5" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
-                                                <p class="mb-1" style="text-align: justify;">Câu 21: <span class="title" id="21">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
-                                                <div class="is-active">
-                                                    <input id="forecast_input" type="number" min="1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
-                                                </div>
-                                            </div>
-                                            @csrf
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <ul class="list-unstyled d-flex justify-content-end flex-wrap mt-2 border border-success p-2 border-2 is-question" id="myTab" role="tablist">
-                                            @php
-                                            $questionId = 1;
-                                            @endphp
-                                            @foreach($data as $k => $item)
-                                            <li class="mb-2 " onClick=clickQuestion(this) id="home{{$questionId}}-tab" data-bs-toggle="tab" data-bs-target="#home{{$questionId}}" type="button" role="tab" aria-controls="home{{$questionId}}" aria-selected="true" >
-                                                <button type="button" class="btn btn-outline-dark me-1">{{$questionId}}</button>
-                                            </li>
-                                            @php
-                                            $questionId ++;
-                                            @endphp
-                                            @endforeach
-
-                                            <li class="mb-2" onClick=clickQuestion(this) id="forecast-tab" data-bs-toggle="tab" data-bs-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="true" >
-                                                <button type="button" class="btn btn-outline-dark me-1">21</button>
-                                            </li>
-                                        </ul>
-                                        <div class="d-flex justify-content-end">
-                                            <button type="button" onClick="clickPrev()" class="btn btn-dark me-1">Trước</button>
-                                            <button type="button" onClick="clickNext()" class="btn btn-dark">Sau</button>
                                         </div>
+                                        @php
+                                        $questionId++;
+                                        $shuffleData = [];
+                                        @endphp
+                                        @endforeach
+
+                                        <div class="tab-pane fade mt-5" id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
+                                            <p class="mb-1" style="text-align: justify;">Câu 21: <span class="title" id="21">Theo bạn nghĩ có bao nhiều người trả lời đúng {{count($data)}} câu hỏi?</span></p>
+                                            <div class="is-active">
+                                                <input id="forecast_input" type="number" min="1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" max="200" name="forecast" class="form-control answer" style="max-width:200px;">
+                                            </div>
+                                        </div>
+                                        @csrf
+                                    </form>
+                                </div>
+                                <div class="col-lg-4">
+                                    <ul class="list-unstyled d-flex justify-content-end flex-wrap mt-2 border border-success p-2 border-2 is-question" id="myTab" role="tablist">
+                                        @php
+                                        $questionId = 1;
+                                        @endphp
+                                        @foreach($data as $k => $item)
+                                        <li class="mb-2 " onClick=clickQuestion(this) id="home{{$questionId}}-tab" data-bs-toggle="tab" data-bs-target="#home{{$questionId}}" type="button" role="tab" aria-controls="home{{$questionId}}" aria-selected="true" >
+                                            <button type="button" class="btn btn-outline-dark me-1">{{$questionId}}</button>
+                                        </li>
+                                        @php
+                                        $questionId ++;
+                                        @endphp
+                                        @endforeach
+
+                                        <li class="mb-2" onClick=clickQuestion(this) id="forecast-tab" data-bs-toggle="tab" data-bs-target="#forecast" type="button" role="tab" aria-controls="forecast" aria-selected="true" >
+                                            <button type="button" class="btn btn-outline-dark me-1">21</button>
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" onClick="clickPrev()" class="btn btn-dark me-1">Trước</button>
+                                        <button type="button" onClick="clickNext()" class="btn btn-dark">Sau</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-
-
+            </div>
+        </section>
     </main>
 
      <!-- ======= Footer ======= -->
