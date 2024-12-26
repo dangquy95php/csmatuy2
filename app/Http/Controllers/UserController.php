@@ -54,7 +54,7 @@ class UserController extends Controller
     {
         if (!empty($request->input('search'))) {
             $search = $request->input('search');;
-            $data = User::where('name', 'like', "%$search%")->with(['team', 'user_infor'])->paginate(20);
+            $data = User::where('first_name', 'like', "%$search%")->with(['team', 'user_infor'])->paginate(20);
         } else {
             $data = User::with(['team', 'user_infor'])->whereNotNull('team_id')->paginate(20);
         }
