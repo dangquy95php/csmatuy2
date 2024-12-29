@@ -39,7 +39,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col">Trạng thái</th>
-                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Ngày vào làm việc</th>
                     @canany('user-create')
                     <th scope="col">
                         <a href="{{ route('user.create') }}" type="button" class="btn btn-primary btn-sm">Thêm</a>
@@ -89,7 +89,7 @@
                             <span class="badge rounded-pill bg-warning">Chưa kích hoạt động</span>
                         @endif
                         </td>
-                        <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($user->user_infor->ngay_vao_lam_viec)) }}</td>
                         <td>
                             @canany('user-edit')
                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-success btn-sm">Sửa</a>

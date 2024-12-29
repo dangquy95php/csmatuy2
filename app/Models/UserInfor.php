@@ -21,6 +21,7 @@ class UserInfor extends Model
         'user_id',
         'ngay_sinh',
         'gioi_tinh',
+        'ngay_vao_lam_viec',
         // 'noi_sinh_xa',
         // 'noi_sinh_huyen',
         // 'noi_sinh_tinh',

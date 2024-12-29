@@ -23,6 +23,7 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
+
         $countNewMail = EmailInfor::where('user_id', Auth::user()->id)->where('seen', EmailInfor::NOT_SEEN)->count();
         $contest = Contest::where('status', Contest::ENABLE)->orderBy('created_at', 'DESC')->select('id', 'free_contest')->first();
         $usersExitsInLawResult = '';

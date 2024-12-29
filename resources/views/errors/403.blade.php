@@ -41,7 +41,7 @@
         <a class="btn" href="{{route('dashboard')}}">Quay về trang chủ</a>
         <img src="{{ asset('admin_library/assets/img/not-found.svg') }}" class="img-fluid py-5" alt="Page Not Found">
         <div class="credits">
-        Thiết kế bởi <a href="#">Cơ sở cn ma túy số 2</a>
+        Thiết kế bởi <a href="#">Cơ sở cai nghiện ma túy số 2</a>
         </div>
       </section>
 

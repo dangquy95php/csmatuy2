@@ -19,8 +19,10 @@ class CreateUserInforsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('ngay_sinh')->nullable();
+            $table->date('ngay_sinh')->nullable();
             $table->boolean('gioi_tinh')->default(0)->nullable();
+            $table->date('ngay_vao_lam_viec')->nullable();
+
             // $table->string('noi_sinh_xa')->nullable();
             // $table->string('noi_sinh_huyen')->nullable();
             // $table->string('noi_sinh_tinh')->nullable();

@@ -85,7 +85,8 @@
               </div>
             </div><!-- End Revenue Card -->
             @endrole
-
+            
+            @if (!empty($contest))
             <div class="col-xxl-3 col-xl-12">
 
               <div class="card info-card customers-card">
@@ -102,7 +103,6 @@
                     <li><a class="dropdown-item" href="#">This Year</a></li>
                   </ul>
                 </div> -->
-
                 <div class="card-body">
                   <h5 class="card-title">Tổng số người đã thi
                   </h5>
@@ -123,6 +123,7 @@
                 </div>
               </div>
             </div>
+            @endif
 
             <div class="col-xxl-3 col-xl-12">
 

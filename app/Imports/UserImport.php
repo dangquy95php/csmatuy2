@@ -81,8 +81,9 @@ class UserImport implements ToModel, WithHeadingRow, WithStartRow, WithChunkRead
                     
                 $data = new UserInfor([
                     'user_id'                                 => $user->id,
-                    'ngay_sinh'                               => !empty($row['nam']) ? $row['nam'] : $row['nu'],
+                    'ngay_sinh'                               => !empty(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['nam'])->format('d/m/Y')) ? \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['nam'])->format('Y/m/d') : \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['nu'])->format('Y/m/d'),
                     'gioi_tinh'                               => !empty($row['nam']) ? 1 : 0,
+                    'ngay_vao_lam_viec'                       => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['ngay_vao_lam_viec'])->format('Y/m/d'),
                     // 'noi_sinh_xa'                             => $row['noi_sinh'],
                     // 'noi_sinh_huyen'                          => $row[7],
                     // 'noi_sinh_tinh'                           => $row[8],

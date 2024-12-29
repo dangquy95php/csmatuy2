@@ -27,6 +27,13 @@ class ExcelImportController extends Controller
 
     public function postImport(Request $request)
     {
+        $this->validate($request, [
+            'file' => 'required|max:2000',
+        ], [
+            'file.required' => 'Tập tin chưa được chọn',
+            'file.max' => 'Tập tin dung lượng quá lớn'
+        ]);
+
         \DB::beginTransaction();
         try {
             Excel::queueImport(new UserImport, $request->file('file'));
